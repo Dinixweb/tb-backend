@@ -3,6 +3,6 @@ const profileController = require("../controllers/Profiles");
 
 const router = Router();
 
-router.get("/profiles", profileController.welcome);
+router.get("/auth", profileController.welcome);
 
 module.exports = router;
