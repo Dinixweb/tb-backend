@@ -38,7 +38,7 @@ const optTemplate = (firstName, otp) => {
     `${otp}\n\n` +
     "This is a auto-generated email. Please do not reply to this email.\n\n" +
     "Regards\n" +
-    "EMS Support Team \n\n"
+    "Travel Buddy Support Team \n\n"
   );
 };
 
