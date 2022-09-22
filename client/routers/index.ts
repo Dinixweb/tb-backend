@@ -9,4 +9,4 @@ router.use("/usersAccount", users);
 
 router.use;
 
-module.exports = router;
+export = router;

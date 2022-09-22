@@ -1,6 +1,6 @@
 import * as express from "express";
-import client from "../client/routers";
-import admin from "../admin/routers";
+import client from "../client/routers/index";
+import admin from "../admin/routers/index";
 
 const router:express.Router = express.Router();
 

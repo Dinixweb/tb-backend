@@ -1,7 +1,7 @@
-const nodemailer = require("nodemailer");
-const fs = require("fs-extra");
-const dotenv = require("dotenv");
-var ejs = require("ejs");
+import  nodemailer from "nodemailer";
+import  fs from "fs-extra";
+import  dotenv from "dotenv";
+import  ejs from "ejs";
 
 dotenv.config();
 const { EMAIL } = process.env;
@@ -16,9 +16,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.oneTimePassword = (firstName, email, otp) => {
+export function oneTimePassword (firstName, email, otp) {
   const mail = {
-    from: emailId,
+    from: EMAIL,
     to: email,
     subject: "one-time-password",
     text: optTemplate(firstName, otp),
@@ -29,7 +29,7 @@ exports.oneTimePassword = (firstName, email, otp) => {
       return;
     }
   });
-};
+}
 
 const optTemplate = (firstName, otp) => {
   return (
@@ -42,13 +42,13 @@ const optTemplate = (firstName, otp) => {
   );
 };
 
-exports.SignUp = (firstName, email, benefitList, referalCodeLink) => {
+export function SignUp (firstName, email, benefitList, referalCodeLink){
   fs.readFile("./template/signup.ejs", "utf8", function (err, data) {
     if (err) {
       return console.log(err);
     }
     const mainOptions = {
-      from: emailId,
+      from: EMAIL,
       to: email,
       subject: "Sign Confirmation",
       html: ejs.render(data, {
@@ -65,4 +65,4 @@ exports.SignUp = (firstName, email, benefitList, referalCodeLink) => {
       }
     });
   });
-};
+}
