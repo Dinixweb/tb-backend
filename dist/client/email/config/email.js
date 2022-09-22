@@ -1,11 +1,17 @@
-const nodemailer = require("nodemailer");
-const fs = require("fs-extra");
-const dotenv = require("dotenv");
-var ejs = require("ejs");
-dotenv.config();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SignUp = exports.oneTimePassword = void 0;
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const fs_extra_1 = __importDefault(require("fs-extra"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const ejs_1 = __importDefault(require("ejs"));
+dotenv_1.default.config();
 const { EMAIL } = process.env;
 const { EMAILPASSWORD } = process.env;
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer_1.default.createTransport({
     host: "smtp-mail.outlook.com",
     port: 587,
     secure: false,
@@ -14,9 +20,9 @@ const transporter = nodemailer.createTransport({
         pass: EMAILPASSWORD,
     },
 });
-exports.oneTimePassword = (firstName, email, otp) => {
+function oneTimePassword(firstName, email, otp) {
     const mail = {
-        from: emailId,
+        from: EMAIL,
         to: email,
         subject: "one-time-password",
         text: optTemplate(firstName, otp),
@@ -27,7 +33,8 @@ exports.oneTimePassword = (firstName, email, otp) => {
             return;
         }
     });
-};
+}
+exports.oneTimePassword = oneTimePassword;
 const optTemplate = (firstName, otp) => {
     return (`Dear ${firstName}, \n\n` +
         "OTP for continue signup is : \n\n" +
@@ -36,16 +43,16 @@ const optTemplate = (firstName, otp) => {
         "Regards\n" +
         "Travel Buddy Support Team \n\n");
 };
-exports.SignUp = (firstName, email, benefitList, referalCodeLink) => {
-    fs.readFile("./template/signup.ejs", "utf8", function (err, data) {
+function SignUp(firstName, email, benefitList, referalCodeLink) {
+    fs_extra_1.default.readFile("./template/signup.ejs", "utf8", function (err, data) {
         if (err) {
             return console.log(err);
         }
         const mainOptions = {
-            from: emailId,
+            from: EMAIL,
             to: email,
             subject: "Sign Confirmation",
-            html: ejs.render(data, {
+            html: ejs_1.default.render(data, {
                 email: email,
                 firstName: firstName,
                 benefitList: benefitList,
@@ -59,5 +66,6 @@ exports.SignUp = (firstName, email, benefitList, referalCodeLink) => {
             }
         });
     });
-};
+}
+exports.SignUp = SignUp;
 //# sourceMappingURL=email.js.map

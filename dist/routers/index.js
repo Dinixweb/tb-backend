@@ -26,12 +26,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const express = __importStar(require("express"));
-const routers_1 = __importDefault(require("../client/routers"));
-const routers_2 = __importDefault(require("../admin/routers"));
+const index_1 = __importDefault(require("../client/routers/index"));
+const index_2 = __importDefault(require("../admin/routers/index"));
 const router = express.Router();
 // Client router path
-router.use("/clients", routers_1.default);
+router.use("/clients", index_1.default);
 // Admin router path
-router.use("/admin", routers_2.default);
+router.use("/admin", index_2.default);
 module.exports = router;
 //# sourceMappingURL=index.js.map
