@@ -42,7 +42,7 @@ const optTemplate = (firstName, otp) => {
   );
 };
 
-exports.SignUp = (firstName, email, benefitList, referalCode) => {
+exports.SignUp = (firstName, email, benefitList, referalCodeLink) => {
   fs.readFile("./template/signup.ejs", "utf8", function (err, data) {
     if (err) {
       return console.log(err);
@@ -55,7 +55,7 @@ exports.SignUp = (firstName, email, benefitList, referalCode) => {
         email: email,
         firstName: firstName,
         benefitList: benefitList,
-        referalCode: referalCode,
+        referalCode: referalCodeLink,
       }),
     };
     transporter.sendMail(mainOptions, (err, info) => {
