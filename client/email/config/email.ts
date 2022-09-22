@@ -4,8 +4,8 @@ import  dotenv from "dotenv";
 import  ejs from "ejs";
 
 dotenv.config();
-const { EMAIL } = process.env;
-const { EMAILPASSWORD } = process.env;
+const  EMAIL  = process.env.EMAIL as string;
+const  EMAILPASSWORD  = process.env.PASSWORD as string;
 const transporter = nodemailer.createTransport({
   host: "smtp-mail.outlook.com",
   port: 587,
