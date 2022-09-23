@@ -1,24 +1,30 @@
 import { DataTypes } from "sequelize";
 
-export const AdminSchema = {
+const AccountTypeSchema = {
   id: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
   },
-  email: {
+  label: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
-  password: {
+  key: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
-  active: {
-    type: DataTypes.BOOLEAN,
+  createdBy: {
+    type: DataTypes.UUID,
     allowNull: false,
-    defaultValue: () => true,
+    references: {
+      model: "admin_account",
+      key: "id",
+    },
   },
 };
+
+export default AccountTypeSchema;
