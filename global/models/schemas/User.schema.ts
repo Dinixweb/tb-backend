@@ -14,18 +14,22 @@ export const UserSchema = {
   },
   active: {
     type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: true,
+  },
+  type: {
+    type: DataTypes.STRING,
     allowNull: false,
-    default: () => true,
   },
   isVerified: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
-    default: () => false,
+    allowNull: true,
+    defaultValue: false,
   },
   refreshToken: {
     type: DataTypes.STRING,
     allowNull: true,
-    default: () => null,
+    defaultValue: null,
   },
   password: {
     type: DataTypes.STRING,

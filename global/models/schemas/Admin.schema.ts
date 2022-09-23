@@ -21,4 +21,8 @@ export const AdminSchema = {
     allowNull: false,
     defaultValue: () => true,
   },
+  type: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 };

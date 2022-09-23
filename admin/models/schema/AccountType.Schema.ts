@@ -17,14 +17,19 @@ const AccountTypeSchema = {
     allowNull: false,
     unique: true,
   },
-  createdBy: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    references: {
-      model: "admin_account",
-      key: "id",
-    },
+  defaultType: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: false,
   },
+  // createdBy: {
+  //   type: DataTypes.UUID,
+  //   allowNull: false,
+  //   references: {
+  //     model: "admin_account",
+  //     key: "id",
+  //   },
+  // },
 };
 
 export default AccountTypeSchema;

@@ -28,7 +28,7 @@ AccountTypeModel.init(
 );
 
 // Model Relationships
-AccountTypeModel.belongsTo(AdminModel, { foreignKey: "createBy" });
+// AccountTypeModel.belongsTo(AdminModel, { foreignKey: "createdBy" });
 
 (async () => {
   await sequelizeOptions({ timestamps: true }).sequelize.sync();

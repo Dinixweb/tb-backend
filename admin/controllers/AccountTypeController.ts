@@ -19,16 +19,15 @@ const responseMsg = (
 
 // accountType controller methods
 export async function CreateAccountType(req: Request, res: Response) {
-  const { label, key } = req.body;
+  const { label, key, defaultType } = req.body;
 
-  const user = ""; // -> get AdminUserID from req.user
-
-  const payload = { label, key, createdBy: user };
+  const payload = { label, key, defaultType };
   try {
     await AccountTypeModel.create(payload);
-    res.status(201).json(responseMsg(201, "Account Types"));
+    return res.status(201).json(responseMsg(201, "Account Types"));
   } catch (error) {
-    if (error.errors[0].message) {
+    console.log(error);
+    if (error.errors[0].message !== undefined) {
       return res
         .status(new BadRequestError().statusCode)
         .json(new BadRequestError(400, error.errors[0].message));
@@ -40,12 +39,10 @@ export async function CreateAccountType(req: Request, res: Response) {
 export async function getAll(_req: Request, res: Response) {
   try {
     const types = await AccountTypeModel.findAll({});
-    res
-      .status(new ServerError().statusCode)
-      .json(responseMsg(200, "Account Types", types));
+    return res.status(200).json(responseMsg(200, "Account Types", types));
   } catch (error) {
     console.log(error);
-    res.status(new ServerError().statusCode).json(new ServerError());
+    return res.status(new ServerError().statusCode).json(new ServerError());
   }
 }
 
@@ -54,9 +51,9 @@ export async function removeType(req: Request, res: Response) {
   try {
     const query = { where: { id } };
     await AccountTypeModel.destroy(query);
-    res.status(200).json(responseMsg(200, "Account Type Deleted"));
+    return res.status(200).json(responseMsg(200, "Account Type Deleted"));
   } catch (error) {
     console.log(error);
-    res.status(new ServerError().statusCode).json(new ServerError());
+    return res.status(new ServerError().statusCode).json(new ServerError());
   }
 }
