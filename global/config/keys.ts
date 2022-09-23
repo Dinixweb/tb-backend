@@ -1,6 +1,7 @@
-import dotenv from 'dotenv'
-    dotenv.config();
+import dotenv from "dotenv";
+dotenv.config();
 
 export default {
-    jwtSecret: process.env.JWT_SECRET as string
+  jwtSecret: process.env.JWT_SECRET as string,
+  JWT_AUDIENCE: process.env.JWT_AUDIENCE as string,
 };

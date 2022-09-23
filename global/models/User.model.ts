@@ -2,7 +2,7 @@ import { Model } from "sequelize";
 import type { UUID } from "sequelize/types";
 import type { IAccount } from "./types";
 
-class Account extends Model<IAccount> {
+class User extends Model<IAccount> {
   declare id: typeof UUID;
   declare email: string;
   declare password: string;
@@ -10,4 +10,4 @@ class Account extends Model<IAccount> {
   declare createdAt: Date;
   declare updatedAt: Date;
 }
-export default Account;
+export default User;

@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 
-import * as Modals from "../modals";
+import * as Modals from "../../global/models";
 export async function Register(req: Request, res: Response) {
-  const user = await Modals.UserModal.findAll({});
+  const user = await Modals.AdminModel.findAll({});
 
-  res.status(201).json({ users: user });
+  res.status(200).json({ users: user });
 }
