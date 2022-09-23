@@ -8,7 +8,7 @@ const db = database;
 dotenv.config();
 const query = util.promisify(db.query).bind(db);
 
-export async function welcome (req, res){
+export async function welcome(req, res) {
   try {
     res.status(200).send("Welcome to travel buddy:::stay tuned");
     return;

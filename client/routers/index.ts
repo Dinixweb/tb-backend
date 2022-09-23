@@ -5,7 +5,7 @@ import users from "./users";
 const router = Router();
 
 router.use("/profiles", profile);
-router.use("/usersAccount", users);
+router.use("/auth", users);
 
 router.use;
 
