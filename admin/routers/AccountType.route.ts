@@ -1,9 +1,12 @@
 import { Router } from "express";
 import * as AccountTypeController from "../controllers/AccountTypeController";
+import { adminAuth } from "../../global/middleware/auth";
 const router = Router();
 
 router.get("", AccountTypeController.getAll);
-router.post("", AccountTypeController.CreateAccountType);
-router.delete("/:id", AccountTypeController.removeType);
+
+// -> admin Middleware
+router.post("", adminAuth, AccountTypeController.CreateAccountType);
+router.delete("/:id", adminAuth, AccountTypeController.removeType);
 
 export = router;

@@ -1,17 +1,12 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-// ->  models
 import * as Modals from "../../global/models";
 
-// -> env
-import ENV from "../../global/config/keys";
-
-// -> Error Classes
 import BadRequestError from "../../global/errors/Api400Error";
 import ServerError from "../../global/errors/ApiError500";
 
-// -> Serializer
+import ENV from "../../global/config/keys";
 import { UserSerializer } from "../serializers/user.serializer";
 
 import type { Request, Response } from "express";
@@ -31,56 +26,54 @@ async function validatePassword(plainPassword, hashedPassword) {
   return await bcrypt.compare(plainPassword, hashedPassword);
 }
 
+// -> User Controller methods
 export async function Register(req: Request, res: Response) {
   const payload = { ...req.body };
+  let accountType: string | number = -1;
 
-  if (payload.type) {
-    try {
+  try {
+    if (payload.type) {
       const query = { where: { id: payload.type } };
       const currentType = await Modals.AccountTypeModel.findOne(query);
-
       if (currentType === null) {
         return res
           .status(new BadRequestError().statusCode)
           .json(new BadRequestError(400, "Invalid type"));
       }
 
-      const currentUser = await findByEmail(payload.email, Modals.AdminModel);
-      if (currentUser) {
-        return res
-          .status(new BadRequestError().statusCode)
-          .json(new BadRequestError(400, "Email already exist"));
-      }
-
-      payload.type = currentType.key;
-      const passwordHash = await hashPassword(payload.password);
-      payload.password = passwordHash;
-      await Modals.AdminModel.create(payload);
-      return res.status(200).json({ code: 200, message: "User Created" });
-    } catch (error) {
-      console.log(error);
-      return res.status(new ServerError().statusCode).json(new ServerError());
+      accountType = currentType.key;
     }
-  }
 
-  try {
-    const currentUser = await findByEmail(payload.email, Modals.UserModel);
+    const selectModel =
+      accountType === -1 ? Modals.UserModel : Modals.AdminModel;
+
+    console.log(selectModel, "Model");
+    const currentUser = await findByEmail(payload.email, selectModel);
     if (currentUser) {
       return res
-        .status(400)
-        .json({ code: 400, message: "Email already exist" });
+        .status(new BadRequestError().statusCode)
+        .json(new BadRequestError(400, "Email already exist"));
     }
 
-    const findDefaultAccountTypeQuery = { where: { defaultType: true } };
-    const accountTypes = await Modals.AccountTypeModel.findOne(
-      findDefaultAccountTypeQuery
-    );
+    if (accountType === -1) {
+      const findDefaultAccountTypeQuery = { where: { defaultType: true } };
+      const defaultAccountType = await Modals.AccountTypeModel.findOne(
+        findDefaultAccountTypeQuery
+      );
 
-    payload.type = accountTypes.key ? accountTypes.key : "user";
+      // -> a default account type needs to set before creating a new user.
+      if (defaultAccountType === null) {
+        return res
+          .status(new BadRequestError().statusCode)
+          .json(new BadRequestError(400, "Please set a default account type"));
+      }
+      accountType = defaultAccountType.key;
+    }
+    payload.type = accountType;
     const passwordHash = await hashPassword(payload.password);
     payload.password = passwordHash;
-    await Modals.UserModel.create(payload);
-    return res.status(200).json({ code: 200, message: "User Created" });
+    await selectModel.create(payload);
+    return res.status(200).json({ code: 200, message: "Account Created" });
   } catch (error) {
     return res.status(new ServerError().statusCode).json(new ServerError());
   }
@@ -100,14 +93,20 @@ export async function Login(req: Request, res: Response) {
   const payload = {};
 
   const ModalRef = {
-    "web-client": Modals.AdminModel,
-    "mobile-client": Modals.UserModel,
+    "web-client": {
+      model: Modals.AdminModel,
+      secret: ENV.JWT_ADMIN_SECRET,
+    },
+    "mobile-client": {
+      model: Modals.UserModel,
+      secret: ENV.jwtSecret,
+    },
   };
 
   const currentUserModal = ModalRef[loginRef];
 
   try {
-    const currentUser = await findByEmail(email, currentUserModal);
+    const currentUser = await findByEmail(email, currentUserModal.model);
 
     if (!currentUser) {
       return res
@@ -130,10 +129,14 @@ export async function Login(req: Request, res: Response) {
         );
     }
 
-    const userToken = jwt.sign({ id: currentUser.id }, ENV.jwtSecret, {
-      audience: ENV.JWT_AUDIENCE,
-      expiresIn: "1d",
-    });
+    const userToken = jwt.sign(
+      { data: { id: currentUser.id } },
+      currentUserModal.secret,
+      {
+        audience: ENV.JWT_AUDIENCE,
+        expiresIn: "1d",
+      }
+    );
 
     payload["token"] = userToken;
 
@@ -143,6 +146,7 @@ export async function Login(req: Request, res: Response) {
       .status(200)
       .json({ code: 200, message: "Logged In", data: payload });
   } catch (error) {
+    console.log(error);
     return res.status(new ServerError().statusCode).json(new ServerError());
   }
 }
