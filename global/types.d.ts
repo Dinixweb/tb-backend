@@ -6,3 +6,10 @@ interface IAcountType {
   key: string;
   createdBy?: null | string;
 }
+
+export enum portalRef {
+  web = "web-client",
+  mobile = "mobile-client",
+}
+
+export type portalTypes = portalRef.web | portalRef.mobile;

@@ -11,12 +11,6 @@ import { UserSerializer } from "../serializers/user.serializer";
 
 import type { Request, Response } from "express";
 
-// -> this would be our names for both client and web application portal
-enum portalRef {
-  web = "web-client",
-  mobile = "mobile-client",
-}
-
 // -> helper method
 async function findByEmail(_email: string, _Modal: any) {
   const query = { where: { email: _email } };
@@ -33,6 +27,15 @@ async function validatePassword(plainPassword, hashedPassword) {
 }
 
 // -> User Controller methods
+
+/**
+ * Register
+ * @description Register method handles both web-client and mobile-client.
+ * omitting type and createRef while fallback to client_account (DB) and will set type(defaultType)
+ * @param req email, password, type?, createRef?
+ * @param res
+ * @returns
+ */
 export async function Register(req: Request, res: Response) {
   const payload = { ...req.body };
   let accountType: string | number = -1;

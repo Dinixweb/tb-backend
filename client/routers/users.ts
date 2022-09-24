@@ -1,9 +1,22 @@
 import { Router } from "express";
 import * as UserController from "../controllers/Users";
 
+import {
+  JoiValidatorMiddleware,
+  LoginValidationSchema,
+  RegisterValidationSchema,
+} from "../../global/middleware/validators";
 const router = Router();
 
-router.post("/register", UserController.Register);
-router.post("/login", UserController.Login);
+router.post(
+  "/register",
+  JoiValidatorMiddleware(RegisterValidationSchema),
+  UserController.Register
+);
+router.post(
+  "/login",
+  JoiValidatorMiddleware(LoginValidationSchema),
+  UserController.Login
+);
 
 export = router;
