@@ -11,6 +11,12 @@ import { UserSerializer } from "../serializers/user.serializer";
 
 import type { Request, Response } from "express";
 
+// -> this would be our names for both client and web application portal
+enum portalRef {
+  web = "web-client",
+  mobile = "mobile-client",
+}
+
 // -> helper method
 async function findByEmail(_email: string, _Modal: any) {
   const query = { where: { email: _email } };
@@ -30,9 +36,14 @@ async function validatePassword(plainPassword, hashedPassword) {
 export async function Register(req: Request, res: Response) {
   const payload = { ...req.body };
   let accountType: string | number = -1;
+  const baseModelRef = {
+    "web-client": Modals.AdminModel,
+    "mobile-client": Modals.UserModel,
+  };
 
+  const modelRef = baseModelRef[payload.createRef] ?? -1;
   try {
-    if (payload.type) {
+    if (payload.type && payload.createRef === "web-client") {
       const query = { where: { id: payload.type } };
       const currentType = await Modals.AccountTypeModel.findOne(query);
       if (currentType === null) {
@@ -44,10 +55,8 @@ export async function Register(req: Request, res: Response) {
       accountType = currentType.key;
     }
 
-    const selectModel =
-      accountType === -1 ? Modals.UserModel : Modals.AdminModel;
+    const selectModel = modelRef === -1 ? Modals.UserModel : modelRef;
 
-    console.log(selectModel, "Model");
     const currentUser = await findByEmail(payload.email, selectModel);
     if (currentUser) {
       return res
