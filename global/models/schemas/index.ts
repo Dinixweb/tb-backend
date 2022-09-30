@@ -1,4 +1,4 @@
-import { UserSchema } from "./User.schema";
+import { UserSchema, Subscription, UserAds } from "./User.schema";
 import { AdminSchema } from "./Admin.schema";
 
-export { UserSchema, AdminSchema };
+export { UserSchema, AdminSchema,Subscription, UserAds };

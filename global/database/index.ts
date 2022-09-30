@@ -16,6 +16,7 @@ const dbDriver = process.env.DB_DRIVER as Dialect;
 const sequelizeConnection = new Sequelize(DATABASE, USER, PASSWORD, {
   host: HOST,
   dialect: dbDriver,
+  logging: false
 });
 
 // helps us configure modal connection to database

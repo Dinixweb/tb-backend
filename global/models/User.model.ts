@@ -1,13 +1,36 @@
 import { Model } from "sequelize";
 import type { UUID } from "sequelize/types";
-import type { IAccount } from "./types";
+import type { Feeds, IAccount, Subscription} from "../interfaces/user";
 
-class User extends Model<IAccount> {
-  declare id: typeof UUID;
+export default class User extends Model<IAccount> {
+  declare userId: typeof UUID;
   declare email: string;
+  declare firstName: string;
+  declare lastname: string;
+  declare phoneNumber: string;
   declare password: string;
-  declare active: boolean;
+  declare isActive: boolean;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
-export default User;
+
+export class UserSubscription extends Model<Subscription>{
+    declare subscriptionId:typeof UUID;
+    declare userId: typeof UUID;
+    declare amount: number|string;
+    declare subscriptionType: string;
+    declare subscriptionDate: Date
+    declare expieryDate: Date
+    declare subscriptionStatus: boolean;
+}
+
+export class UserAds extends Model<Feeds>{
+    declare  adId: typeof UUID;
+    declare  userId: typeof UUID;
+    declare  adTitle: string;
+    declare  adType: string;
+    declare  adDescription: string;
+    declare  createdAt: Date;
+    declare  updatedAt: Date;
+}
+

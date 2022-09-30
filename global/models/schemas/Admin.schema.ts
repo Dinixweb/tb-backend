@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 
 export const AdminSchema = {
-  id: {
+  userId: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
@@ -11,6 +11,19 @@ export const AdminSchema = {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
+  },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  phoneNumber: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique:true
   },
   password: {
     type: DataTypes.STRING,

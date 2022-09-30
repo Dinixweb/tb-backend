@@ -1,9 +1,10 @@
-export const UserSerializer = (data) => {
+import { UserModels } from "global/models";
+
+export const UserSerializer = (data:UserModels.default) => {
   return {
+    firstName:data.firstName,
     email: data.email,
-    id: data.id,
-    isVerified: data.isVerified,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
+    userId: data.userId,
+    isActive: data.isActive,
   };
 };

@@ -1,7 +1,8 @@
 import { DataTypes } from "sequelize";
 
+// User Profile
 export const UserSchema = {
-  id: {
+  userId: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
@@ -12,27 +13,107 @@ export const UserSchema = {
     allowNull: false,
     unique: true,
   },
-  active: {
-    type: DataTypes.BOOLEAN,
-    allowNull: true,
-    defaultValue: true,
-  },
-  type: {
+   firstName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  phoneNumber: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique:true
+  },
+  active: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    default: () => true,
+  },
   isVerified: {
     type: DataTypes.BOOLEAN,
-    allowNull: true,
-    defaultValue: false,
+    allowNull: false,
+    default: () => false,
   },
   refreshToken: {
     type: DataTypes.STRING,
     allowNull: true,
-    defaultValue: null,
+    default: () => null,
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
 };
+
+// subscription schema
+export const Subscription = {
+  subscriptionId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    foreignKey:true
+  },
+  amount: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  subscriptionType: {
+    type:DataTypes.STRING,
+    allowNull: false,
+  },
+   subscriptionDate: {
+    type:DataTypes.DATE,
+    allowNull: false,
+    default:DataTypes.DATE
+  },
+    expiryDate: {
+    type:DataTypes.DATE,
+    allowNull: false,
+  },
+    subscriptionStatus: {
+    type:DataTypes.TINYINT,
+    allowNull: false,
+  }
+}
+
+// feeds schema
+export const UserAds = {
+  adId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primayKey: true,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    foreignKey: true,
+    allowNull:false
+  },
+   adType: {
+    type: DataTypes.STRING,
+    allowNull:false
+  },
+  adTitle: {
+    type: DataTypes.STRING,
+    allowNull:false
+  },
+  adDescription: {
+    type: DataTypes.STRING,
+    allowNull:false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull:false
+  },
+   updatedAt: {
+    type: DataTypes.DATE,
+    allowNull:false
+  }
+}
+

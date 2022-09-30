@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 import type { UUID } from "sequelize/types";
-import type { IAcountType } from "../../global/types";
+import type { IAcountType } from "../../global/interfaces/admin";
 
 class AccountType extends Model<IAcountType> {
   declare id: typeof UUID;

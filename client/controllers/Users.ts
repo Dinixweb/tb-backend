@@ -41,10 +41,11 @@ export async function Register(req: Request, res: Response) {
   let accountType: string | number = -1;
   const baseModelRef = {
     "web-client": Modals.AdminModel,
-    "mobile-client": Modals.UserModel,
+    "mobile-client": Modals.UserModels,
   };
-
+  
   const modelRef = baseModelRef[payload.createRef] ?? -1;
+  console.log(modelRef,payload.createRef)
   try {
     if (payload.type && payload.createRef === "web-client") {
       const query = { where: { id: payload.type } };
@@ -58,7 +59,7 @@ export async function Register(req: Request, res: Response) {
       accountType = currentType.key;
     }
 
-    const selectModel = modelRef === -1 ? Modals.UserModel : modelRef;
+    const selectModel = modelRef === -1 ? Modals.UserModels : modelRef;
 
     const currentUser = await findByEmail(payload.email, selectModel);
     if (currentUser) {
@@ -110,7 +111,7 @@ export async function Login(req: Request, res: Response) {
       secret: ENV.JWT_ADMIN_SECRET,
     },
     "mobile-client": {
-      model: Modals.UserModel,
+      model: Modals.UserModels,
       secret: ENV.jwtSecret,
     },
   };
@@ -119,7 +120,6 @@ export async function Login(req: Request, res: Response) {
 
   try {
     const currentUser = await findByEmail(email, currentUserModal.model);
-
     if (!currentUser) {
       return res
         .status(statusCode)
@@ -137,7 +137,7 @@ export async function Login(req: Request, res: Response) {
       return res
         .status(statusCode)
         .json(
-          new BadRequestError(statusCode, "Email or Password is incorrect")
+          new BadRequestError(statusCode, "Password is incorrect")
         );
     }
 
@@ -149,7 +149,7 @@ export async function Login(req: Request, res: Response) {
         expiresIn: "1d",
       }
     );
-
+  
     payload["token"] = userToken;
 
     payload["user"] = UserSerializer(currentUser);
