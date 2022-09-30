@@ -48,7 +48,7 @@ export const UserSchema = {
 };
 
 // subscription schema
-export const Subscription = {
+export const SubscriptionSchema = {
   subscriptionId: {
     type: DataTypes.UUID,
     allowNull: false,
@@ -84,7 +84,7 @@ export const Subscription = {
 }
 
 // feeds schema
-export const UserAds = {
+export const UserAdsSchema = {
   adId: {
     type: DataTypes.UUID,
     allowNull: false,
@@ -112,6 +112,31 @@ export const UserAds = {
     allowNull:false
   },
    updatedAt: {
+    type: DataTypes.DATE,
+    allowNull:false
+  }
+}
+
+export const UserAdViewsSchema = {
+  viewId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey:true    
+  },
+  adId: {
+    type: DataTypes.UUID,
+    foreignKey: true,
+    allowNull:false
+  },
+  viewCount: {
+    type: DataTypes.INTEGER,
+    allowNull:false,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull:false
+  },
+  createdAt: {
     type: DataTypes.DATE,
     allowNull:false
   }

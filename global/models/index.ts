@@ -1,7 +1,7 @@
 import { sequelizeOptions } from "../database";
 
 // -> schema imports
-import { UserSchema, AdminSchema, Subscription, UserAds } from "./schemas";
+import { UserSchema, AdminSchema, SubscriptionSchema, UserAdsSchema, UserAdViewsSchema } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
 // -> model imports
@@ -15,12 +15,16 @@ UserModels.default.init(
 );
 
 UserModels.UserSubscription.init(
-  Subscription,
+  SubscriptionSchema,
   sequelizeOptions({ modelName: "subscription", tableName: "subscription" })
 );
 
 UserModels.UserAds.init(
-  UserAds, sequelizeOptions({modelName:"user_ads", tableName:"user_ads"})
+  UserAdsSchema, sequelizeOptions({modelName:"user_ads", tableName:"user_ads"})
+)
+
+UserModels.UserAdViews.init(
+  UserAdViewsSchema, sequelizeOptions({modelName:"ad_view", tableName:"ad_view"})
 )
 
 AdminModel.init(

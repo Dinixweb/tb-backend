@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 import type { UUID } from "sequelize/types";
-import type { Feeds, IAccount, Subscription} from "../interfaces/user";
+import type { AdViews, Feeds, IAccount, Subscription} from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
   declare userId: typeof UUID;
@@ -32,5 +32,12 @@ export class UserAds extends Model<Feeds>{
     declare  adDescription: string;
     declare  createdAt: Date;
     declare  updatedAt: Date;
+}
+export class UserAdViews extends Model<AdViews>{
+    declare viewId: typeof UUID
+    declare adId: typeof UUID;
+    declare viewCount: number;
+    declare userId: typeof UUID;
+    declare createdAt: Date
 }
 

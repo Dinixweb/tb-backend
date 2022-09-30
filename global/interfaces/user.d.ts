@@ -49,6 +49,7 @@ interface AdViews{
   adId: typeof UUID;
   viewCount: number;
   userId: typeof UUID;
+  createdAt: Date
 }
 
 export interface Travels{
