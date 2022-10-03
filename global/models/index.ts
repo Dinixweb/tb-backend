@@ -44,6 +44,10 @@ AccountTypeModel.init(
 // AccountTypeModel.belongsTo(AdminModel, { foreignKey: "createdBy" });
 UserModels.UserSubscription.belongsTo(UserModels.default, { foreignKey: "userId" });
 
+UserModels.UserAdViews.belongsTo(UserModels.UserAds, { foreignKey: "adId" });
+
+UserModels.UserAds.belongsTo(UserModels.default, { foreignKey: "userId" });
+
 (async () => {
   await sequelizeOptions({ timestamps: true }).sequelize.sync();
 })();

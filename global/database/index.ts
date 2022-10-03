@@ -12,8 +12,11 @@ const USER = isDev === "development" ? "root" : (process.env.USER as string);
 const PASSWORD = process.env.PASSWORD as string;
 const DATABASE = process.env.DATABASE as string;
 const dbDriver = process.env.DB_DRIVER as Dialect;
-
-const sequelizeConnection = new Sequelize(DATABASE, USER, PASSWORD, {
+let sequelizeConnection;
+if (process.env.CLEARdB_DATABASE_URL) {
+ sequelizeConnection = new Sequelize(process.env.CLEARDB_DATABASE_URL);
+}
+ sequelizeConnection= new Sequelize(DATABASE, USER, PASSWORD, {
   host: HOST,
   dialect: dbDriver,
   logging: false

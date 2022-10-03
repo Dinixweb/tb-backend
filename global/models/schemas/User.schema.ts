@@ -88,7 +88,8 @@ export const UserAdsSchema = {
   adId: {
     type: DataTypes.UUID,
     allowNull: false,
-    primayKey: true,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
   },
   userId: {
     type: DataTypes.UUID,
@@ -121,7 +122,8 @@ export const UserAdViewsSchema = {
   viewId: {
     type: DataTypes.UUID,
     allowNull: false,
-    primaryKey:true    
+    primaryKey: true,
+    defaultValue:DataTypes.UUIDV4
   },
   adId: {
     type: DataTypes.UUID,
