@@ -3,15 +3,16 @@ import type { UUID } from "sequelize/types";
 import type { AdViews, Feeds, IAccount, Subscription} from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
-  declare userId: typeof UUID;
-  declare email: string;
-  declare firstName: string;
-  declare lastname: string;
-  declare phoneNumber: string;
-  declare password: string;
-  declare isActive: boolean;
-  declare createdAt: Date;
-  declare updatedAt: Date;
+    declare userId: typeof UUID;
+    declare email: string;
+    declare firstName: string;
+    declare lastname: string;
+    declare phoneNumber: string;
+    declare type: string;
+    declare password: string;
+    declare isActive: boolean;
+    declare createdAt: Date;
+    declare updatedAt: Date;
 }
 
 export class UserSubscription extends Model<Subscription>{

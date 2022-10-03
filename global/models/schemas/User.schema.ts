@@ -29,17 +29,17 @@ export const UserSchema = {
   active: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    default: () => true,
+    defaultValue: () => true,
   },
   isVerified: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    default: () => false,
+    defaultValue: () => false,
   },
   refreshToken: {
     type: DataTypes.STRING,
     allowNull: true,
-    default: () => null,
+    defaultValue: () => null,
   },
   password: {
     type: DataTypes.STRING,
@@ -107,14 +107,6 @@ export const UserAdsSchema = {
   adDescription: {
     type: DataTypes.STRING,
     allowNull:false
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    allowNull:false
-  },
-   updatedAt: {
-    type: DataTypes.DATE,
-    allowNull:false
   }
 }
 
@@ -136,10 +128,6 @@ export const UserAdViewsSchema = {
   },
   userId: {
     type: DataTypes.UUID,
-    allowNull:false
-  },
-  createdAt: {
-    type: DataTypes.DATE,
     allowNull:false
   }
 }

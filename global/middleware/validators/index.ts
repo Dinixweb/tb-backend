@@ -20,6 +20,9 @@ export const LoginValidationSchema = Joi.object({
 export const RegisterValidationSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
+  firstName: Joi.string().required(),
+  lastName: Joi.string().required(),
+  phoneNumber: Joi.string().required(),
   createRef: Joi.string().optional(),
   type: Joi.string().optional(),
 });

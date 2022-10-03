@@ -36,8 +36,8 @@ export interface Feeds{
   adTitle: string;
   adType: string;
   adDescription: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 export interface Ads extends Feeds {
   deletedAt: Date
@@ -49,7 +49,7 @@ interface AdViews{
   adId: typeof UUID;
   viewCount: number;
   userId: typeof UUID;
-  createdAt: Date
+  createdAt?: Date
 }
 
 export interface Travels{

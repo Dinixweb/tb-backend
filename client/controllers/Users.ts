@@ -41,11 +41,10 @@ export async function Register(req: Request, res: Response) {
   let accountType: string | number = -1;
   const baseModelRef = {
     "web-client": Modals.AdminModel,
-    "mobile-client": Modals.UserModels,
+    "mobile-client": Modals.UserModels.default,
   };
   
   const modelRef = baseModelRef[payload.createRef] ?? -1;
-  console.log(modelRef,payload.createRef)
   try {
     if (payload.type && payload.createRef === "web-client") {
       const query = { where: { id: payload.type } };
@@ -59,7 +58,7 @@ export async function Register(req: Request, res: Response) {
       accountType = currentType.key;
     }
 
-    const selectModel = modelRef === -1 ? Modals.UserModels : modelRef;
+    const selectModel = modelRef === -1 ? Modals.UserModels.default : modelRef;
 
     const currentUser = await findByEmail(payload.email, selectModel);
     if (currentUser) {
@@ -88,6 +87,7 @@ export async function Register(req: Request, res: Response) {
     await selectModel.create(payload);
     return res.status(200).json({ code: 200, message: "Account Created" });
   } catch (error) {
+    console.log(error)
     return res.status(new ServerError().statusCode).json(new ServerError());
   }
 }
@@ -111,13 +111,12 @@ export async function Login(req: Request, res: Response) {
       secret: ENV.JWT_ADMIN_SECRET,
     },
     "mobile-client": {
-      model: Modals.UserModels,
+      model: Modals.UserModels.default,
       secret: ENV.jwtSecret,
     },
   };
 
   const currentUserModal = ModalRef[loginRef];
-
   try {
     const currentUser = await findByEmail(email, currentUserModal.model);
     if (!currentUser) {
