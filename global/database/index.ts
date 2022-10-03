@@ -15,13 +15,29 @@ const dbDriver = process.env.DB_DRIVER as Dialect;
 const herokuConnection = process.env.CLEARDB_DATABASE_URL as string
 let sequelizeConnection;
 if (herokuConnection) {
- sequelizeConnection = new Sequelize(herokuConnection);
+  sequelizeConnection = new Sequelize(herokuConnection, {
+   dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  });
+} else {
+  sequelizeConnection = new Sequelize(DATABASE, USER, PASSWORD, {
+    host: HOST,
+    dialect: dbDriver,
+    logging: false
+  });
 }
- sequelizeConnection= new Sequelize(DATABASE, USER, PASSWORD, {
-  host: HOST,
-  dialect: dbDriver,
-  logging: false
-});
+sequelizeConnection
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 // helps us configure modal connection to database
 export const sequelizeOptions = (options: ModelOptions) => {
