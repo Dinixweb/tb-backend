@@ -18,7 +18,7 @@ if (herokuConnection) {
   sequelizeConnection = new Sequelize(herokuConnection, {
    dialectOptions: {
       ssl: {
-        require: true,
+        require: false,
         rejectUnauthorized: false
       }
     }
