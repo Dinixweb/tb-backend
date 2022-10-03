@@ -85,7 +85,7 @@ export const SubscriptionSchema = {
 
 // feeds schema
 export const UserAdsSchema = {
-  adId: {
+  postId: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
@@ -96,17 +96,21 @@ export const UserAdsSchema = {
     foreignKey: true,
     allowNull:false
   },
-   adType: {
+   postType: {
     type: DataTypes.STRING,
     allowNull:false
   },
-  adTitle: {
+  postTitle: {
     type: DataTypes.STRING,
     allowNull:false
   },
-  adDescription: {
+  postDescription: {
     type: DataTypes.STRING,
     allowNull:false
+  },
+  postImage: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }
 
@@ -117,7 +121,7 @@ export const UserAdViewsSchema = {
     primaryKey: true,
     defaultValue:DataTypes.UUIDV4
   },
-  adId: {
+  postId: {
     type: DataTypes.UUID,
     foreignKey: true,
     allowNull:false

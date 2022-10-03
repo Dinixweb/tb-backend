@@ -26,17 +26,18 @@ export class UserSubscription extends Model<Subscription>{
 }
 
 export class UserAds extends Model<Feeds>{
-    declare  adId: typeof UUID;
+    declare  postId: typeof UUID;
+    declare  postImage: string;
     declare  userId: typeof UUID;
-    declare  adTitle: string;
-    declare  adType: string;
-    declare  adDescription: string;
+    declare  postTitle: string;
+    declare  postType: string;
+    declare  postDescription: string;
     declare  createdAt: Date;
     declare  updatedAt: Date;
 }
 export class UserAdViews extends Model<AdViews>{
     declare viewId: typeof UUID
-    declare adId: typeof UUID;
+    declare postId: typeof UUID;
     declare viewCount: number;
     declare userId: typeof UUID;
     declare createdAt: Date

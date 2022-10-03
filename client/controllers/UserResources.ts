@@ -11,10 +11,10 @@ import * as Modals from '../../global/models/index'
  * @returns 
  */
 export async function CreatePost(req, res) {
-    const { userId, adType, adTitle, adDescription } = req.body
+    const { userId, postType, postTitle, postDescription } = req.body
     
     try {
-        const postPayload = { userId, adType, adTitle, adDescription }
+        const postPayload = { userId, postType, postTitle, postDescription }
 
         await Modals.UserModels.UserAds.create(postPayload)
         res.status(201).send({
@@ -31,7 +31,8 @@ export async function CreatePost(req, res) {
 export async function getAllPost(req, res) {
     const  {userId} = req.params
     try {
-        const allUserPost = Modals.UserModels.UserAds.findAll()
+        const allUserPost = await Modals.UserModels.UserAds.findAll()
+        console.log(allUserPost)
         res.status(200).send(allUserPost);
     } catch (err) {
         return res.status(400).send(

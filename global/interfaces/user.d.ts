@@ -31,11 +31,12 @@ export interface CreditUnit {
 }
 
 export interface Feeds{
-  adId: typeof UUID;
+  postId: typeof UUID;
   userId: typeof UUID;
-  adTitle: string;
-  adType: string;
-  adDescription: string;
+  postTitle: string;
+  postType: string;
+  postDescription: string;
+  postImage?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -46,7 +47,7 @@ export interface Ads extends Feeds {
 
 interface AdViews{
   viewId: typeof UUID
-  adId: typeof UUID;
+  postId: typeof UUID;
   viewCount: number;
   userId: typeof UUID;
   createdAt?: Date
