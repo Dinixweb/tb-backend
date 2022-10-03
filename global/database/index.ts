@@ -12,9 +12,10 @@ const USER = isDev === "development" ? "root" : (process.env.USER as string);
 const PASSWORD = process.env.PASSWORD as string;
 const DATABASE = process.env.DATABASE as string;
 const dbDriver = process.env.DB_DRIVER as Dialect;
+const herokuConnection = process.env.CLEARDB_DATABASE_URL as string
 let sequelizeConnection;
-if (process.env.CLEARdB_DATABASE_URL) {
- sequelizeConnection = new Sequelize(process.env.CLEARDB_DATABASE_URL);
+if (herokuConnection) {
+ sequelizeConnection = new Sequelize(herokuConnection);
 }
  sequelizeConnection= new Sequelize(DATABASE, USER, PASSWORD, {
   host: HOST,
