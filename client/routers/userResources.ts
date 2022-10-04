@@ -1,9 +1,11 @@
 import { Router } from "express";
 import * as UserResource from '../controllers/UserResources'
+import multer from 'multer'
+const addressUpload = multer({ dest: "" }).single("Post");
 
 const router = Router()
 
-router.post("/CreatePost", UserResource.CreatePost)
+router.post("/CreatePost", addressUpload,UserResource.CreatePost)
 router.get("/getAllPost", UserResource.getAllPost)
 
 export = router
