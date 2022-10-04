@@ -5,11 +5,28 @@ import BadRequestError from "../../global/errors/ApiError404";
 import type { Response, Request } from "express";
 
 // -> accountType controller methods
-export async function CreateAccountType(req: Request, res: Response) {
+export async function CreateAccountType(req, res) {
   const { label, key, defaultType } = req.body;
-  const payload = { label, key, defaultType };
+  //const payload = { label, key, defaultType };
+  const accountType = [
+    {
+      label:"web-client", 
+      key:"web-client",
+      defaultType:1
+    },
+    {
+      label:"mobile-client", 
+      key:"mobile-client",
+      defaultType:1
+    }
+  ]
+
   try {
-    await AccountTypeModel.create(payload);
+    const addType = []
+    for (const type of accountType) {
+       addType.push(AccountTypeModel.create(type))
+    }
+    await Promise.all(addType)
     return res.status(201).json({ code: 201, message: "Account Types" });
   } catch (error) {
     console.log(error);
