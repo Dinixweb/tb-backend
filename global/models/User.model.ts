@@ -33,11 +33,12 @@ export class UserAds extends Model<Feeds>{
     declare  postType: string;
     declare  postDescription: string;
     declare  createdAt: Date;
-    declare  updatedAt: Date;
+    declare updatedAt: Date;
+    declare postAddress: string;
+    declare postPrice: string
 }
 export class UserAdViews extends Model<AdViews>{
     declare viewId: typeof UUID
-    declare postId: typeof UUID;
     declare viewCount: number;
     declare userId: typeof UUID;
     declare createdAt: Date

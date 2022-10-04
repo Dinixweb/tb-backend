@@ -48,7 +48,8 @@ AccountTypeModel.init(
 // AccountTypeModel.belongsTo(AdminModel, { foreignKey: "createdBy" });
 UserModels.UserSubscription.belongsTo(UserModels.default, { foreignKey: "userId" });
 
-UserModels.UserAdViews.belongsTo(UserModels.UserAds, { foreignKey: "adId" });
+UserModels.UserAds.hasMany(UserModels.UserAdViews);
+UserModels.UserAdViews.belongsTo(UserModels.UserAds);
 
 UserModels.UserAds.belongsTo(UserModels.default, { foreignKey: "userId" });
 

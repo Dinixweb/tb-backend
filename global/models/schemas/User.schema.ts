@@ -104,6 +104,14 @@ export const UserAdsSchema = {
     allowNull:false
   },
   postDescription: {
+    type: DataTypes.TEXT,
+    allowNull:false
+  },
+  postAddress: {
+    type: DataTypes.TEXT,
+    allowNull:false
+  },
+  postPrice: {
     type: DataTypes.STRING,
     allowNull:false
   }
@@ -116,11 +124,6 @@ export const UserAdViewsSchema = {
     allowNull: false,
     primaryKey: true,
     defaultValue:DataTypes.UUIDV4
-  },
-  postId: {
-    type: DataTypes.UUID,
-    foreignKey: true,
-    allowNull:false
   },
   viewCount: {
     type: DataTypes.INTEGER,

@@ -37,6 +37,8 @@ export interface Feeds{
   postType: string;
   postDescription: string;
   postImage?: string;
+  postAddress: string;
+  postPrice: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -47,7 +49,6 @@ export interface Ads extends Feeds {
 
 interface AdViews{
   viewId: typeof UUID
-  postId: typeof UUID;
   viewCount: number;
   userId: typeof UUID;
   createdAt?: Date

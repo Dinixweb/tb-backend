@@ -16,7 +16,7 @@ const parser = new DatauriParser();
  * @returns 
  */
 export async function CreatePost(req, res) {
-    const { userId, postType, postTitle, postDescription } = req.body
+    const { userId, postType, postTitle, postDescription, postAddress, postPrice } = req.body
     const ImageId = randomUUID()
     const postId = randomUUID();
     
@@ -24,7 +24,7 @@ export async function CreatePost(req, res) {
         const extName = path.extname(req.file.originalname).toString();
         const file64 = parser.format(extName, req.file.buffer);
         const imagePath = file64.content;
-        const postPayload = { userId, postType, postTitle, postDescription }
+        //const postPayload = { userId, postType, postTitle, postDescription }
 
         const profielImage = Modals.UserModels.ProfileImageUpload
         
@@ -41,7 +41,9 @@ export async function CreatePost(req, res) {
             userId: userId,
             postType: postType,
             postTitle: postTitle,
-            postDescription:postDescription,
+            postDescription: postDescription,
+            postAddress: postAddress,
+            postPrice: postPrice
         })
         await Modals.UserModels.ProfileImageUpload.create(profielImage)
         res.status(201).send({
