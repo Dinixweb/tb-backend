@@ -88,8 +88,7 @@ export const UserAdsSchema = {
   postId: {
     type: DataTypes.UUID,
     allowNull: false,
-    primaryKey: true,
-    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
   },
   userId: {
     type: DataTypes.UUID,
@@ -107,11 +106,8 @@ export const UserAdsSchema = {
   postDescription: {
     type: DataTypes.STRING,
     allowNull:false
-  },
-  postImage: {
-    type: DataTypes.STRING,
-    allowNull: true
   }
+
 }
 
 export const UserAdViewsSchema = {
@@ -136,3 +132,14 @@ export const UserAdViewsSchema = {
   }
 }
 
+export const ProfileImageSchema = {
+   imageId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    primaryKey: true,
+  },
+  imageList: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+}

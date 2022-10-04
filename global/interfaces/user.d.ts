@@ -31,7 +31,7 @@ export interface CreditUnit {
 }
 
 export interface Feeds{
-  postId: typeof UUID;
+  postId: string;
   userId: typeof UUID;
   postTitle: string;
   postType: string;
@@ -66,4 +66,9 @@ export interface TravelRoutes{
   routeId: typeof UUID;
   travelId: typeof UUID;
   routes:string
+}
+
+export interface ProfileImage{
+  imageId: string;
+  imageList:string
 }

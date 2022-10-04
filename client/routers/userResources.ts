@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as UserResource from '../controllers/UserResources'
 import multer from 'multer'
-const addressUpload = multer({ dest: "" }).single("Post");
+const addressUpload = multer({ dest: "" }).single("post");
 
 const router = Router()
 
