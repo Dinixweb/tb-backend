@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'wekanfly'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8DCA716138C94681B5F37A794F3B933C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0690C1D94D2D4C1297255EB6CCCBA21E }}
           package: .
