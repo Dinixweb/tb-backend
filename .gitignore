@@ -1,5 +1,5 @@
 node_modules
 database/config.js
-.env
+# .env
 .idea
 dist
