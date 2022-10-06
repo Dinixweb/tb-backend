@@ -9,7 +9,8 @@
     "postinstall": "tsc",
     "lint": "eslint . --ext .ts",
     "deploy": "git add . && git commit -m Heroku && git push heroku main",
-    "watch-ts": "tsc -w"
+    "watch-ts": "tsc -w",
+    "build": "./node_modules/typescript/bin/tsc"
   },
   "repository": {
     "type": "git",
