@@ -16,7 +16,6 @@ const AZUREDATABASE = process.env.AZUREDATABASE as string
 const AZUREUSER = process.env.AZUREUSER as string
 const AZUREHOST = process.env.AZUREHOST 
 const AZUREPASSWORD = process.env.AZUREPASSWORD as string
-const azureConnection = process.env.CLEARDB_DATABASE_URL as string
 
   const sequelizeConnection = new Sequelize(AZUREDATABASE,AZUREUSER,AZUREPASSWORD, {
     host: AZUREHOST,
@@ -54,7 +53,6 @@ export const sequelizeOptions = (options: ModelOptions) => {
     ...options,
   };
 };
-//20.232.234.203
 
 export default sequelizeConnection;
 
