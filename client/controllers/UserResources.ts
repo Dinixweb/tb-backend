@@ -69,3 +69,20 @@ export async function getAllPost(req, res) {
         )
     }
 }
+
+
+
+// Show Interest
+export async function CreateInterest(req, res){
+    const { userId, postId, location } = req.body
+    const payload = {userId,postId, location}
+    try {
+        const addInterest = Modals.UserModels.ShownInterestModel;
+        await addInterest.create(payload)
+        res.state(201).send({
+            message:"Request sent successfully"
+        })
+    } catch (err) {
+        res.status(400).send(new Api400Error())
+    }
+}

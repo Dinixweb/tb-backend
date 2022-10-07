@@ -16,26 +16,29 @@ const AZUREDATABASE = process.env.AZUREDATABASE as string
 const AZUREUSER = process.env.AZUREUSER as string
 const AZUREHOST = process.env.AZUREHOST 
 const AZUREPASSWORD = process.env.AZUREPASSWORD as string
+const AZURECONNECTIONMODE = process.env.AZURECONNECTIONMODE
 
-  const sequelizeConnection = new Sequelize(AZUREDATABASE,AZUREUSER,AZUREPASSWORD, {
+let sequelizeConnection: Sequelize;
+  if(AZUREHOST){
+ sequelizeConnection = new Sequelize(AZUREDATABASE,AZUREUSER,AZUREPASSWORD, {
     host: AZUREHOST,
     "ssl": true,
     "dialect": dbDriver,
     dialectOptions: {
       dialect: dbDriver,
        "ssl": {
-          "require": true
+          "require": AZURECONNECTIONMODE
        }
     },
     logging: false,
   });
-// } else {
-//   sequelizeConnection = new Sequelize(DATABASE, USER, PASSWORD, {
-//     host: HOST,
-//     dialect: dbDriver,
-//     logging: false
-//   });
-// }
+} else {
+  sequelizeConnection = new Sequelize(DATABASE, USER, PASSWORD, {
+    host: HOST,
+    dialect: dbDriver,
+    logging: false
+  });
+}
 sequelizeConnection
   .authenticate()
   .then(() => {

@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 import type { UUID } from "sequelize/types";
-import type { AdViews, Feeds, IAccount, Subscription, ProfileImage} from "../interfaces/user";
+import type { AdViews, Feeds, IAccount, Subscription, ProfileImage, ShownInterest} from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
     declare userId: typeof UUID;
@@ -31,7 +31,8 @@ export class UserAds extends Model<Feeds>{
     declare  userId: typeof UUID;
     declare  postTitle: string;
     declare  postType: string;
-    declare  postDescription: string;
+    declare postDescription: string;
+    declare requestedNumber: number;
     declare  createdAt: Date;
     declare updatedAt: Date;
     declare postAddress: string;
@@ -49,3 +50,9 @@ export class ProfileImageUpload extends Model<ProfileImage>{
     declare imageList:string
 }
 
+export class ShownInterestModel extends Model<ShownInterest>{
+    declare interestId: typeof UUID;
+    declare userId: string;
+    declare location: string;
+    declare postId: string
+}

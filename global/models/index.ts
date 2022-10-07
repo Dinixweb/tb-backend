@@ -1,7 +1,7 @@
 import { sequelizeOptions } from "../database";
 
 // -> schema imports
-import { UserSchema, AdminSchema, SubscriptionSchema, UserAdsSchema, UserAdViewsSchema, ProfileImageSchema } from "./schemas";
+import { UserSchema, AdminSchema, SubscriptionSchema, UserAdsSchema, UserAdViewsSchema, ProfileImageSchema,ShownInterestSchema } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
 // -> model imports
@@ -31,6 +31,10 @@ UserModels.ProfileImageUpload.init(
   ProfileImageSchema, sequelizeOptions({modelName:"profile_images", tableName:"profile_images"})
 )
 
+UserModels.ShownInterestModel.init(
+  ShownInterestSchema, sequelizeOptions({modelName:"shown_interest", tableName:"shown_interest"})
+)
+
 AdminModel.init(
   AdminSchema,
   sequelizeOptions({ modelName: "admin_account", tableName: "admin_account" })
@@ -56,9 +60,12 @@ UserModels.UserAds.belongsTo(UserModels.default, { foreignKey: "userId" });
 UserModels.UserAds.hasOne(UserModels.ProfileImageUpload);
 UserModels.ProfileImageUpload.belongsTo(UserModels.UserAds);
 
+UserModels.UserAds.hasMany(UserModels.ShownInterestModel);
+UserModels.ShownInterestModel.belongsTo(UserModels.UserAds);
+
 
 (async () => {
-  await sequelizeOptions({ timestamps: true }).sequelize.sync();
+  await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: true, force: true  });
 })();
 
 export { UserModels, AdminModel, AccountTypeModel };

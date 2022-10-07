@@ -111,6 +111,10 @@ export const UserAdsSchema = {
     type: DataTypes.TEXT,
     allowNull:false
   },
+  requestedNumber: {
+    type: DataTypes.INTEGER,
+    allowNull:false
+  },
   postPrice: {
     type: DataTypes.STRING,
     allowNull:false
@@ -144,5 +148,25 @@ export const ProfileImageSchema = {
   imageList: {
     type: DataTypes.STRING(255),
     allowNull: true,
+  },
+}
+
+export const ShownInterestSchema = {
+  interestId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
+   userId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+    postId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  location: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
   },
 }

@@ -39,6 +39,7 @@ export interface Feeds{
   postImage?: string;
   postAddress: string;
   postPrice: string;
+  requestedNumber: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -72,4 +73,11 @@ export interface TravelRoutes{
 export interface ProfileImage{
   imageId: string;
   imageList:string
+}
+
+export interface ShownInterest{
+  interestId: typeof UUID;
+  userId: string;
+  postId: string
+  location:string
 }
