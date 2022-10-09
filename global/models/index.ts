@@ -62,10 +62,11 @@ UserModels.ProfileImageUpload.belongsTo(UserModels.UserAds);
 
 UserModels.UserAds.hasMany(UserModels.ShownInterestModel);
 UserModels.ShownInterestModel.belongsTo(UserModels.UserAds);
-
+UserModels.default.hasOne(UserModels.ShownInterestModel);
+UserModels.ShownInterestModel.belongsTo(UserModels.default);
 
 (async () => {
-  await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: true, force: true  });
+  await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: true });
 })();
 
 export { UserModels, AdminModel, AccountTypeModel };

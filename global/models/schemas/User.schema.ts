@@ -111,7 +111,7 @@ export const UserAdsSchema = {
     type: DataTypes.TEXT,
     allowNull:false
   },
-  requestedNumber: {
+  numberOfPersons: {
     type: DataTypes.INTEGER,
     allowNull:false
   },
@@ -153,17 +153,10 @@ export const ProfileImageSchema = {
 
 export const ShownInterestSchema = {
   interestId: {
-    type: DataTypes.STRING,
+    type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
-  },
-   userId: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-    postId: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    defaultValue: DataTypes.UUIDV4
   },
   location: {
     type: DataTypes.STRING(255),

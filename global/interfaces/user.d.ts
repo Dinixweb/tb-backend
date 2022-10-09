@@ -39,7 +39,7 @@ export interface Feeds{
   postImage?: string;
   postAddress: string;
   postPrice: string;
-  requestedNumber: number;
+  numberOfPersons: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -77,7 +77,8 @@ export interface ProfileImage{
 
 export interface ShownInterest{
   interestId: typeof UUID;
-  userId: string;
-  postId: string
-  location:string
+  location: string
+  firstName?: string;
+  lastName?: string
+
 }

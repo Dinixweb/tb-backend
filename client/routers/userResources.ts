@@ -7,6 +7,7 @@ const router = Router()
 
 router.post("/CreatePost", addressUpload,UserResource.CreatePost)
 router.get("/getAllPost", UserResource.getAllPost)
-router.post("/showInterect", UserResource.CreateInterest)
+router.post("/showInterest", UserResource.CreateInterest)
+router.get("/getUserAdverts/:userId",UserResource.getAllAdverts)
 
 export = router

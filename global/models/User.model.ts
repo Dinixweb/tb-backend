@@ -32,7 +32,7 @@ export class UserAds extends Model<Feeds>{
     declare  postTitle: string;
     declare  postType: string;
     declare postDescription: string;
-    declare requestedNumber: number;
+    declare numberOfPersons: number;
     declare  createdAt: Date;
     declare updatedAt: Date;
     declare postAddress: string;
@@ -52,7 +52,6 @@ export class ProfileImageUpload extends Model<ProfileImage>{
 
 export class ShownInterestModel extends Model<ShownInterest>{
     declare interestId: typeof UUID;
-    declare userId: string;
     declare location: string;
-    declare postId: string
+
 }
