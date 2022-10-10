@@ -1,4 +1,4 @@
-import { Model } from "sequelize";
+import { DataType, Model } from "sequelize";
 import type { UUID } from "sequelize/types";
 import type { AdViews, Feeds, IAccount, Subscription, ProfileImage, ShownInterest} from "../interfaces/user";
 
@@ -54,5 +54,7 @@ export class ShownInterestModel extends Model<ShownInterest>{
     declare interestId: typeof UUID;
     declare location: string;
     declare interestCount: number;
+    userAdPostId: string;
+    clientAccountUserId:string;
 
 }

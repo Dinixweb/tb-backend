@@ -156,7 +156,7 @@ export const ShownInterestSchema = {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
-    defaultValue: DataTypes.UUIDV4
+    defaultValue: DataTypes.UUIDV4,
   },
   location: {
     type: DataTypes.STRING(255),
@@ -165,5 +165,5 @@ export const ShownInterestSchema = {
   interestCount: {
     type: DataTypes.INTEGER,
     allowNull: false,
-  },
+  }
 }

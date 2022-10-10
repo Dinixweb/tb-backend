@@ -4,8 +4,7 @@ import * as Modals from '../../global/models/index'
 import path from 'path'
 import cloudinary from '../../global/utils/cloudinaryConfig'
 import DatauriParser from 'datauri/parser'
-import { randomUUID } from 'crypto'
-import { Sequelize } from 'sequelize'
+import { v4 as uuidv4 } from 'uuid';
 
 
 const parser = new DatauriParser();
@@ -19,8 +18,8 @@ const parser = new DatauriParser();
  */
 export async function CreatePost(req, res) {
     const { userId, postType, postTitle, postDescription, postAddress, postPrice, numberOfPersons } = req.body
-    const ImageId = randomUUID()
-    const postId = randomUUID();
+    const ImageId = uuidv4()
+    const postId = uuidv4();
     
     try {
         const extName = path.extname(req.file.originalname).toString();
@@ -106,13 +105,28 @@ export async function CreateInterest(req, res){
         showInterest['clientAccountUserId'] = userId;
         showInterest['location'] = location
         showInterest['interestCount'] = 1
-
-        const addInterest = Modals.UserModels.ShownInterestModel;
-        addInterest['userAdPostId'] = postId
-        await addInterest.create(showInterest)
-        res.status(201).send({
-            message:"Request sent successfully"
-        })
+        
+        const interestExist = await Modals.UserModels.ShownInterestModel.findAll({ attributes: ['userAdPostId', 'clientAccountUserId'] });
+        const addUserInterest = async () => {
+            const addInterest = Modals.UserModels.ShownInterestModel;
+            addInterest['userAdPostId'] = postId
+            await addInterest.create(showInterest)
+            return res.status(201).send({
+                message: "Request sent successfully"
+            })
+        }
+        if (interestExist.length <= 0) {
+            addUserInterest();
+        } else {
+            for (const data of interestExist) {
+                if (data.userAdPostId === postId && data.clientAccountUserId === userId) {
+                    return res.status(400).send({message:'user interest already added'})
+                } else {
+                    addUserInterest()
+                }
+            }
+        }
+    
     } catch (err) {
         console.log(err)
         res.status(400).send(new Api400Error())
