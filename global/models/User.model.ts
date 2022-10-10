@@ -53,5 +53,6 @@ export class ProfileImageUpload extends Model<ProfileImage>{
 export class ShownInterestModel extends Model<ShownInterest>{
     declare interestId: typeof UUID;
     declare location: string;
+    declare interestCount: number;
 
 }

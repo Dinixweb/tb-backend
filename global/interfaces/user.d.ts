@@ -6,6 +6,7 @@ export interface IAccount {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  photoImage?:string;
   isActive?: boolean;
   password: string;
   createdAt?: Date;
@@ -77,8 +78,7 @@ export interface ProfileImage{
 
 export interface ShownInterest{
   interestId: typeof UUID;
-  location: string
-  firstName?: string;
-  lastName?: string
-
+  location: string;
+  interestCount: number;
 }
+

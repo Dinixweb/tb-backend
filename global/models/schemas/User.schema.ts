@@ -162,4 +162,8 @@ export const ShownInterestSchema = {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
+  interestCount: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 }

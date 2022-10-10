@@ -80,10 +80,10 @@ export async function getAllAdverts(req, res) {
         const UserFeeds = Modals.UserModels
         const allUserPost = await UserFeeds.UserAds.findAll({
             include: [
-                {model: UserFeeds.ProfileImageUpload},
+                {model: UserFeeds.ProfileImageUpload,attributes:['imageId', 'imageList']},
                 {
-                    model: UserFeeds.ShownInterestModel,
-                    include:[UserFeeds.default]
+                    model: UserFeeds.ShownInterestModel,attributes:['interestId', 'location','interestCount'],
+                    include:[{model:UserFeeds.default,attributes:['userId', 'firstName','lastName']}]
                 }
             ], where: { userId: userId }
         })
@@ -105,6 +105,7 @@ export async function CreateInterest(req, res){
         showInterest['userAdPostId'] = postId;
         showInterest['clientAccountUserId'] = userId;
         showInterest['location'] = location
+        showInterest['interestCount'] = 1
 
         const addInterest = Modals.UserModels.ShownInterestModel;
         addInterest['userAdPostId'] = postId
