@@ -176,9 +176,9 @@ export const ConnectionRequestSchema = {
     defaultValue:DataTypes.UUIDV4,
   },
   defaultMessage: {
-    type: DataTypes.TEXT,
+    type: DataTypes.STRING(255),
     allowNull: false,
-    defaultValue:`I'd like to join your Wekanfly network`
+    defaultValue:'I would like to join your Wekanfly network'
   },
   senderUserId: {
     type: DataTypes.STRING,
@@ -186,7 +186,8 @@ export const ConnectionRequestSchema = {
   },
    receiverUserId: {
     type: DataTypes.STRING,
-    allowNull:false
+     allowNull: false,
+    foreignKey:true
   },
   requestStatus: {
     type: DataTypes.STRING,

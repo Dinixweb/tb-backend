@@ -1,7 +1,7 @@
 import { sequelizeOptions } from "../database";
 
 // -> schema imports
-import { UserSchema, AdminSchema, SubscriptionSchema, UserAdsSchema, UserAdViewsSchema, ProfileImageSchema,ShownInterestSchema } from "./schemas";
+import { UserSchema, AdminSchema, SubscriptionSchema, UserAdsSchema, UserAdViewsSchema, ProfileImageSchema,ShownInterestSchema, ConnectionRequestSchema } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
 // -> model imports
@@ -34,6 +34,9 @@ UserModels.ProfileImageUpload.init(
 UserModels.ShownInterestModel.init(
   ShownInterestSchema, sequelizeOptions({modelName:"shown_interest", tableName:"shown_interest"})
 )
+UserModels.Connection.init(
+  ConnectionRequestSchema, sequelizeOptions({ modelName: "connections", tableName: "connections" })
+)
 
 AdminModel.init(
   AdminSchema,
@@ -64,6 +67,9 @@ UserModels.UserAds.hasMany(UserModels.ShownInterestModel);
 UserModels.ShownInterestModel.belongsTo(UserModels.UserAds);
 UserModels.default.hasOne(UserModels.ShownInterestModel);
 UserModels.ShownInterestModel.belongsTo(UserModels.default);
+
+UserModels.default.hasOne(UserModels.Connection);
+UserModels.Connection.belongsTo(UserModels.default);
 
 
 (async () => {
