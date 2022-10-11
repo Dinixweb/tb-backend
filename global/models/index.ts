@@ -65,6 +65,7 @@ UserModels.ShownInterestModel.belongsTo(UserModels.UserAds);
 UserModels.default.hasOne(UserModels.ShownInterestModel);
 UserModels.ShownInterestModel.belongsTo(UserModels.default);
 
+
 (async () => {
   await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: true });
 })();

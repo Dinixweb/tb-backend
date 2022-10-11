@@ -168,7 +168,7 @@ export const ShownInterestSchema = {
   }
 }
 
-export const ConnectionRequest = {
+export const ConnectionRequestSchema = {
   connectionId: {
     type: DataTypes.UUID,
     allowNull: false,
