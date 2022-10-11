@@ -167,3 +167,35 @@ export const ShownInterestSchema = {
     allowNull: false,
   }
 }
+
+export const ConnectionRequest = {
+  connectionId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue:DataTypes.UUIDV4,
+  },
+  defaultMessage: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    defaultValue:`I'd like to join your Wekanfly network`
+  },
+  senderUserId: {
+    type: DataTypes.STRING,
+    allowNull:false
+  },
+   receiverUserId: {
+    type: DataTypes.STRING,
+    allowNull:false
+  },
+  requestStatus: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue:'request pendind' 
+  },
+  isConnected: {
+     type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue:false
+  }
+}

@@ -7,4 +7,16 @@ import DatauriParser from 'datauri/parser'
 import { v4 as uuidv4 } from 'uuid';
 
 
+
 const parser = new DatauriParser();
+
+export async function getMyConnections(req, res) {
+    const { userId } = req.params;
+    try {
+        const connectionList = Modals.UserModels
+    } catch (err) {
+        res.status(404).send(
+            new Api404Error()
+        )
+    }
+} 

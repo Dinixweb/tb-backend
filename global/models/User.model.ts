@@ -1,6 +1,6 @@
 import { DataType, Model } from "sequelize";
 import type { UUID } from "sequelize/types";
-import type { AdViews, Feeds, IAccount, Subscription, ProfileImage, ShownInterest} from "../interfaces/user";
+import type { AdViews, Feeds, IAccount, Subscription, ProfileImage, ShownInterest, ConnectionRequest} from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
     declare userId: typeof UUID;
@@ -56,5 +56,13 @@ export class ShownInterestModel extends Model<ShownInterest>{
     declare interestCount: number;
     userAdPostId: string;
     clientAccountUserId:string;
+}
 
+export class Connection extends Model<ConnectionRequest>{
+    declare connectionId: typeof UUID;
+    declare defaultMessage: string;
+    declare senderUserId: string;
+    declare receiverUserId: string;
+    declare requestStatus: string;
+    declare isConnected: boolean;
 }

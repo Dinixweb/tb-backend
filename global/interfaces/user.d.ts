@@ -82,3 +82,13 @@ export interface ShownInterest{
   interestCount: number;
 }
 
+export type ConnectionList = IAccount[]
+
+export type ConnectionRequest = {
+  connectionId: typeof UUID;
+  defaultMessage: string;
+  senderUserId: string;
+  receiverUserId: string;
+  requestStatus: string;
+  isConnected: boolean;
+}
