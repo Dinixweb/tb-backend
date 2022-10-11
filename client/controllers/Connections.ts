@@ -15,7 +15,9 @@ const parser = new DatauriParser();
 export async function getMyConnections(req, res) {
     const { userId } = req.params;
     try {
-        const connectionList = Modals.UserModels
+        const connectionList = Modals.UserModels;
+        const getAllConnection = await connectionList.Connection.findAll({include:{model:connectionList.default,attributes:['firstName','lastName']}, where:{senderUserId:userId}})
+        res.status(200).send(getAllConnection)
     } catch (err) {
         res.status(404).send(
             new Api404Error()
@@ -23,7 +25,6 @@ export async function getMyConnections(req, res) {
     }
 } 
 export async function addConnection(req, res) {
-
     const { senderUserId, receiverUserId } = req.body
     
     const payload = { senderUserId, receiverUserId }
@@ -39,7 +40,6 @@ export async function addConnection(req, res) {
                 }
             }
         });
-        console.log("connection data", isConnectionExist)
         payload['clientAccountUserId'] = receiverUserId;
         if (isConnectionExist.length <= 0) {
             await connectionRef.create(payload);
@@ -55,5 +55,15 @@ export async function addConnection(req, res) {
         return res.status(400).send(
             new Api400Error(0)
         )
+    }
+}
+
+export async function GetAllClients(req, res) {
+    const { userId } = req.params;
+    const { name, location, advertType } = req.query;
+    try {
+        
+    } catch (err) {
+        res.status(404).send(new Api404Error())
     }
 }
