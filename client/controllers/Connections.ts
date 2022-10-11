@@ -20,3 +20,29 @@ export async function getMyConnections(req, res) {
         )
     }
 } 
+export async function addConnection(req, res) {
+    const { senderUserId, receiverUserId } = req.body
+    
+    const payload = { senderUserId, receiverUserId }
+    try {
+        const connectionRef = Modals.UserModels.Connection;
+    const isConnectionExist = await connectionRef.findAll({
+        where: {
+            receiverUserId:receiverUserId,
+            senderUserId: senderUserId,
+            requestStatus:'confirmed',
+        }
+    })
+    if (isConnectionExist.length <= 0)
+        return
+    
+    await connectionRef.create(payload);
+    res.status(201).send({
+        message:'request sent successfully'
+    })
+    } catch (err) {
+        return res.status(400).send(
+            new Api400Error(0)
+        )
+    }
+}
