@@ -5,7 +5,7 @@ import path from 'path'
 import cloudinary from '../../global/utils/cloudinaryConfig'
 import DatauriParser from 'datauri/parser'
 import { v4 as uuidv4 } from 'uuid';
-import { Op } from 'sequelize'
+import { Op, where } from 'sequelize'
 
 
 
@@ -62,7 +62,9 @@ export async function GetAllClients(req, res) {
     const { userId } = req.params;
     const { name, location, advertType } = req.query;
     try {
-        
+        const getAllClients = Modals.UserModels
+        const clientList = getAllClients.default.findAll({ include: { model: getAllClients.Connection } })
+        req.status(200).send(clientList)
     } catch (err) {
         res.status(404).send(new Api404Error())
     }
