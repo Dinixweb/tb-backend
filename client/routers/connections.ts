@@ -3,8 +3,9 @@ import * as Connections from '../controllers/Connections'
 
 const router = Router()
 
-router.get("/myConnections/:userId", Connections.getMyConnections);
-router.post("/connectionRequest", Connections.addConnection);
 
+router.post("/connectionRequest", Connections.addConnection);
+router.get("/myConnections/:userId", Connections.getMyConnections);
+router.get("/allClients/:userId", Connections.GetAllClients);
 
 export = router
