@@ -12,12 +12,31 @@ import { Op, where } from 'sequelize'
 
 const parser = new DatauriParser();
 
-export async function getMyConnections(req, res) {
+export async function connectionList(req, res) {
     const { userId } = req.params;
+    const { connectionRef } = req.query;
+
     try {
-        const connectionList = Modals.UserModels;
-        const getAllConnection = await connectionList.Connection.findAll({include:{model:connectionList.default,attributes:['firstName','lastName']}, where:{senderUserId:userId}})
-        res.status(200).send(getAllConnection)
+        console.log(req.query)
+        if (!connectionRef)
+            return res.status(400).send({ message: 'api expects an input in the query with key {connectionRef}' })
+        
+        console.log("after ")
+         const connectionList = Modals.UserModels;
+        const pendingConnection = async() => {
+            const getAllConnection = await connectionList.Connection.findAll({ include: { model: connectionList.default, attributes: ['firstName', 'lastName'] }, where: { senderUserId: userId, isConnected: 0, requestStatus: 'request pending' } }) 
+            res.status(200).send(getAllConnection)
+        }
+        const myConnectionList = async() => {
+            const getAllConnection = connectionList.Connection.findAll({ include: { model: connectionList.default, attributes: ['firstName', 'lastName'] }, where: { senderUserId: userId, isConnected: 1, requestStatus: 'confirmed' } }) 
+            res.status(200).send(getAllConnection)
+        }
+        if (connectionRef === 'pending request') {
+            pendingConnection();
+        } else if (connectionRef === 'confirmed') {
+            myConnectionList();
+        }
+        
     } catch (err) {
         res.status(404).send(
             new Api404Error()
