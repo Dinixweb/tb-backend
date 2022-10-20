@@ -1,7 +1,16 @@
 import { sequelizeOptions } from "../database";
 
 // -> schema imports
-import { UserSchema, AdminSchema, SubscriptionSchema, UserAdsSchema, UserAdViewsSchema, ProfileImageSchema,ShownInterestSchema, ConnectionRequestSchema } from "./schemas";
+import {
+  UserSchema,
+  AdminSchema,
+  SubscriptionSchema,
+  UserAdsSchema,
+  UserAdViewsSchema,
+  ProfileImageSchema,
+  ShownInterestSchema,
+  ConnectionRequestSchema,
+} from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
 // -> model imports
@@ -20,23 +29,28 @@ UserModels.UserSubscription.init(
 );
 
 UserModels.UserAds.init(
-  UserAdsSchema, sequelizeOptions({modelName:"user_ads", tableName:"user_ads"})
-)
+  UserAdsSchema,
+  sequelizeOptions({ modelName: "user_ads", tableName: "user_ads" })
+);
 
 UserModels.UserAdViews.init(
-  UserAdViewsSchema, sequelizeOptions({modelName:"ad_view", tableName:"ad_view"})
-)
+  UserAdViewsSchema,
+  sequelizeOptions({ modelName: "ad_view", tableName: "ad_view" })
+);
 
 UserModels.ProfileImageUpload.init(
-  ProfileImageSchema, sequelizeOptions({modelName:"profile_images", tableName:"profile_images"})
-)
+  ProfileImageSchema,
+  sequelizeOptions({ modelName: "profile_images", tableName: "profile_images" })
+);
 
 UserModels.ShownInterestModel.init(
-  ShownInterestSchema, sequelizeOptions({modelName:"shown_interest", tableName:"shown_interest"})
-)
+  ShownInterestSchema,
+  sequelizeOptions({ modelName: "shown_interest", tableName: "shown_interest" })
+);
 UserModels.Connection.init(
-  ConnectionRequestSchema, sequelizeOptions({ modelName: "connections", tableName: "connections" })
-)
+  ConnectionRequestSchema,
+  sequelizeOptions({ modelName: "connections", tableName: "connections" })
+);
 
 AdminModel.init(
   AdminSchema,
@@ -53,7 +67,9 @@ AccountTypeModel.init(
 
 // Model Relationships
 // AccountTypeModel.belongsTo(AdminModel, { foreignKey: "createdBy" });
-UserModels.UserSubscription.belongsTo(UserModels.default, { foreignKey: "userId" });
+UserModels.UserSubscription.belongsTo(UserModels.default, {
+  foreignKey: "userId",
+});
 
 UserModels.UserAds.hasMany(UserModels.UserAdViews);
 UserModels.UserAdViews.belongsTo(UserModels.UserAds);
@@ -71,9 +87,8 @@ UserModels.ShownInterestModel.belongsTo(UserModels.default);
 UserModels.default.hasOne(UserModels.Connection);
 UserModels.Connection.belongsTo(UserModels.default);
 
-
 (async () => {
-  await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: true });
+  await sequelizeOptions({ timestamps: true }).sequelize.sync();
 })();
 
 export { UserModels, AdminModel, AccountTypeModel };

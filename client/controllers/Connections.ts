@@ -14,13 +14,10 @@ export async function connectionList(req, res) {
   const { connectionRef } = req.query;
 
   try {
-    console.log(req.query);
     if (!connectionRef)
       return res.status(400).send({
         message: "api expects an input in the query with key {connectionRef}",
       });
-
-    console.log("after ");
     const connectionList = Modals.UserModels;
     const pendingConnection = async () => {
       const getAllConnection = await connectionList.Connection.findAll({
@@ -29,7 +26,7 @@ export async function connectionList(req, res) {
           attributes: ["firstName", "lastName"],
         },
         where: {
-          senderUserId: userId,
+          receiverUserId: userId,
           isConnected: 0,
           requestStatus: "request pending",
         },
@@ -37,17 +34,18 @@ export async function connectionList(req, res) {
       res.status(200).send(getAllConnection);
     };
     const myConnectionList = async () => {
-      const getAllConnection = connectionList.Connection.findAll({
+      const getAllConnection = await connectionList.Connection.findAll({
         include: {
           model: connectionList.default,
           attributes: ["firstName", "lastName"],
         },
         where: {
-          senderUserId: userId,
+          receiverUserId: userId,
           isConnected: 1,
           requestStatus: "confirmed",
         },
       });
+      console.log(getAllConnection);
       res.status(200).send(getAllConnection);
     };
     if (connectionRef === "pending request") {
@@ -56,6 +54,7 @@ export async function connectionList(req, res) {
       myConnectionList();
     }
   } catch (err) {
+    console.log(err);
     res.status(404).send(new Api404Error());
   }
 }
@@ -92,10 +91,19 @@ export async function addConnection(req, res) {
 }
 
 export async function removeConnection(req, res) {
-  const { connectionId } = req.body;
+  const { connectionId } = req.params;
   try {
     const removeUserConnection = Modals.UserModels.Connection;
-    await removeUserConnection.destroy({ where: connectionId });
+
+    const connectionExist = await Modals.UserModels.Connection.findOne({
+      where: { connectionId: connectionId },
+    });
+    if (!connectionExist)
+      return res.status(404).send({ message: "connection already deleted" });
+
+    await removeUserConnection.destroy({
+      where: { connectionId: connectionId },
+    });
     return res.status(200).send({ message: "connection removed" });
   } catch (err) {
     return res.status(400).send(new Api400Error());
@@ -103,16 +111,25 @@ export async function removeConnection(req, res) {
 }
 
 export async function acceptConnection(req, res) {
-  const { userId, senderUserId, connectionId } = req.body;
-  const payload = { userId, senderUserId, connectionId };
+  const { receiverUserId, connectionId } = req.body;
+  const payload = { receiverUserId, connectionId };
   try {
     const acceptNewConnection = Modals.UserModels.Connection;
-    payload["requestStatus"] = "confirmed";
-    payload["isConnected"] = true;
-    await acceptNewConnection.create(payload);
+    const requestStatus = (payload["requestStatus"] = "confirmed");
+    const isConnected = (payload["isConnected"] = true);
+    await acceptNewConnection.update(
+      { requestStatus: requestStatus, isConnected: isConnected },
+      {
+        where: {
+          connectionId: payload.connectionId,
+          receiverUserId: payload.receiverUserId,
+        },
+      }
+    );
 
     res.status(201).send({ message: "connection accepted" });
   } catch (err) {
+    console.log(err);
     return res.status(400).send(new Api400Error());
   }
 }
@@ -125,8 +142,9 @@ export async function SuggestedConnection(req, res) {
     const clientList = getAllClients.default.findAll({
       include: { model: getAllClients.Connection },
     });
-    req.status(200).send(clientList);
+    res.status(200).send(clientList);
   } catch (err) {
+    console.log(err);
     res.status(404).send(new Api404Error());
   }
 }

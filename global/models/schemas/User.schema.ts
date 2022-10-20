@@ -13,7 +13,7 @@ export const UserSchema = {
     allowNull: false,
     unique: true,
   },
-   firstName: {
+  firstName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -24,7 +24,7 @@ export const UserSchema = {
   phoneNumber: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique:true
+    unique: true,
   },
   active: {
     type: DataTypes.BOOLEAN,
@@ -58,89 +58,88 @@ export const SubscriptionSchema = {
   userId: {
     type: DataTypes.UUID,
     allowNull: false,
-    foreignKey:true
+    foreignKey: true,
   },
   amount: {
     type: DataTypes.BIGINT,
     allowNull: false,
   },
   subscriptionType: {
-    type:DataTypes.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
-   subscriptionDate: {
-    type:DataTypes.DATE,
+  subscriptionDate: {
+    type: DataTypes.DATE,
     allowNull: false,
-    default:DataTypes.DATE
+    default: DataTypes.DATE,
   },
-    expiryDate: {
-    type:DataTypes.DATE,
+  expiryDate: {
+    type: DataTypes.DATE,
     allowNull: false,
   },
-    subscriptionStatus: {
-    type:DataTypes.TINYINT,
+  subscriptionStatus: {
+    type: DataTypes.TINYINT,
     allowNull: false,
-  }
-}
+  },
+};
 
 // feeds schema
 export const UserAdsSchema = {
   postId: {
     type: DataTypes.UUID,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   userId: {
     type: DataTypes.UUID,
     foreignKey: true,
-    allowNull:false
+    allowNull: false,
   },
-   postType: {
+  postType: {
     type: DataTypes.STRING,
-    allowNull:false
+    allowNull: false,
   },
   postTitle: {
     type: DataTypes.STRING,
-    allowNull:false
+    allowNull: false,
   },
   postDescription: {
     type: DataTypes.TEXT,
-    allowNull:false
+    allowNull: false,
   },
   postAddress: {
     type: DataTypes.TEXT,
-    allowNull:false
+    allowNull: false,
   },
   numberOfPersons: {
     type: DataTypes.INTEGER,
-    allowNull:false
+    allowNull: false,
   },
   postPrice: {
     type: DataTypes.STRING,
-    allowNull:false
-  }
-
-}
+    allowNull: false,
+  },
+};
 
 export const UserAdViewsSchema = {
   viewId: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
-    defaultValue:DataTypes.UUIDV4
+    defaultValue: DataTypes.UUIDV4,
   },
   viewCount: {
     type: DataTypes.INTEGER,
-    allowNull:false,
+    allowNull: false,
   },
   userId: {
     type: DataTypes.UUID,
-    allowNull:false
-  }
-}
+    allowNull: false,
+  },
+};
 
 export const ProfileImageSchema = {
-   imageId: {
+  imageId: {
     type: DataTypes.STRING,
     allowNull: true,
     primaryKey: true,
@@ -149,7 +148,7 @@ export const ProfileImageSchema = {
     type: DataTypes.STRING(255),
     allowNull: true,
   },
-}
+};
 
 export const ShownInterestSchema = {
   interestId: {
@@ -165,38 +164,38 @@ export const ShownInterestSchema = {
   interestCount: {
     type: DataTypes.INTEGER,
     allowNull: false,
-  }
-}
+  },
+};
 
 export const ConnectionRequestSchema = {
   connectionId: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
-    defaultValue:DataTypes.UUIDV4,
+    defaultValue: DataTypes.UUIDV4,
   },
   defaultMessage: {
     type: DataTypes.STRING(255),
     allowNull: false,
-    defaultValue:'I would like to join your Wekanfly network'
+    defaultValue: "I would like to join your Wekanfly network",
   },
   senderUserId: {
     type: DataTypes.STRING,
-    allowNull:false
+    allowNull: false,
   },
-   receiverUserId: {
+  receiverUserId: {
     type: DataTypes.STRING,
-     allowNull: false,
-    foreignKey:true
+    allowNull: false,
+    foreignKey: true,
   },
   requestStatus: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue:'request pendind' 
+    defaultValue: "request pending",
   },
   isConnected: {
-     type: DataTypes.BOOLEAN,
+    type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue:false
-  }
-}
+    defaultValue: false,
+  },
+};
