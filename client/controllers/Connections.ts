@@ -45,7 +45,6 @@ export async function connectionList(req, res) {
           requestStatus: "confirmed",
         },
       });
-      console.log(getAllConnection);
       res.status(200).send(getAllConnection);
     };
     if (connectionRef === "pending request") {
@@ -54,7 +53,6 @@ export async function connectionList(req, res) {
       myConnectionList();
     }
   } catch (err) {
-    console.log(err);
     res.status(404).send(new Api404Error());
   }
 }
@@ -129,7 +127,6 @@ export async function acceptConnection(req, res) {
 
     res.status(201).send({ message: "connection accepted" });
   } catch (err) {
-    console.log(err);
     return res.status(400).send(new Api400Error());
   }
 }
@@ -144,7 +141,6 @@ export async function SuggestedConnection(req, res) {
     });
     res.status(200).send(clientList);
   } catch (err) {
-    console.log(err);
     res.status(404).send(new Api404Error());
   }
 }
