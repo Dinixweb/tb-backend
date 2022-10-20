@@ -1,11 +1,12 @@
 import { Router } from "express";
-import * as Connections from '../controllers/Connections'
+import * as Connections from "../controllers/Connections";
 
-const router = Router()
-
+const router = Router();
 
 router.post("/connectionRequest", Connections.addConnection);
 router.get("/myConnections/:userId", Connections.connectionList);
-router.get("/allClients/:userId", Connections.GetAllClients);
+router.get("/suggestedConnection/:userId", Connections.SuggestedConnection);
+router.put("/acceptConnection", Connections.acceptConnection);
+router.delete("/removeConnection/:connectionId", Connections.removeConnection);
 
-export = router
+export = router;
