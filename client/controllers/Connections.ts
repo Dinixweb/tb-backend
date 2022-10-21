@@ -109,23 +109,41 @@ export async function removeConnection(req, res) {
 }
 
 export async function acceptConnection(req, res) {
-  const { receiverUserId, connectionId } = req.body;
-  const payload = { receiverUserId, connectionId };
+  const { receiverUserId, connectionId, connectionRef } = req.body;
+  const payload = { receiverUserId, connectionId, connectionRef };
   try {
-    const acceptNewConnection = Modals.UserModels.Connection;
-    const requestStatus = (payload["requestStatus"] = "confirmed");
-    const isConnected = (payload["isConnected"] = true);
-    await acceptNewConnection.update(
-      { requestStatus: requestStatus, isConnected: isConnected },
-      {
+    const AcceptConnection = async () => {
+      const acceptNewConnection = Modals.UserModels.Connection;
+      const requestStatus = (payload["requestStatus"] = "confirmed");
+      const isConnected = (payload["isConnected"] = true);
+      await acceptNewConnection.update(
+        { requestStatus: requestStatus, isConnected: isConnected },
+        {
+          where: {
+            connectionId: payload.connectionId,
+            receiverUserId: payload.receiverUserId,
+          },
+        }
+      );
+
+      return res.status(201).send({ message: "connection accepted" });
+    };
+    const RejectConnection = async () => {
+      const acceptNewConnection = Modals.UserModels.Connection;
+      await acceptNewConnection.destroy({
         where: {
           connectionId: payload.connectionId,
           receiverUserId: payload.receiverUserId,
         },
-      }
-    );
+      });
 
-    res.status(201).send({ message: "connection accepted" });
+      return res.status(201).send({ message: "connection rejected" });
+    };
+    if (connectionRef === "accepted") {
+      AcceptConnection();
+    } else if (connectionRef === "rejected") {
+      RejectConnection();
+    }
   } catch (err) {
     return res.status(400).send(new Api400Error());
   }
