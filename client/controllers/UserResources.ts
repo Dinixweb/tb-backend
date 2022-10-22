@@ -153,11 +153,39 @@ export async function CreateInterest(req, res) {
 }
 
 export async function createSplit(req, res) {
-  const { postId, userId, interestedList, adPrice, paidAmount } = req.body;
-  const payload = { postId, userId, interestedList, adPrice, paidAmount };
+  const { postId, userId, userInterestedList, adPrice, paidAmount } = req.body;
+  const payload = { postId, userId, userInterestedList, adPrice, paidAmount };
+  const splitId = uuidv4();
   try {
-    console.log(payload);
+    payload["splitId"] = splitId;
+    const createNewSplit = Modals.UserModels.SplitModel;
+    const addSplit = await createNewSplit.create(payload);
+    if (!addSplit)
+      return res
+        .status(400)
+        .send({ message: "unable to create split check payload" });
+
+    const addNewInterestList = [];
+    const createSplitList = Modals.UserModels.UserInterested;
+    for (const data of userInterestedList) {
+      data["splitListSplitId"] = splitId;
+      addNewInterestList.push(createSplitList.create(data));
+    }
+    await Promise.all(addNewInterestList);
+    res.status(200).send({ message: "split created successfully" });
   } catch (err) {
+    console.log(err);
     return res.status(400).send(new Api400Error());
+  }
+}
+
+export async function getSplitRequest(req, res) {
+  const { userId } = req.params;
+  try {
+    const splitModelQuery = Modals.UserModels.SplitModel;
+    const getInSplitRequest = await splitModelQuery.findAll();
+    res.status(200).send(getSplitRequest);
+  } catch (err) {
+    return res.status(404).send(new Api404Error());
   }
 }

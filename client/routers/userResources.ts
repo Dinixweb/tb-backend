@@ -13,5 +13,6 @@ router.get("/getUserAdverts/:userId", UserResource.getAllAdverts);
 
 // Split System
 router.post("/createSplit", UserResource.createSplit);
+router.get("/getSplitRequest", UserResource.getSplitRequest);
 
 export = router;

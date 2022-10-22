@@ -205,7 +205,6 @@ export const SplitSchema = {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
-    defaultValue: DataTypes.UUIDV4,
   },
   postId: {
     type: DataTypes.UUID,
@@ -236,7 +235,7 @@ export const UserInterestedSchema = {
     type: DataTypes.UUID,
     allowNull: false,
   },
-  amountPaid: {
+  paidAmount: {
     type: DataTypes.STRING,
     allowNull: false,
   },

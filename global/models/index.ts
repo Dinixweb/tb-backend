@@ -50,6 +50,14 @@ UserModels.SplitModel.init(
   sequelizeOptions({ modelName: "split_list", tableName: "split_list" })
 );
 
+UserModels.UserInterested.init(
+  UserInterestedSchema,
+  sequelizeOptions({
+    modelName: "User_interest_list",
+    tableName: "user_interest_list",
+  })
+);
+
 UserModels.ShownInterestModel.init(
   ShownInterestSchema,
   sequelizeOptions({ modelName: "shown_interest", tableName: "shown_interest" })
@@ -93,6 +101,9 @@ UserModels.ShownInterestModel.belongsTo(UserModels.default);
 
 UserModels.default.hasOne(UserModels.Connection);
 UserModels.Connection.belongsTo(UserModels.default);
+
+UserModels.SplitModel.hasMany(UserModels.UserInterested);
+UserModels.UserInterested.belongsTo(UserModels.SplitModel);
 
 (async () => {
   await sequelizeOptions({ timestamps: true }).sequelize.sync();
