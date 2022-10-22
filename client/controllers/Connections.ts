@@ -28,10 +28,10 @@ export async function connectionList(req, res) {
         where: {
           receiverUserId: userId,
           isConnected: 0,
-          requestStatus: "request pending",
+          //requestStatus: "request pending",
         },
       });
-      res.status(200).send(getAllConnection);
+      return res.status(200).send(getAllConnection);
     };
     const myConnectionList = async () => {
       const getAllConnection = await connectionList.Connection.findAll({
@@ -45,9 +45,9 @@ export async function connectionList(req, res) {
           requestStatus: "confirmed",
         },
       });
-      res.status(200).send(getAllConnection);
+      return res.status(200).send(getAllConnection);
     };
-    if (connectionRef === "pending request") {
+    if (connectionRef === "request pending") {
       pendingConnection();
     } else if (connectionRef === "confirmed") {
       myConnectionList();
@@ -139,13 +139,41 @@ export async function acceptConnection(req, res) {
 
       return res.status(201).send({ message: "connection rejected" });
     };
-    if (connectionRef === "accepted") {
+    if (connectionRef === "accept") {
       AcceptConnection();
-    } else if (connectionRef === "rejected") {
+    } else if (connectionRef === "reject") {
       RejectConnection();
     }
   } catch (err) {
     return res.status(400).send(new Api400Error());
+  }
+}
+
+export async function checkConnection(req, res) {
+  const { userId, user_2_Id } = req.params;
+
+  const payload = { userId, user_2_Id };
+  console.log(payload);
+  try {
+    const isConnectionExist = Modals.UserModels.Connection;
+    const response = await isConnectionExist.findOne({
+      where: {
+        senderUserId: payload.user_2_Id,
+        receiverUserId: payload.userId,
+        requestStatus: "confirmed",
+      },
+    });
+    console.log(response);
+    if (!response)
+      return res
+        .status(404)
+        .send({ message: "you are not connected to this user" });
+    res.status(200).send({
+      message: "you are conncted to user",
+      data: response,
+    });
+  } catch (err) {
+    return res.status(404).send(new Api404Error());
   }
 }
 

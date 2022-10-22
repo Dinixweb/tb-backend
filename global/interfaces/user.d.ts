@@ -6,7 +6,7 @@ export interface IAccount {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  photoImage?:string;
+  photoImage?: string;
   isActive?: boolean;
   password: string;
   createdAt?: Date;
@@ -14,24 +14,23 @@ export interface IAccount {
   deletedAt?: Date;
 }
 
-
-export interface Subscription  {
-    subscriptionId:typeof UUID;
-    userId: typeof UUID;
-    amount: number|string;
-    subscriptionType: string;
-    subscriptionDate: Date
-    expiryDate: Date
-    subscriptionStatus: boolean;
+export interface Subscription {
+  subscriptionId: typeof UUID;
+  userId: typeof UUID;
+  amount: number | string;
+  subscriptionType: string;
+  subscriptionDate: Date;
+  expiryDate: Date;
+  subscriptionStatus: boolean;
 }
 
 export interface CreditUnit {
   creditUnitId: typeof UUID;
-  subscriptionId: typeof UUID
+  subscriptionId: typeof UUID;
   units: number;
 }
 
-export interface Feeds{
+export interface Feeds {
   postId: string;
   userId: typeof UUID;
   postTitle: string;
@@ -45,44 +44,44 @@ export interface Feeds{
   updatedAt?: Date;
 }
 export interface Ads extends Feeds {
-  deletedAt: Date
-  adView?:AdViews[]
+  deletedAt: Date;
+  adView?: AdViews[];
 }
 
-interface AdViews{
-  viewId: typeof UUID
+interface AdViews {
+  viewId: typeof UUID;
   viewCount: number;
   userId: typeof UUID;
-  createdAt?: Date
+  createdAt?: Date;
 }
 
-export interface Travels{
+export interface Travels {
   travelId: typeof UUID;
   userId: typeof UUID;
   location: string;
   destination: string;
   flightDate: Date;
-  travelRoutes:TravelRoutes[]
+  travelRoutes: TravelRoutes[];
 }
 
-export interface TravelRoutes{
+export interface TravelRoutes {
   routeId: typeof UUID;
   travelId: typeof UUID;
-  routes:string
+  routes: string;
 }
 
-export interface ProfileImage{
+export interface ProfileImage {
   imageId: string;
-  imageList:string
+  imageList: string;
 }
 
-export interface ShownInterest{
+export interface ShownInterest {
   interestId: typeof UUID;
   location: string;
   interestCount: number;
 }
 
-export type ConnectionList = IAccount[]
+export type ConnectionList = IAccount[];
 
 export type ConnectionRequest = {
   connectionId: typeof UUID;
@@ -91,4 +90,18 @@ export type ConnectionRequest = {
   receiverUserId: string;
   requestStatus: string;
   isConnected: boolean;
-}
+};
+
+export type Splits = {
+  splitId: typeof UUID;
+  userId: string;
+  postId: string;
+  adPrice: string;
+  paidAmount: string;
+};
+
+export type UserInterestedList = {
+  userInterestedId: typeof UUID;
+  userId: string;
+  paidAmount: string;
+};

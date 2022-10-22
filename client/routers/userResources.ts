@@ -5,10 +5,13 @@ const addressUpload = multer({ dest: "" }).single("post");
 
 const router = Router();
 
-router.post("/CreatePost", addressUpload, UserResource.CreatePost);
+router.post("/CreatePost", UserResource.CreatePost);
 router.get("/getAllPost", UserResource.getAllPost);
 router.post("/showInterest", UserResource.CreateInterest);
 router.get("/getUserAdverts/:userId", UserResource.getAllAdverts);
 //router.post("/wishlist", UserResource.CreateWishlist);
+
+// Split System
+router.post("/createSplit", UserResource.createSplit);
 
 export = router;

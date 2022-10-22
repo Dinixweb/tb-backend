@@ -199,3 +199,45 @@ export const ConnectionRequestSchema = {
     defaultValue: false,
   },
 };
+
+export const SplitSchema = {
+  splitId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  postId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  adPrice: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  paidAmount: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+};
+
+export const UserInterestedSchema = {
+  userInterestedId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  amountPaid: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+};

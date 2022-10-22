@@ -10,6 +10,8 @@ import {
   ProfileImageSchema,
   ShownInterestSchema,
   ConnectionRequestSchema,
+  UserInterestedSchema,
+  SplitSchema,
 } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
@@ -41,6 +43,11 @@ UserModels.UserAdViews.init(
 UserModels.ProfileImageUpload.init(
   ProfileImageSchema,
   sequelizeOptions({ modelName: "profile_images", tableName: "profile_images" })
+);
+
+UserModels.SplitModel.init(
+  SplitSchema,
+  sequelizeOptions({ modelName: "split_list", tableName: "split_list" })
 );
 
 UserModels.ShownInterestModel.init(
