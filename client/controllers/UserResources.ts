@@ -182,8 +182,9 @@ export async function createSplit(req, res) {
 export async function getSplitRequest(req, res) {
   const { userId } = req.params;
   try {
-    const splitModelQuery = Modals.UserModels.SplitModel;
-    const getInSplitRequest = await splitModelQuery.findAll({
+    const splitModelQuery = Modals.UserModels;
+    const getInSplitRequest = await splitModelQuery.SplitModel.findAll({
+      include: { model: splitModelQuery.UserInterested },
       where: { userId: userId },
     });
     res.status(200).send(getInSplitRequest);
