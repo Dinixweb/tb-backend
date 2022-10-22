@@ -183,8 +183,10 @@ export async function getSplitRequest(req, res) {
   const { userId } = req.params;
   try {
     const splitModelQuery = Modals.UserModels.SplitModel;
-    const getInSplitRequest = await splitModelQuery.findAll();
-    res.status(200).send(getSplitRequest);
+    const getInSplitRequest = await splitModelQuery.findAll({
+      where: { userId: userId },
+    });
+    res.status(200).send(getInSplitRequest);
   } catch (err) {
     return res.status(404).send(new Api404Error());
   }
