@@ -192,3 +192,12 @@ export async function getSplitRequest(req, res) {
     return res.status(404).send(new Api404Error());
   }
 }
+export async function acceptSplitRequest(req, res) {
+  const { splitId, userId } = req.body;
+  const payload = { splitId, userId };
+  try {
+    const acceptSplit = Modals.UserModels;
+  } catch (err) {
+    return res.status(400).send(new Api400Error());
+  }
+}
