@@ -89,4 +89,5 @@ export class UserInterested extends Model<UserInterestedList> {
   declare userInterestedId: typeof UUID;
   declare userId: string;
   declare paidAmount: string;
+  declare requestStatus: boolean;
 }
