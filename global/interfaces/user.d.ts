@@ -104,4 +104,5 @@ export type UserInterestedList = {
   userInterestedId: typeof UUID;
   userId: string;
   paidAmount: string;
+  requestStatus: boolean;
 };

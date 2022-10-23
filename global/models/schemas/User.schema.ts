@@ -239,4 +239,9 @@ export const UserInterestedSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  requestStatus: {
+    type: DataTypes.BOOLEAN,
+    allowNul: false,
+    defaultValue: false,
+  },
 };
