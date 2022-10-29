@@ -42,4 +42,8 @@ export const AdminSchema = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  passwordResetToken: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 };

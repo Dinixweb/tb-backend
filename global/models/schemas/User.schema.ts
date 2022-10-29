@@ -49,6 +49,10 @@ export const UserSchema = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  passwordResetToken: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 };
 
 // subscription schema

@@ -20,10 +20,11 @@ export default class User extends Model<IAccount> {
   declare phoneNumber: string;
   declare type: string;
   declare password: string;
+  declare profileImage: string;
+  declare passwordResetToken: string;
   declare isActive: boolean;
   declare createdAt: Date;
   declare updatedAt: Date;
-  declare profileImage: string;
 }
 
 export class UserSubscription extends Model<Subscription> {

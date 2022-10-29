@@ -10,6 +10,7 @@ export interface IAccount {
   isActive?: boolean;
   password: string;
   profileImage: string;
+  passwordResetToken: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;

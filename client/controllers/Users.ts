@@ -10,6 +10,8 @@ import ENV from "../../global/config/keys";
 import { UserSerializer } from "../serializers/user.serializer";
 
 import type { Request, Response } from "express";
+import Api400Error from "../../global/errors/Api400Error";
+import { generateToken } from "global/utils/global_function";
 
 // -> helper method
 async function findByEmail(_email: string, _Modal: any) {
@@ -43,7 +45,7 @@ export async function Register(req: Request, res: Response) {
     "web-client": Modals.AdminModel,
     "mobile-client": Modals.UserModels.default,
   };
-  
+
   const modelRef = baseModelRef[payload.createRef] ?? -1;
   try {
     if (payload.type && payload.createRef === "web-client") {
@@ -87,7 +89,7 @@ export async function Register(req: Request, res: Response) {
     await selectModel.create(payload);
     return res.status(200).json({ code: 200, message: "Account Created" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(new ServerError().statusCode).json(new ServerError());
   }
 }
@@ -135,9 +137,7 @@ export async function Login(req: Request, res: Response) {
     if (!isPasswordValid) {
       return res
         .status(statusCode)
-        .json(
-          new BadRequestError(statusCode, "Password is incorrect")
-        );
+        .json(new BadRequestError(statusCode, "Password is incorrect"));
     }
 
     const userToken = jwt.sign(
@@ -148,7 +148,7 @@ export async function Login(req: Request, res: Response) {
         expiresIn: "1d",
       }
     );
-  
+
     payload["token"] = userToken;
 
     payload["user"] = UserSerializer(currentUser);
@@ -159,5 +159,26 @@ export async function Login(req: Request, res: Response) {
   } catch (error) {
     console.log(error);
     return res.status(new ServerError().statusCode).json(new ServerError());
+  }
+}
+
+export async function InitializePasswordReset(req, res) {
+  const { email } = req.body;
+  const payload = { email };
+  const token = generateToken();
+
+  try {
+    const userRef = Modals.UserModels.default;
+    const checkUser = await userRef.findAll({
+      where: { email: payload.email },
+    });
+    if (!checkUser) return;
+
+    await userRef.update(
+      { passwordResetToken: token },
+      { where: { email: payload.email } }
+    );
+  } catch (error) {
+    res.status(400).send(new Api400Error());
   }
 }
