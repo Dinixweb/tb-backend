@@ -45,6 +45,10 @@ export const UserSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  profileImage: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 };
 
 // subscription schema

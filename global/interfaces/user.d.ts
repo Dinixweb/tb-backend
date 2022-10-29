@@ -9,6 +9,7 @@ export interface IAccount {
   photoImage?: string;
   isActive?: boolean;
   password: string;
+  profileImage: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;

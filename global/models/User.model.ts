@@ -23,6 +23,7 @@ export default class User extends Model<IAccount> {
   declare isActive: boolean;
   declare createdAt: Date;
   declare updatedAt: Date;
+  declare profileImage: string;
 }
 
 export class UserSubscription extends Model<Subscription> {

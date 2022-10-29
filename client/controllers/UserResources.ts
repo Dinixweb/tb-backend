@@ -69,7 +69,10 @@ export async function getAllPost(req, res) {
   try {
     const UserFeeds = Modals.UserModels;
     const allUserPost = await UserFeeds.UserAds.findAll({
-      include: { model: UserFeeds.ProfileImageUpload },
+      include: {
+        model: UserFeeds.default,
+        attributes: ["firstName", "lastName", "profileImage"],
+      },
     });
     res.status(200).send(allUserPost);
   } catch (err) {
