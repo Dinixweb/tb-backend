@@ -1,16 +1,15 @@
 import { UUID } from "sequelize/types";
 
 export interface IAccount {
-  userId: typeof UUID;
-  email: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
+  userId?: typeof UUID;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
   photoImage?: string;
   isActive?: boolean;
-  password: string;
-  profileImage: string;
-  passwordResetToken: string;
+  password?: string;
+  profileImage?: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -108,3 +107,10 @@ export type UserInterestedList = {
   paidAmount: string;
   requestStatus: boolean;
 };
+
+export interface PasswordResetToken {
+  tokenId: typeof UUID;
+  userId: string;
+  resetToken: string;
+  tokenTimestamp: string;
+}

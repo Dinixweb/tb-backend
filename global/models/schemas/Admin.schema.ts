@@ -46,4 +46,8 @@ export const AdminSchema = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  tokenTimestamp: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 };

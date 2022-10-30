@@ -49,10 +49,6 @@ export const UserSchema = {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  passwordResetToken: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
 };
 
 // subscription schema
@@ -251,5 +247,26 @@ export const UserInterestedSchema = {
     type: DataTypes.BOOLEAN,
     allowNul: false,
     defaultValue: false,
+  },
+};
+
+export const ResetPasswordToken = {
+  tokenId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  resetToken: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  tokenTimestamp: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 };

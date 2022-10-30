@@ -10,6 +10,7 @@ import type {
   ConnectionRequest,
   Splits,
   UserInterestedList,
+  PasswordResetToken,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -21,7 +22,6 @@ export default class User extends Model<IAccount> {
   declare type: string;
   declare password: string;
   declare profileImage: string;
-  declare passwordResetToken: string;
   declare isActive: boolean;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -92,4 +92,11 @@ export class UserInterested extends Model<UserInterestedList> {
   declare userId: string;
   declare paidAmount: string;
   declare requestStatus: boolean;
+}
+
+export class ResetPasswordModel extends Model<PasswordResetToken> {
+  declare tokenId: typeof UUID;
+  declare userId: string;
+  declare resetToken: string;
+  declare tokenTimestamp: string;
 }

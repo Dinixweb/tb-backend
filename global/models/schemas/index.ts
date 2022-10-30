@@ -8,6 +8,7 @@ import {
   ConnectionRequestSchema,
   UserInterestedSchema,
   SplitSchema,
+  ResetPasswordToken,
 } from "./User.schema";
 import { AdminSchema } from "./Admin.schema";
 
@@ -22,4 +23,5 @@ export {
   ConnectionRequestSchema,
   UserInterestedSchema,
   SplitSchema,
+  ResetPasswordToken,
 };

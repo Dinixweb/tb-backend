@@ -12,6 +12,7 @@ import {
   ConnectionRequestSchema,
   UserInterestedSchema,
   SplitSchema,
+  ResetPasswordToken,
 } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
@@ -38,6 +39,14 @@ UserModels.UserAds.init(
 UserModels.UserAdViews.init(
   UserAdViewsSchema,
   sequelizeOptions({ modelName: "ad_view", tableName: "ad_view" })
+);
+
+UserModels.ResetPasswordModel.init(
+  ResetPasswordToken,
+  sequelizeOptions({
+    modelName: "password_reset_tokens",
+    tableName: "password_reset_tokens",
+  })
 );
 
 UserModels.ProfileImageUpload.init(

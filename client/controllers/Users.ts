@@ -11,7 +11,12 @@ import { UserSerializer } from "../serializers/user.serializer";
 
 import type { Request, Response } from "express";
 import Api400Error from "../../global/errors/Api400Error";
-import { generateToken } from "global/utils/global_function";
+import {
+  generateToken,
+  otpCompareTimer,
+  otpTimer,
+} from "global/utils/global_function";
+import { IAccount } from "global/interfaces/user";
 
 // -> helper method
 async function findByEmail(_email: string, _Modal: any) {
@@ -164,21 +169,40 @@ export async function Login(req: Request, res: Response) {
 
 export async function InitializePasswordReset(req, res) {
   const { email } = req.body;
-  const payload = { email };
+
   const token = generateToken();
+  const timestamp = otpTimer();
 
   try {
-    const userRef = Modals.UserModels.default;
-    const checkUser = await userRef.findAll({
-      where: { email: payload.email },
+    const userRef = Modals.UserModels;
+    const checkUser = await userRef.default.findAll({
+      where: { email: email },
     });
     if (!checkUser) return;
-
-    await userRef.update(
-      { passwordResetToken: token },
-      { where: { email: payload.email } }
-    );
+    //const userId = checkUser.map((userId: IAccount) => userId.userId);
+    const userId = [checkUser]["userId"];
+    const payload = { email, token, timestamp, userId };
+    await userRef.ResetPasswordModel.create(payload);
   } catch (error) {
     res.status(400).send(new Api400Error());
+  }
+}
+
+export async function tokenInvalidation(req, res) {
+  const Timer = otpTimer();
+  const otpCompareTime = otpCompareTimer();
+  const userRef = Modals.UserModels;
+  const timing = await userRef.ResetPasswordModel.findAll();
+  for (const t of timing) {
+    const hr = t.tokenTimestamp.split(":")[0];
+    const hrs = parseInt(hr) - 1;
+    const min = t.tokenTimestamp.split(":")[1];
+    const sec = t.tokenTimestamp.split(":")[2];
+    const _joinedTime = hrs + ":" + min + ":" + sec;
+    if (otpCompareTime >= _joinedTime) {
+      await userRef.ResetPasswordModel.destroy({
+        where: { tokenTimestamp: otpCompareTime },
+      });
+    }
   }
 }
