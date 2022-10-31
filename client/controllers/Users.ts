@@ -12,11 +12,10 @@ import { UserSerializer } from "../serializers/user.serializer";
 import type { Request, Response } from "express";
 import Api400Error from "../../global/errors/Api400Error";
 import {
-  generateToken,
   otpCompareTimer,
   otpTimer,
-} from "global/utils/global_function";
-import { IAccount } from "global/interfaces/user";
+  generateToken,
+} from "../../global/utils/global_function";
 
 // -> helper method
 async function findByEmail(_email: string, _Modal: any) {
@@ -170,19 +169,26 @@ export async function Login(req: Request, res: Response) {
 export async function InitializePasswordReset(req, res) {
   const { email } = req.body;
 
-  const token = generateToken();
-  const timestamp = otpTimer();
+  const resetToken = generateToken();
+  const tokenTimestamp = otpTimer();
 
   try {
     const userRef = Modals.UserModels;
     const checkUser = await userRef.default.findAll({
+      attributes: ["userId"],
       where: { email: email },
     });
+    const userIdData = [];
+    for (const data of checkUser) {
+      userIdData.push(data.userId);
+    }
+    const userId: string = userIdData[0];
+
     if (!checkUser) return;
-    //const userId = checkUser.map((userId: IAccount) => userId.userId);
-    const userId = [checkUser]["userId"];
-    const payload = { email, token, timestamp, userId };
+
+    const payload = { email, resetToken, tokenTimestamp, userId };
     await userRef.ResetPasswordModel.create(payload);
+    res.status(201).send({ message: "password reset link sent" });
   } catch (error) {
     res.status(400).send(new Api400Error());
   }

@@ -19,4 +19,6 @@ router.post(
   UserController.Login
 );
 
+router.post("/initializePasswordReset", UserController.InitializePasswordReset);
+
 export = router;

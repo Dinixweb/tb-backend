@@ -258,11 +258,11 @@ export const ResetPasswordToken = {
     defaultValue: DataTypes.UUIDV4,
   },
   userId: {
-    type: DataTypes.UUID,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   resetToken: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(225),
     allowNull: true,
   },
   tokenTimestamp: {
