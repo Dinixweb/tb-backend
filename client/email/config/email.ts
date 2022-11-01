@@ -1,11 +1,11 @@
-import  nodemailer from "nodemailer";
-import  fs from "fs-extra";
-import  dotenv from "dotenv";
-import  ejs from "ejs";
+import nodemailer from "nodemailer";
+import fs from "fs-extra";
+import dotenv from "dotenv";
+import ejs from "ejs";
 
 dotenv.config();
-const  EMAIL  = process.env.EMAIL as string;
-const  EMAILPASSWORD  = process.env.PASSWORD as string;
+const EMAIL = process.env.EMAIL as string;
+const EMAILPASSWORD = process.env.PASSWORD as string;
 const transporter = nodemailer.createTransport({
   host: "smtp-mail.outlook.com",
   port: 587,
@@ -16,12 +16,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export function oneTimePassword (firstName, email, otp) {
+export function passwordResetEmail(firstName, email, otp) {
   const mail = {
     from: EMAIL,
     to: email,
     subject: "one-time-password",
-    text: optTemplate(firstName, otp),
+    text: passwordReset(firstName, otp),
   };
   transporter.sendMail(mail, (err, info) => {
     if (err) {
@@ -31,18 +31,18 @@ export function oneTimePassword (firstName, email, otp) {
   });
 }
 
-const optTemplate = (firstName, otp) => {
+const passwordReset = (firstName, otp) => {
   return (
     `Dear ${firstName}, \n\n` +
-    "OTP for continue signup is : \n\n" +
-    `${otp}\n\n` +
+    "Kindly use this link to reset your password : \n\n" +
+    `https:www.wekanfly.com/${otp}\n\n` +
     "This is a auto-generated email. Please do not reply to this email.\n\n" +
     "Regards\n" +
     "Travel Buddy Support Team \n\n"
   );
 };
 
-export function SignUp (firstName, email, benefitList, referalCodeLink){
+export function SignUp(firstName, email, benefitList, referalCodeLink) {
   fs.readFile("./template/signup.ejs", "utf8", function (err, data) {
     if (err) {
       return console.log(err);

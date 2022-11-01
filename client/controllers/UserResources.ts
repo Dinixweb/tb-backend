@@ -204,3 +204,7 @@ export async function acceptSplitRequest(req, res) {
     return res.status(400).send(new Api400Error());
   }
 }
+
+export async function PNRSearch(req, res) {
+  const { prnNumber, firstName } = req.params;
+}

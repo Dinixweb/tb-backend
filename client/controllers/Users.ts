@@ -16,6 +16,7 @@ import {
   otpTimer,
   generateToken,
 } from "../../global/utils/global_function";
+import { passwordResetEmail } from "client/email/config/email";
 
 // -> helper method
 async function findByEmail(_email: string, _Modal: any) {
@@ -175,19 +176,21 @@ export async function InitializePasswordReset(req, res) {
   try {
     const userRef = Modals.UserModels;
     const checkUser = await userRef.default.findAll({
-      attributes: ["userId"],
+      attributes: ["userId", "firstName"],
       where: { email: email },
     });
     const userIdData = [];
     for (const data of checkUser) {
       userIdData.push(data.userId);
     }
+    const firstName: string = checkUser[0].firstName;
     const userId: string = userIdData[0];
 
     if (!checkUser) return;
 
     const payload = { email, resetToken, tokenTimestamp, userId };
     await userRef.ResetPasswordModel.create(payload);
+    //passwordResetEmail(firstName, email, resetToken);
     res.status(201).send({ message: "password reset link sent" });
   } catch (error) {
     res.status(400).send(new Api400Error());
