@@ -13,6 +13,7 @@ import {
   UserInterestedSchema,
   SplitSchema,
   ResetPasswordToken,
+  IndentitySchema,
 } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
@@ -46,6 +47,13 @@ UserModels.ResetPasswordModel.init(
   sequelizeOptions({
     modelName: "password_reset_tokens",
     tableName: "password_reset_tokens",
+  })
+);
+UserModels.IdentityModel.init(
+  IndentitySchema,
+  sequelizeOptions({
+    modelName: "indentity_verification",
+    tableName: "indentity_verification",
   })
 );
 

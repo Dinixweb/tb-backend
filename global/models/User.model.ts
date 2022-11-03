@@ -11,6 +11,7 @@ import type {
   Splits,
   UserInterestedList,
   PasswordResetToken,
+  IndentityVerification,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -99,4 +100,15 @@ export class ResetPasswordModel extends Model<PasswordResetToken> {
   declare userId: string;
   declare resetToken: string;
   declare tokenTimestamp: string;
+}
+
+export class IdentityModel extends Model<IndentityVerification> {
+  declare identityId: string;
+  declare userId: string;
+  declare identityType: string;
+  declare identity: string;
+  declare expiryDate: string;
+  declare identityNumber: number;
+  declare identityStatus: string;
+  declare comment: string;
 }

@@ -270,3 +270,40 @@ export const ResetPasswordToken = {
     allowNull: true,
   },
 };
+
+export const IndentitySchema = {
+  identityId: {
+    type: DataTypes.STRING(225),
+    allowNull: false,
+    primaryKey: true,
+  },
+  userId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  identityType: {
+    type: DataTypes.STRING(225),
+    allowNull: false,
+  },
+  identity: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  expiryDate: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  identityNumber: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  identityStatus: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: "pending",
+  },
+  comment: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+};

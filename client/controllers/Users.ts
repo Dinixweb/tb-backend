@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-
+import { v4 as uuidv4 } from "uuid";
 import * as Modals from "../../global/models";
 
 import BadRequestError from "../../global/errors/Api400Error";
@@ -17,7 +17,10 @@ import {
   generateToken,
 } from "../../global/utils/global_function";
 import { passwordResetEmail } from "client/email/config/email";
-
+import path from "path";
+import cloudinary from "../../global/utils/cloudinaryConfig";
+import DatauriParser from "datauri/parser";
+const parser = new DatauriParser();
 // -> helper method
 async function findByEmail(_email: string, _Modal: any) {
   const query = { where: { email: _email } };

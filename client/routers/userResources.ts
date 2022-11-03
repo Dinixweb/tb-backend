@@ -15,4 +15,8 @@ router.get("/getUserAdverts/:userId", UserResource.getAllAdverts);
 router.post("/createSplit", UserResource.createSplit);
 router.get("/getSplitRequest/:userId", UserResource.getSplitRequest);
 router.put("/acceptSplitRequest", UserResource.acceptSplitRequest);
+
+//PRN
+router.get("/pnrRequest", UserResource.PNRSearch);
+
 export = router;

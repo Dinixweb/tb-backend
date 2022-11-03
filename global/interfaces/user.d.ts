@@ -114,3 +114,14 @@ export interface PasswordResetToken {
   resetToken: string;
   tokenTimestamp: string;
 }
+
+export interface IndentityVerification {
+  identityId: string;
+  userId: string;
+  identityType?: string;
+  identity?: string;
+  expiryDate?: string;
+  identityNumber?: number;
+  identityStatus?: string;
+  comment?: string;
+}
