@@ -12,41 +12,24 @@ const USER = isDev === "development" ? "root" : (process.env.USER as string);
 const PASSWORD = process.env.PASSWORD as string;
 const DATABASE = process.env.DATABASE as string;
 const dbDriver = process.env.DB_DRIVER as Dialect;
-const AZUREDATABASE = process.env.AZUREDATABASE as string
-const AZUREUSER = process.env.AZUREUSER as string
-const AZUREHOST = process.env.AZUREHOST 
-const AZUREPASSWORD = process.env.AZUREPASSWORD as string
-const AZURECONNECTIONMODE = process.env.AZURECONNECTIONMODE
 
 let sequelizeConnection: Sequelize;
-  if(AZUREHOST){
- sequelizeConnection = new Sequelize(AZUREDATABASE,AZUREUSER,AZUREPASSWORD, {
-    host: AZUREHOST,
-    "ssl": true,
-    "dialect": dbDriver,
-    dialectOptions: {
-      dialect: dbDriver,
-       "ssl": {
-          "require": AZURECONNECTIONMODE
-       }
-    },
-    logging: false,
-  });
+if (process.env.CLEARDB_DATABASE_URL) {
+  sequelizeConnection = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 } else {
   sequelizeConnection = new Sequelize(DATABASE, USER, PASSWORD, {
     host: HOST,
     dialect: dbDriver,
-    logging: false
+    logging: false,
   });
 }
 sequelizeConnection
   .authenticate()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    console.log("Connection has been established successfully.");
   })
-  .catch(err => {
-    
-    console.error('Unable to connect to the database:', err);
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
   });
 
 // helps us configure modal connection to database
@@ -58,4 +41,3 @@ export const sequelizeOptions = (options: ModelOptions) => {
 };
 
 export default sequelizeConnection;
-
