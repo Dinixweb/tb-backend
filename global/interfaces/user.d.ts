@@ -39,7 +39,8 @@ export interface Feeds {
   postDescription: string;
   postImage?: string;
   postAddress: string;
-  postPrice: string;
+  link: string;
+  postPrice: number;
   numberOfPersons: number;
   createdAt?: Date;
   updatedAt?: Date;

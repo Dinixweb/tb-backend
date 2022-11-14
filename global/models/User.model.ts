@@ -49,7 +49,8 @@ export class UserAds extends Model<Feeds> {
   declare createdAt: Date;
   declare updatedAt: Date;
   declare postAddress: string;
-  declare postPrice: string;
+  declare link: string;
+  declare postPrice: number;
 }
 export class UserAdViews extends Model<AdViews> {
   declare viewId: typeof UUID;

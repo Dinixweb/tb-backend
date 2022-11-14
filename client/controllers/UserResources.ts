@@ -5,6 +5,8 @@ import path from "path";
 import cloudinary from "../../global/utils/cloudinaryConfig";
 import DatauriParser from "datauri/parser";
 import { v4 as uuidv4 } from "uuid";
+import { Op } from "sequelize";
+import sequelize from "sequelize/types/sequelize";
 
 const parser = new DatauriParser();
 
@@ -23,6 +25,7 @@ export async function CreatePost(req, res) {
     postAddress,
     postPrice,
     numberOfPersons,
+    link,
   } = req.body;
   //const ImageId = uuidv4();
   const postId = uuidv4();
@@ -49,12 +52,14 @@ export async function CreatePost(req, res) {
       postId: postId,
       userId: userId,
       postType: postType,
+      link: link,
       postTitle: postTitle,
       postDescription: postDescription,
       postAddress: postAddress,
       postPrice: postPrice,
       numberOfPersons: numberOfPersons,
     });
+
     //await Modals.UserModels.ProfileImageUpload.create(profielImage);
     res.status(201).send({
       message: "post created successfully",
@@ -65,16 +70,48 @@ export async function CreatePost(req, res) {
   }
 }
 
+// Get all Feeds
 export async function getAllPost(req, res) {
+  const { adType, minPrice, maxPrice, offset, limit } = req.query;
   try {
     const UserFeeds = Modals.UserModels;
-    const allUserPost = await UserFeeds.UserAds.findAll({
-      include: {
-        model: UserFeeds.default,
-        attributes: ["firstName", "lastName", "profileImage"],
-      },
-    });
-    res.status(200).send(allUserPost);
+    if (adType && !minPrice && !maxPrice) {
+      const allUserPost = await UserFeeds.UserAds.findAll({
+        limit,
+        offset,
+        where: { postType: adType },
+        // include: {
+        //   model: UserFeeds.default,
+        //   attributes: ["firstName", "lastName", "profileImage"],
+        // },
+      });
+      console.log(allUserPost);
+      return res.status(200).send(allUserPost);
+    } else if (adType !== "" && minPrice && maxPrice) {
+      const allUserPost = await UserFeeds.UserAds.findAll({
+        limit: limit,
+        offset: offset,
+        where: {
+          postType: adType,
+          postPrice: { [Op.between]: [minPrice, maxPrice] },
+        },
+        include: {
+          model: UserFeeds.default,
+          attributes: ["firstName", "lastName", "profileImage"],
+        },
+      });
+      return res.status(200).send(allUserPost);
+    } else {
+      const allUserPost = await UserFeeds.UserAds.findAll({
+        limit: limit,
+        offset: offset,
+        include: {
+          model: UserFeeds.default,
+          attributes: ["firstName", "lastName", "profileImage"],
+        },
+      });
+      return res.status(200).send(allUserPost);
+    }
   } catch (err) {
     console.log(err);
     return res.status(400).send(new Api404Error());

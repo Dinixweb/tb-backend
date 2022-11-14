@@ -113,15 +113,19 @@ export const UserAdsSchema = {
   },
   postAddress: {
     type: DataTypes.TEXT,
-    allowNull: false,
+    allowNull: true,
   },
   numberOfPersons: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
   postPrice: {
-    type: DataTypes.STRING,
+    type: DataTypes.BIGINT,
     allowNull: false,
+  },
+  link: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 };
 
