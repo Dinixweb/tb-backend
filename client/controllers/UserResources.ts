@@ -74,23 +74,32 @@ export async function CreatePost(req, res) {
 export async function getAllPost(req, res) {
   const { adType, minPrice, maxPrice, offset, limit } = req.query;
   try {
+    const offsetInt: number = parseInt(offset, 10);
+    const limitInt: number = parseInt(limit, 10);
     const UserFeeds = Modals.UserModels;
+    if (!offset || !limit)
+      return res
+        .status(400)
+        .send({
+          message:
+            "api requires page limit and offset in order to fetch required data",
+        });
     if (adType && !minPrice && !maxPrice) {
       const allUserPost = await UserFeeds.UserAds.findAll({
-        limit,
-        offset,
+        limit: limitInt,
+        offset: offsetInt,
         where: { postType: adType },
-        // include: {
-        //   model: UserFeeds.default,
-        //   attributes: ["firstName", "lastName", "profileImage"],
-        // },
+        include: {
+          model: UserFeeds.default,
+          attributes: ["firstName", "lastName", "profileImage"],
+        },
       });
-      console.log(allUserPost);
+
       return res.status(200).send(allUserPost);
     } else if (adType !== "" && minPrice && maxPrice) {
       const allUserPost = await UserFeeds.UserAds.findAll({
-        limit: limit,
-        offset: offset,
+        limit: limitInt,
+        offset: offsetInt,
         where: {
           postType: adType,
           postPrice: { [Op.between]: [minPrice, maxPrice] },
@@ -103,8 +112,8 @@ export async function getAllPost(req, res) {
       return res.status(200).send(allUserPost);
     } else {
       const allUserPost = await UserFeeds.UserAds.findAll({
-        limit: limit,
-        offset: offset,
+        limit: limitInt,
+        offset: offsetInt,
         include: {
           model: UserFeeds.default,
           attributes: ["firstName", "lastName", "profileImage"],

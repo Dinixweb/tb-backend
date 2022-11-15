@@ -28,7 +28,7 @@ export async function connectionList(req, res) {
         where: {
           receiverUserId: userId,
           isConnected: 0,
-          //requestStatus: "request pending",
+          requestStatus: "request pending",
         },
       });
       return res.status(200).send(getAllConnection);
@@ -40,9 +40,9 @@ export async function connectionList(req, res) {
           attributes: ["firstName", "lastName"],
         },
         where: {
-          receiverUserId: userId,
-          isConnected: 1,
-          requestStatus: "confirmed",
+          [Op.or]: [{ receiverUserId: userId }, { senderUserId: userId }],
+          //isConnected: 1,
+          //requestStatus: "confirmed",
         },
       });
       return res.status(200).send(getAllConnection);
@@ -68,7 +68,7 @@ export async function addConnection(req, res) {
         receiverUserId: receiverUserId,
         senderUserId: senderUserId,
         requestStatus: {
-          [Op.or]: ["request pendind", "request confirmed"],
+          [Op.or]: ["request pending", "request confirmed"],
         },
       },
     });
