@@ -157,3 +157,30 @@ export interface Tokens {
   expiryTime: string;
   phoneNumber?: string;
 }
+
+export interface WishList {
+  wishlistId: typeof UUID;
+  departure: string;
+  destination: string;
+  dateFrom: string;
+  dateTo: string;
+}
+
+export interface Travelers {
+  travelerId: typeof UUID;
+  firstName: string;
+  lastName: string;
+  location: string;
+}
+
+export interface PNRData {
+  departure: string;
+  destination: string;
+  dateFrom: string;
+  dateTo: string;
+  miles: string;
+  seat: string;
+  passenger: string;
+  airline: string;
+  Travelers: Travelers;
+}
