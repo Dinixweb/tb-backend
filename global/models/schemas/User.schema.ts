@@ -406,6 +406,10 @@ export const TokenSchema = {
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+  },
+  phoneNumber: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 };

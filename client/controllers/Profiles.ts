@@ -11,7 +11,11 @@ import { v4 as uuidv4 } from "uuid";
 import * as Modals from "../../global/models";
 import Api404Error from "../../global/errors/ApiError404";
 import Api400Error from "../../global/errors/Api400Error";
-import { changeEmail, EmailChangeSuccess } from "../email/config/email";
+import {
+  changeEmail,
+  changePhone,
+  EmailChangeSuccess,
+} from "../email/config/email";
 import { generatedOTP } from "../../global/utils/global_function";
 
 const parser = new DatauriParser();
@@ -127,9 +131,31 @@ export async function updateEmail(req, res) {
     const otp = generatedOTP();
     payload["otp"] = otp;
     await updateEmails.create(payload);
-    console.log(otp);
+
     changeEmail(getUserData.firstName, getUserData.email, otp);
     return res.status(200).send({ message: "otp sent to old email" });
+  } catch (err) {
+    console.log(err);
+    res.status(404).send(new Api404Error());
+  }
+}
+export async function phoneNumberUpdate(req, res) {
+  const payload = { ...req.body };
+  try {
+    const getUserData = await Modals.UserModels.default.findOne({
+      where: { userId: payload.userId, phoneNumber: payload.oldPhoneNumber },
+    });
+
+    if (!getUserData) return res.status(400).send({ message: "invalid phone" });
+    payload["phoneNumber"] = payload.newPhoneNumber;
+    const updatePhone = Modals.UserModels.TokensModel;
+    payload["phoneNumber"] = payload.newPhoneNumber;
+    const otp = generatedOTP();
+    payload["otp"] = otp;
+    await updatePhone.create(payload);
+
+    changePhone(getUserData.firstName, getUserData.email, otp);
+    return res.status(200).send({ message: "otp sent to email" });
   } catch (err) {
     console.log(err);
     res.status(404).send(new Api404Error());
@@ -139,12 +165,14 @@ export async function OtpEmailVerification(req, res) {
   const payload = { ...req.body };
   try {
     const getUserToken = await Modals.UserModels.TokensModel.findOne({
-      where: { userId: payload.userId, otp: payload.token },
+      where: { userId: payload.userId, otp: payload.otp },
     });
 
     const getUserData = await Modals.UserModels.default.findOne({
       where: { userId: payload.userId },
     });
+
+    console.log(getUserToken, getUserData);
 
     if (!getUserToken) return res.status(400).send({ message: "invalid otp" });
 
@@ -157,7 +185,29 @@ export async function OtpEmailVerification(req, res) {
     );
 
     EmailChangeSuccess(getUserData.firstName, getUserData.email);
-    return res.status(200).send({ message: "otp sent to old email" });
+    return res.status(200).send({ message: "email updated successfully" });
+  } catch (err) {
+    res.status(404).send(new Api404Error());
+  }
+}
+export async function OtpPhoneVerification(req, res) {
+  const payload = { ...req.body };
+  try {
+    const getUserToken = await Modals.UserModels.TokensModel.findOne({
+      where: { userId: payload.userId, otp: payload.otp },
+    });
+
+    if (!getUserToken) return res.status(400).send({ message: "invalid otp" });
+
+    const updateEmails = Modals.UserModels.default;
+    await updateEmails.update(
+      { phoneNumber: getUserToken.phoneNumber },
+      {
+        where: { userId: payload.userId },
+      }
+    );
+
+    return res.status(200).send({ message: "email updated successfully" });
   } catch (err) {
     res.status(404).send(new Api404Error());
   }

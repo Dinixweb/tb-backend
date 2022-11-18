@@ -6,6 +6,7 @@ const addressUpload = multer({ dest: "" }).single("post");
 const router = Router();
 
 router.post("/CreatePost", UserResource.CreatePost);
+router.delete("/removePost/:userId/:postId", UserResource.RemovePost);
 router.get("/getAllPost", UserResource.getAllPost);
 router.post("/showInterest", UserResource.CreateInterest);
 router.get("/getUserAdverts/:userId", UserResource.getAllAdverts);

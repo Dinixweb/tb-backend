@@ -10,7 +10,9 @@ router.put("/updateProfileDescription", Profile.profileDescription);
 router.put("/updateProfile", Profile.updateProfile);
 router.put("/updatePassword", Profile.updatePassword);
 router.post("/initEmailUpdate", Profile.updateEmail);
-router.put("/OtpEmailVerification", Profile.updateEmail);
+router.post("/initPhoneNumberUpdate", Profile.phoneNumberUpdate);
+router.put("/OtpEmailVerification", Profile.OtpEmailVerification);
+router.put("/OtpPhoneNumberVerification", Profile.OtpPhoneVerification);
 router.post(
   "/identityVerification",
   uploadIdentity,

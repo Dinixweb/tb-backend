@@ -70,6 +70,17 @@ export async function CreatePost(req, res) {
   }
 }
 
+export async function RemovePost(req, res) {
+  const { postId, userId } = req.body;
+  try {
+    const deletePost = Modals.UserModels.UserAds;
+    await deletePost.destroy({ where: { userId: userId, postId: postId } });
+    res.status(200).send({ message: "post deleted successfully" });
+  } catch (err) {
+    return res.status(400).send(new Api400Error());
+  }
+}
+
 // Get all Feeds
 export async function getAllPost(req, res) {
   const { adType, minPrice, maxPrice, offset, limit } = req.query;
@@ -78,12 +89,10 @@ export async function getAllPost(req, res) {
     const limitInt: number = parseInt(limit, 10);
     const UserFeeds = Modals.UserModels;
     if (!offset || !limit)
-      return res
-        .status(400)
-        .send({
-          message:
-            "api requires page limit and offset in order to fetch required data",
-        });
+      return res.status(400).send({
+        message:
+          "api requires page limit and offset in order to fetch required data",
+      });
     if (adType && !minPrice && !maxPrice) {
       const allUserPost = await UserFeeds.UserAds.findAll({
         limit: limitInt,

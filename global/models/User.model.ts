@@ -142,4 +142,5 @@ export class TokensModel extends Model<Tokens> {
   declare otp: string;
   declare email: string;
   declare expiryTime?: string;
+  declare phoneNumber?: string;
 }

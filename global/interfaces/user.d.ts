@@ -155,4 +155,5 @@ export interface Tokens {
   otp: string;
   email: string;
   expiryTime: string;
+  phoneNumber?: string;
 }

@@ -44,6 +44,20 @@ export function changeEmail(firstName, email, otp) {
     }
   });
 }
+export function changePhone(firstName, email, otp) {
+  const mail = {
+    from: "wekanfly@outlook.com",
+    to: email,
+    subject: "Email Reset OTP",
+    text: changePhoneMessage(firstName, otp),
+  };
+  transporter.sendMail(mail, (err, info) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+  });
+}
 export function EmailChangeSuccess(firstName, email) {
   const mail = {
     from: "wekanfly@outlook.com",
@@ -63,6 +77,16 @@ const changeEmailMessage = (firstName, otp) => {
   return (
     `Dear ${firstName}, \n\n` +
     "Kindly use this otp to change your email : \n\n" +
+    `${otp}\n\n` +
+    "This is a auto-generated email. Please do not reply to this email.\n\n" +
+    "Regards\n" +
+    "Travel Buddy Support Team \n\n"
+  );
+};
+const changePhoneMessage = (firstName, otp) => {
+  return (
+    `Dear ${firstName}, \n\n` +
+    "Kindly use this otp to change your phone number : \n\n" +
     `${otp}\n\n` +
     "This is a auto-generated email. Please do not reply to this email.\n\n" +
     "Regards\n" +
