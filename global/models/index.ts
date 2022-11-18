@@ -9,7 +9,7 @@ import {
   UserAdViewsSchema,
   ProfileImageSchema,
   ShownInterestSchema,
-  ConnectionRequestSchema,
+  ConnectionsSchema,
   UserInterestedSchema,
   SplitSchema,
   ResetPasswordToken,
@@ -21,6 +21,7 @@ import { AccountTypeSchema } from "../../admin/models/schema";
 import * as UserModels from "./User.model";
 import AdminModel from "./Admin.model";
 import AccountTypeModel from "../../admin/models/AccountType";
+import { ConnectionAwaitSchema, TokenSchema } from "./schemas/User.schema";
 
 UserModels.default.init(
   UserSchema,
@@ -79,14 +80,27 @@ UserModels.ShownInterestModel.init(
   ShownInterestSchema,
   sequelizeOptions({ modelName: "shown_interest", tableName: "shown_interest" })
 );
-UserModels.Connection.init(
-  ConnectionRequestSchema,
+UserModels.Connections.init(
+  ConnectionsSchema,
   sequelizeOptions({ modelName: "connections", tableName: "connections" })
+);
+
+UserModels.ConnectionAwaitModel.init(
+  ConnectionAwaitSchema,
+  sequelizeOptions({
+    modelName: "connection_request",
+    tableName: "connection_request",
+  })
 );
 
 AdminModel.init(
   AdminSchema,
   sequelizeOptions({ modelName: "admin_account", tableName: "admin_account" })
+);
+
+UserModels.TokensModel.init(
+  TokenSchema,
+  sequelizeOptions({ modelName: "tokens", tableName: "tokens" })
 );
 
 AccountTypeModel.init(
@@ -116,8 +130,8 @@ UserModels.ShownInterestModel.belongsTo(UserModels.UserAds);
 UserModels.default.hasOne(UserModels.ShownInterestModel);
 UserModels.ShownInterestModel.belongsTo(UserModels.default);
 
-UserModels.default.hasOne(UserModels.Connection);
-UserModels.Connection.belongsTo(UserModels.default);
+UserModels.default.hasOne(UserModels.Connections);
+UserModels.Connections.belongsTo(UserModels.default);
 
 UserModels.SplitModel.hasMany(UserModels.UserInterested);
 UserModels.UserInterested.belongsTo(UserModels.SplitModel);

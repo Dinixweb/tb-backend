@@ -5,11 +5,12 @@ import {
   UserAdViewsSchema,
   ProfileImageSchema,
   ShownInterestSchema,
-  ConnectionRequestSchema,
+  ConnectionsSchema,
   UserInterestedSchema,
   SplitSchema,
   ResetPasswordToken,
   IndentitySchema,
+  TokenSchema,
 } from "./User.schema";
 import { AdminSchema } from "./Admin.schema";
 
@@ -21,9 +22,10 @@ export {
   UserAdViewsSchema,
   ProfileImageSchema,
   ShownInterestSchema,
-  ConnectionRequestSchema,
+  ConnectionsSchema,
   UserInterestedSchema,
   SplitSchema,
   ResetPasswordToken,
   IndentitySchema,
+  TokenSchema,
 };

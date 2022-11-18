@@ -12,78 +12,79 @@ const parser = new DatauriParser();
 export async function connectionList(req, res) {
   const { userId } = req.params;
   const { connectionRef } = req.query;
-
   try {
-    if (!connectionRef)
-      return res.status(400).send({
-        message: "api expects an input in the query with key {connectionRef}",
-      });
     const connectionList = Modals.UserModels;
-    const pendingConnection = async () => {
-      const getAllConnection = await connectionList.Connection.findAll({
-        include: {
-          model: connectionList.default,
-          attributes: ["firstName", "lastName"],
-        },
+    const allConnections = async () => {
+      const getAllConnection = await connectionList.Connections.findAll({
         where: {
-          receiverUserId: userId,
-          isConnected: 0,
-          requestStatus: "request pending",
+          userId: userId,
         },
       });
       return res.status(200).send(getAllConnection);
     };
-    const myConnectionList = async () => {
-      const getAllConnection = await connectionList.Connection.findAll({
-        include: {
-          model: connectionList.default,
-          attributes: ["firstName", "lastName"],
-        },
-        where: {
-          [Op.or]: [{ receiverUserId: userId }, { senderUserId: userId }],
-          //isConnected: 1,
-          //requestStatus: "confirmed",
-        },
-      });
+    const pendingRequest = async () => {
+      const getAllConnection =
+        await connectionList.ConnectionAwaitModel.findAll({
+          where: {
+            userId: userId,
+          },
+        });
       return res.status(200).send(getAllConnection);
     };
-    if (connectionRef === "request pending") {
-      pendingConnection();
-    } else if (connectionRef === "confirmed") {
-      myConnectionList();
-    }
+
+    if (!connectionRef) return allConnections();
+
+    pendingRequest();
   } catch (err) {
     res.status(404).send(new Api404Error());
   }
 }
 export async function addConnection(req, res) {
-  const { senderUserId, receiverUserId } = req.body;
+  const { userId, receiverId } = req.body;
 
-  const payload = { senderUserId, receiverUserId };
+  const payload = { userId, receiverId };
+  const newConnection = { userId, receiverId };
 
   try {
-    const connectionRef = Modals.UserModels.Connection;
-    const isConnectionExist = await connectionRef.findAll({
+    const connectionRef = Modals.UserModels;
+    const getSenderData = await Modals.UserModels.default.findOne({
+      where: { userId: userId },
+    });
+    const getReceiverData = await Modals.UserModels.default.findOne({
+      where: { userId: receiverId },
+    });
+    const isConnectionExist = await connectionRef.ConnectionAwaitModel.findAll({
       where: {
-        receiverUserId: receiverUserId,
-        senderUserId: senderUserId,
-        requestStatus: {
-          [Op.or]: ["request pending", "request confirmed"],
-        },
+        userId: receiverId,
+        senderId: userId,
       },
     });
-    payload["clientAccountUserId"] = receiverUserId;
+    // pending
+    payload["firstName"] = getSenderData.firstName;
+    payload["lastName"] = getSenderData.lastName;
+    payload["senderId"] = userId;
+    payload["userId"] = receiverId;
+
+    //new
+    newConnection["firstName"] = getReceiverData.firstName;
+    newConnection["lastName"] = getReceiverData.lastName;
+    newConnection["user_2_Id"] = receiverId;
+
     if (isConnectionExist.length <= 0) {
-      await connectionRef.create(payload);
+      //create a new connection(pending)
+      await connectionRef.ConnectionAwaitModel.create(payload);
+      //create a new connection(connecitonList)
+      await connectionRef.Connections.create(newConnection);
       res.status(201).send({
         message: "request sent successfully",
       });
     } else {
       return res.status(200).send({
-        message: "connection already exist",
+        message: "already sent a connection request",
       });
     }
   } catch (err) {
+    console.log(err);
     return res.status(400).send(new Api400Error(0));
   }
 }
@@ -91,9 +92,9 @@ export async function addConnection(req, res) {
 export async function removeConnection(req, res) {
   const { connectionId } = req.params;
   try {
-    const removeUserConnection = Modals.UserModels.Connection;
+    const removeUserConnection = Modals.UserModels.Connections;
 
-    const connectionExist = await Modals.UserModels.Connection.findOne({
+    const connectionExist = await Modals.UserModels.Connections.findOne({
       where: { connectionId: connectionId },
     });
     if (!connectionExist)
@@ -109,32 +110,51 @@ export async function removeConnection(req, res) {
 }
 
 export async function acceptConnection(req, res) {
-  const { receiverUserId, connectionId, connectionRef } = req.body;
-  const payload = { receiverUserId, connectionId, connectionRef };
+  const { userId, senderId, connectionAwaitId, connectionRef } = req.body;
+  const payload = { userId, senderId, connectionAwaitId, connectionRef };
+  const createConnection = { userId };
   try {
+    const getSenderData = await Modals.UserModels.default.findOne({
+      where: { userId: userId },
+    });
+
+    // pending
+    createConnection["firstName"] = getSenderData.firstName;
+    createConnection["lastName"] = getSenderData.lastName;
+    createConnection["connectionStatus"] = "connected";
+    createConnection["user_2_Id"] = senderId;
+
+    const rejectConnection = Modals.UserModels;
     const AcceptConnection = async () => {
-      const acceptNewConnection = Modals.UserModels.Connection;
+      const acceptNewConnection = Modals.UserModels;
       const requestStatus = (payload["requestStatus"] = "confirmed");
       const isConnected = (payload["isConnected"] = true);
-      await acceptNewConnection.update(
-        { requestStatus: requestStatus, isConnected: isConnected },
-        {
-          where: {
-            connectionId: payload.connectionId,
-            receiverUserId: payload.receiverUserId,
-          },
-        }
-      );
+      await acceptNewConnection.ConnectionAwaitModel.destroy({
+        where: {
+          connectionAwaitId: payload.connectionAwaitId,
+        },
+      });
 
+      await acceptNewConnection.Connections.update(
+        {
+          connectionStatus: "connected",
+        },
+        { where: { user_2_Id: userId, userId: senderId } }
+      );
+      await acceptNewConnection.Connections.create(createConnection);
       return res.status(201).send({ message: "connection accepted" });
     };
     const RejectConnection = async () => {
-      const acceptNewConnection = Modals.UserModels.Connection;
+      const acceptNewConnection = Modals.UserModels.Connections;
       await acceptNewConnection.destroy({
         where: {
-          connectionId: payload.connectionId,
-          receiverUserId: payload.receiverUserId,
+          userId: senderId,
+          user_2_Id: userId,
         },
+      });
+
+      await rejectConnection.ConnectionAwaitModel.destroy({
+        where: { userId: userId, senderId: senderId },
       });
 
       return res.status(201).send({ message: "connection rejected" });
@@ -155,15 +175,15 @@ export async function checkConnection(req, res) {
   const payload = { userId, user_2_Id };
   console.log(payload);
   try {
-    const isConnectionExist = Modals.UserModels.Connection;
+    const isConnectionExist = Modals.UserModels.Connections;
     const response = await isConnectionExist.findOne({
       where: {
-        senderUserId: payload.user_2_Id,
-        receiverUserId: payload.userId,
-        requestStatus: "confirmed",
+        userId: payload.userId,
+        user_2_Id: payload.user_2_Id,
+        connectionStatus: "connected",
       },
     });
-    console.log(response);
+
     if (!response)
       return res
         .status(404)
@@ -183,7 +203,7 @@ export async function SuggestedConnection(req, res) {
   try {
     const getAllClients = Modals.UserModels;
     const clientList = getAllClients.default.findAll({
-      include: { model: getAllClients.Connection },
+      include: { model: getAllClients.Connections },
     });
     res.status(200).send(clientList);
   } catch (err) {

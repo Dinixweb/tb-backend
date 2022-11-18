@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./", 
+    "baseUrl": "./",
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
@@ -11,7 +11,7 @@
     "emitDecoratorMetadata": true,
     "paths": {
       // "@/client": ["./client/*"],
-    },
+    }
   },
   "lib": ["es2015"]
 }

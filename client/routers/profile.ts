@@ -6,12 +6,18 @@ const uploadIdentity = multer({ dest: "" }).single("identity");
 const router = Router();
 
 router.get("/auth", Profile.welcome);
+router.put("/updateProfileDescription", Profile.profileDescription);
+router.put("/updateProfile", Profile.updateProfile);
+router.put("/updatePassword", Profile.updatePassword);
+router.post("/initEmailUpdate", Profile.updateEmail);
+router.put("/OtpEmailVerification", Profile.updateEmail);
 router.post(
   "/identityVerification",
   uploadIdentity,
   Profile.indentityVerification
 );
 router.get("/userBio/:userId", Profile.getUserBio);
+
 router.get("/getIdentityStatus/:userId", Profile.getIdentityByUserId);
 
 export = router;

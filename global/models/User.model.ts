@@ -7,22 +7,29 @@ import type {
   Subscription,
   ProfileImage,
   ShownInterest,
-  ConnectionRequest,
   Splits,
   UserInterestedList,
   PasswordResetToken,
   IndentityVerification,
+  ConnectionRequestList,
+  ConnectionAwaitList,
+  ConnectionList,
+  Tokens,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
   declare userId: typeof UUID;
   declare email: string;
   declare firstName: string;
-  declare lastname: string;
+  declare lastName: string;
   declare phoneNumber: string;
   declare type: string;
   declare password: string;
   declare profileImage: string;
+  declare description: string;
+  declare gender: string;
+  declare userName: string;
+  declare referralCode: string;
   declare isActive: boolean;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -72,13 +79,13 @@ export class ShownInterestModel extends Model<ShownInterest> {
   clientAccountUserId: string;
 }
 
-export class Connection extends Model<ConnectionRequest> {
-  declare connectionId: typeof UUID;
-  declare defaultMessage: string;
-  declare senderUserId: string;
-  declare receiverUserId: string;
-  declare requestStatus: string;
-  declare isConnected: boolean;
+export class Connections extends Model<ConnectionList> {
+  declare firstName: string;
+  declare lastName: string;
+  declare userId: typeof UUID;
+  declare connectionId: string;
+  declare user_2_Id: string;
+  declare connectionStatus: string;
 }
 
 export class SplitModel extends Model<Splits> {
@@ -112,4 +119,27 @@ export class IdentityModel extends Model<IndentityVerification> {
   declare identityNumber: number;
   declare identityStatus: string;
   declare comment: string;
+}
+
+export class ConnectionRequestModel extends Model<ConnectionRequestList> {
+  declare connectionRequestId: typeof UUID;
+  declare receiverId: string;
+  declare senderId: string;
+  declare requestStatus: string;
+}
+
+export class ConnectionAwaitModel extends Model<ConnectionAwaitList> {
+  declare connectionAwaitId: typeof UUID;
+  declare userId: typeof UUID;
+  declare senderId: typeof UUID;
+  declare requestStatus: string;
+  declare defaultMesage: string;
+}
+
+export class TokensModel extends Model<Tokens> {
+  declare tokenId: typeof UUID;
+  declare userId: string;
+  declare otp: string;
+  declare email: string;
+  declare expiryTime?: string;
 }

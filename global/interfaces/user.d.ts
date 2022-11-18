@@ -1,3 +1,4 @@
+import { string } from "joi";
 import { UUID } from "sequelize/types";
 
 export interface IAccount {
@@ -10,6 +11,10 @@ export interface IAccount {
   isActive?: boolean;
   password?: string;
   profileImage?: string;
+  userName?: string;
+  gender?: string;
+  referralCode?: string;
+  description?: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -83,16 +88,14 @@ export interface ShownInterest {
   interestCount: number;
 }
 
-export type ConnectionList = IAccount[];
-
-export type ConnectionRequest = {
-  connectionId: typeof UUID;
-  defaultMessage: string;
-  senderUserId: string;
-  receiverUserId: string;
-  requestStatus: string;
-  isConnected: boolean;
-};
+export interface ConnectionList {
+  firstName: string;
+  lastName: string;
+  userId: typeof UUID;
+  connectionId: string;
+  user_2_Id: string;
+  connectionStatus: string;
+}
 
 export type Splits = {
   splitId: typeof UUID;
@@ -125,4 +128,31 @@ export interface IndentityVerification {
   identityNumber?: number;
   identityStatus?: string;
   comment?: string;
+}
+
+export interface ConnectionAwaitList {
+  connectionAwaitId: typeof UUID;
+  senderId: typeof UUID;
+  userId?: typeof UUID;
+  requestStatus: string;
+  firstName: string;
+  lastName: string;
+  defaultMessage: string;
+}
+
+export interface ConnectionRequestList {
+  connectionRequestId: typeof UUID;
+  receiverId: string;
+  senderId: string;
+  requestStatus: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface Tokens {
+  tokenId: typeof UUID;
+  userId: string;
+  otp: string;
+  email: string;
+  expiryTime: string;
 }

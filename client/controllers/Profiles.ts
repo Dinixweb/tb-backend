@@ -11,6 +11,8 @@ import { v4 as uuidv4 } from "uuid";
 import * as Modals from "../../global/models";
 import Api404Error from "../../global/errors/ApiError404";
 import Api400Error from "../../global/errors/Api400Error";
+import { changeEmail, EmailChangeSuccess } from "../email/config/email";
+import { generatedOTP } from "../../global/utils/global_function";
 
 const parser = new DatauriParser();
 
@@ -84,4 +86,99 @@ export async function getUserBio(req, res) {
   } catch (err) {
     res.status(404).send(new Api404Error());
   }
+}
+
+export async function profileDescription(req, res) {
+  const { description, userId } = req.body;
+  try {
+    const updateDescription = Modals.UserModels.default;
+    await updateDescription.update(
+      { description: description },
+      { where: { userId: userId } }
+    );
+    res.status(200).send({ message: "update successful" });
+  } catch (err) {
+    res.status(404).send(new Api404Error());
+  }
+}
+export async function updateProfile(req, res) {
+  const payload = { ...req.body };
+  try {
+    const updateDescription = Modals.UserModels.default;
+    await updateDescription.update(payload, {
+      where: { userId: payload.userId },
+    });
+    res.status(200).send({ message: "update successful" });
+  } catch (err) {
+    res.status(404).send(new Api404Error());
+  }
+}
+export async function updateEmail(req, res) {
+  const payload = { ...req.body };
+  try {
+    const getUserData = await Modals.UserModels.default.findOne({
+      where: { userId: payload.userId, email: payload.oldEmail },
+    });
+
+    if (!getUserData) return res.status(400).send({ message: "invalid email" });
+    payload["email"] = payload.newEmail;
+    const updateEmails = Modals.UserModels.TokensModel;
+    payload["email"] = payload.newEmail;
+    const otp = generatedOTP();
+    payload["otp"] = otp;
+    await updateEmails.create(payload);
+    console.log(otp);
+    changeEmail(getUserData.firstName, getUserData.email, otp);
+    return res.status(200).send({ message: "otp sent to old email" });
+  } catch (err) {
+    console.log(err);
+    res.status(404).send(new Api404Error());
+  }
+}
+export async function OtpEmailVerification(req, res) {
+  const payload = { ...req.body };
+  try {
+    const getUserToken = await Modals.UserModels.TokensModel.findOne({
+      where: { userId: payload.userId, otp: payload.token },
+    });
+
+    const getUserData = await Modals.UserModels.default.findOne({
+      where: { userId: payload.userId },
+    });
+
+    if (!getUserToken) return res.status(400).send({ message: "invalid otp" });
+
+    const updateEmails = Modals.UserModels.default;
+    await updateEmails.update(
+      { email: getUserToken.email },
+      {
+        where: { userId: payload.userId },
+      }
+    );
+
+    EmailChangeSuccess(getUserData.firstName, getUserData.email);
+    return res.status(200).send({ message: "otp sent to old email" });
+  } catch (err) {
+    res.status(404).send(new Api404Error());
+  }
+}
+export async function updatePassword(req, res) {
+  console.log(req.body);
+  const payload = { ...req.body };
+
+  const passwordHash = await hashPassword(payload.password);
+  payload.password = passwordHash;
+  try {
+    const updatePassword = Modals.UserModels.default;
+    await updatePassword.update(payload, {
+      where: { userId: payload.userId },
+    });
+    res.status(200).send({ message: "update successful" });
+  } catch (err) {
+    res.status(404).send(new Api404Error());
+  }
+}
+
+async function hashPassword(password: string) {
+  return await bcrypt.hash(password, 10);
 }

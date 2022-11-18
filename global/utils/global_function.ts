@@ -1,4 +1,5 @@
 import * as crypto from "crypto";
+import otpGenerator from "otp-generator";
 function generateToken() {
   return crypto.randomBytes(20).toString("hex");
 }
@@ -15,6 +16,13 @@ function otpTimer() {
   return dFormat.format(timer);
 }
 
+function generatedOTP() {
+  return otpGenerator.generate(6, {
+    specialChars: false,
+    digits: true,
+  });
+}
+
 function otpCompareTimer() {
   const dFormat = new Intl.DateTimeFormat("default", {
     hour: "numeric",
@@ -25,4 +33,4 @@ function otpCompareTimer() {
   return dFormat.format(now);
 }
 
-export { otpCompareTimer, otpTimer, generateToken };
+export { otpCompareTimer, otpTimer, generateToken, generatedOTP };

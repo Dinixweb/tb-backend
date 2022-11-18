@@ -11,14 +11,14 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: EMAIL,
-    pass: EMAILPASSWORD,
+    user: "wekanfly@outlook.com",
+    pass: "TravelBuddy@001",
   },
 });
 
 export function passwordResetEmail(firstName, email, otp) {
   const mail = {
-    from: EMAIL,
+    from: "wekanfly@outlook.com",
     to: email,
     subject: "one-time-password",
     text: passwordReset(firstName, otp),
@@ -30,7 +30,54 @@ export function passwordResetEmail(firstName, email, otp) {
     }
   });
 }
+export function changeEmail(firstName, email, otp) {
+  const mail = {
+    from: "wekanfly@outlook.com",
+    to: email,
+    subject: "Email Reset OTP",
+    text: changeEmailMessage(firstName, otp),
+  };
+  transporter.sendMail(mail, (err, info) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+  });
+}
+export function EmailChangeSuccess(firstName, email) {
+  const mail = {
+    from: "wekanfly@outlook.com",
+    to: email,
+    subject: "Email Reset OTP",
+    text: emailSuccessMessage(firstName),
+  };
+  transporter.sendMail(mail, (err, info) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+  });
+}
 
+const changeEmailMessage = (firstName, otp) => {
+  return (
+    `Dear ${firstName}, \n\n` +
+    "Kindly use this otp to change your email : \n\n" +
+    `${otp}\n\n` +
+    "This is a auto-generated email. Please do not reply to this email.\n\n" +
+    "Regards\n" +
+    "Travel Buddy Support Team \n\n"
+  );
+};
+const emailSuccessMessage = (firstName) => {
+  return (
+    `Dear ${firstName}, \n\n` +
+    "Your email has been changed successfully : \n\n" +
+    "This is a auto-generated email. Please do not reply to this email.\n\n" +
+    "Regards\n" +
+    "Travel Buddy Support Team \n\n"
+  );
+};
 const passwordReset = (firstName, otp) => {
   return (
     `Dear ${firstName}, \n\n` +
@@ -48,7 +95,7 @@ export function SignUp(firstName, email, benefitList, referalCodeLink) {
       return console.log(err);
     }
     const mainOptions = {
-      from: EMAIL,
+      from: "wekanfly@outlook.com",
       to: email,
       subject: "Sign Confirmation",
       html: ejs.render(data, {

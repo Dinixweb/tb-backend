@@ -26,6 +26,10 @@ export const UserSchema = {
     allowNull: false,
     unique: true,
   },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
   active: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -35,6 +39,18 @@ export const UserSchema = {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: () => false,
+  },
+  userName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  gender: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  referralCode: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   refreshToken: {
     type: DataTypes.STRING,
@@ -175,36 +191,34 @@ export const ShownInterestSchema = {
   },
 };
 
-export const ConnectionRequestSchema = {
+export const ConnectionsSchema = {
   connectionId: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
   },
-  defaultMessage: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-    defaultValue: "I would like to join your Wekanfly network",
-  },
-  senderUserId: {
+
+  userId: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  receiverUserId: {
+  firstName: {
     type: DataTypes.STRING,
     allowNull: false,
-    foreignKey: true,
   },
-  requestStatus: {
+  lastName: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "request pending",
   },
-  isConnected: {
-    type: DataTypes.BOOLEAN,
+  connectionStatus: {
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: false,
+    defaultValue: "pending",
+  },
+  user_2_Id: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 };
 
@@ -309,5 +323,89 @@ export const IndentitySchema = {
   comment: {
     type: DataTypes.TEXT,
     allowNull: true,
+  },
+};
+
+//conection request
+export const ConnectionRequestsSchema = {
+  connectionRequestId: {
+    type: DataTypes.STRING(225),
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  receiverId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  senderId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  requestStatus: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "pending",
+  },
+};
+
+//conection await
+export const ConnectionAwaitSchema = {
+  connectionAwaitId: {
+    type: DataTypes.STRING(225),
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  senderId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  requestStatus: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "pending",
+  },
+  defaultMessage: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+    defaultValue: "I would like to join your Wekanfly network",
+  },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+};
+
+export const TokenSchema = {
+  tokenId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  otp: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  expiryTime: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 };
