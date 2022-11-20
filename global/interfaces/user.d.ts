@@ -206,6 +206,7 @@ export interface Credits {
   userId: string;
   creditSource: string;
   creditUnit: number;
+  amount: number | string;
 }
 
 export interface FreeView {
@@ -213,4 +214,10 @@ export interface FreeView {
   userId: typeof UUID;
   travellerId: typeof UUID;
   viewRemaining: number;
+}
+
+export interface PointOffers {
+  offerId: typeof UUID;
+  point: number;
+  price: number;
 }

@@ -60,6 +60,10 @@ export async function Register(req: Request, res: Response) {
   const modelRef = baseModelRef[payload.createRef] ?? -1;
   try {
     const addReferralCode = Modals.UserModels.ReferralCodeModel;
+    const addReferralCodeActivation =
+      Modals.UserModels.ReferralCodeActivationModal;
+    const bonus = Modals.UserModels.CreditModel;
+
     if (payload.type && payload.createRef === "web-client") {
       const query = { where: { id: payload.type } };
       const currentType = await Modals.AccountTypeModel.findOne(query);
@@ -108,6 +112,24 @@ export async function Register(req: Request, res: Response) {
     payload.password = passwordHash;
     await selectModel.create(payload);
     await addReferralCode.create(referralCodePayload);
+    if (payload.referralCode) {
+      const getUserData = await addReferralCode.findOne({
+        where: { referralCode: payload.referralCode },
+      });
+      const referralActivation = {};
+      referralActivation["referralCode"] = payload.referralCode;
+      referralActivation["createdBy"] = getUserData.userId;
+      referralActivation["usedBy"] = userId;
+      await addReferralCodeActivation.create(referralActivation);
+
+      //add bonus
+      const addBonus = {};
+      addBonus["userId"] = getUserData.userId;
+      addBonus["creditUnit"] = 20;
+      addBonus["creditSource"] = "referral";
+
+      await bonus.create(addBonus);
+    }
     return res.status(200).json({ code: 200, message: "Account Created" });
   } catch (error) {
     console.log(error);

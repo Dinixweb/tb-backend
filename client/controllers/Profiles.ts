@@ -17,6 +17,7 @@ import {
   EmailChangeSuccess,
 } from "../email/config/email";
 import { generatedOTP } from "../../global/utils/global_function";
+import { Credits } from "global/interfaces/user";
 
 const parser = new DatauriParser();
 
@@ -244,5 +245,21 @@ export async function getReferralCode(req, res) {
     res.status(200).send(referrralResponse);
   } catch (err) {
     res.status(404).send(new Api404Error());
+  }
+}
+export async function getUserPoints(req, res) {
+  const { userId } = req.params;
+  try {
+    const getCredit = Modals.UserModels.CreditModel;
+    const CreditResponse = await getCredit.findAll({
+      where: { userId: userId },
+    });
+    const creditUnit = CreditResponse.map(
+      (credit: Credits) => credit.creditUnit
+    ).reduce((i, a) => i + a, 0);
+    const points = { creditUnit };
+    return res.send(points);
+  } catch (err) {
+    return res.status(404).send(new Api404Error());
   }
 }

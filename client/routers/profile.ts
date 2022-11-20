@@ -20,6 +20,7 @@ router.post(
 );
 router.get("/userBio/:userId", Profile.getUserBio);
 router.get("/getReferralCode/:userId", Profile.getReferralCode);
+router.get("/getUserPoints/:userId", Profile.getUserPoints);
 
 router.get("/getIdentityStatus/:userId", Profile.getIdentityByUserId);
 
