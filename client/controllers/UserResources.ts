@@ -263,3 +263,12 @@ export async function acceptSplitRequest(req, res) {
 export async function PNRSearch(req, res) {
   const { prnNumber, firstName } = req.params;
 }
+
+export async function createWishlist(req, res) {
+  const payload = { ...req.body };
+  try {
+    const addWishlist = Modals.UserModels;
+  } catch (err) {
+    return res.status(400).send(new Api400Error());
+  }
+}

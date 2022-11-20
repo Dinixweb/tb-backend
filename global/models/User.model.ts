@@ -20,6 +20,7 @@ import type {
   Credits,
   FreeView,
   PointOffers,
+  WishList,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -177,10 +178,17 @@ export class FreeViewModal extends Model<FreeView> {
   declare freeViewId: typeof UUID;
   declare userId: string;
   declare travellerId: string;
-  declare viewRemianing: number;
+  declare viewRemaining: number;
 }
 export class PointOfferModal extends Model<PointOffers> {
   declare offerId: typeof UUID;
   declare points: number;
   declare price: number;
+}
+export class WishlistModel extends Model<WishList> {
+  declare wishlistId: typeof UUID;
+  declare departure: string;
+  declare destination: string;
+  declare dateFrom: string;
+  declare dateTo: string;
 }

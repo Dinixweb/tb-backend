@@ -6,6 +6,7 @@ import cloudinary from "../../global/utils/cloudinaryConfig";
 import DatauriParser from "datauri/parser";
 import { v4 as uuidv4 } from "uuid";
 import { Op, where } from "sequelize";
+import { FreeView } from "global/interfaces/user";
 
 const parser = new DatauriParser();
 
@@ -208,5 +209,36 @@ export async function SuggestedConnection(req, res) {
     res.status(200).send(clientList);
   } catch (err) {
     res.status(404).send(new Api404Error());
+  }
+}
+
+export async function initializeFreeView(req, res) {
+  const payload = { ...req.body };
+  try {
+    const freeViewCount = Modals.UserModels.FreeViewModal;
+    const addFreeView = freeViewCount;
+    const viewResponse = await freeViewCount.findAll({
+      where: { userId: payload.userId },
+    });
+    if (viewResponse.length >= 3)
+      return res.status(400).send({ message: "view limit reach for today" });
+
+    payload["viewRemaining"] = 1;
+    await addFreeView.create(payload);
+
+    const activeAccount = await freeViewCount.findAll({
+      where: { userId: payload.userId },
+    });
+    const viewRemining = activeAccount
+      .map((val) => {
+        return val.viewRemaining;
+      })
+      .reduce((i, a) => i + a, 0);
+
+    res
+      .status(201)
+      .send({ message: "view successful", viewRemaining: viewRemining });
+  } catch (err) {
+    res.status(400).send(new Api400Error());
   }
 }

@@ -1,4 +1,3 @@
-import { string } from "joi";
 import { UUID } from "sequelize/types";
 
 export interface IAccount {
@@ -167,13 +166,14 @@ export interface WishList {
 }
 
 export interface Travelers {
-  travelerId: typeof UUID;
+  travellerId: typeof UUID;
   firstName: string;
   lastName: string;
   location: string;
 }
 
 export interface PNRData {
+  pnrDataId: typeof UUID;
   departure: string;
   destination: string;
   dateFrom: string;

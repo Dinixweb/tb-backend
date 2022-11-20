@@ -4,6 +4,7 @@ import * as Connections from "../controllers/Connections";
 const router = Router();
 
 router.post("/connectionRequest", Connections.addConnection);
+router.post("/initFreeView", Connections.initializeFreeView);
 router.get("/myConnections/:userId", Connections.connectionList);
 router.get("/suggestedConnection/:userId", Connections.SuggestedConnection);
 router.put("/connectionAction", Connections.acceptConnection);
