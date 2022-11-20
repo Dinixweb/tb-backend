@@ -15,6 +15,8 @@ import {
   otpCompareTimer,
   otpTimer,
   generateToken,
+  generatedOTP,
+  referralCode,
 } from "../../global/utils/global_function";
 import { passwordResetEmail } from "client/email/config/email";
 import path from "path";
@@ -48,6 +50,7 @@ async function validatePassword(plainPassword, hashedPassword) {
  */
 export async function Register(req: Request, res: Response) {
   const payload = { ...req.body };
+  const userId = uuidv4();
   let accountType: string | number = -1;
   const baseModelRef = {
     "web-client": Modals.AdminModel,
@@ -56,6 +59,7 @@ export async function Register(req: Request, res: Response) {
 
   const modelRef = baseModelRef[payload.createRef] ?? -1;
   try {
+    const addReferralCode = Modals.UserModels.ReferralCodeModel;
     if (payload.type && payload.createRef === "web-client") {
       const query = { where: { id: payload.type } };
       const currentType = await Modals.AccountTypeModel.findOne(query);
@@ -91,10 +95,19 @@ export async function Register(req: Request, res: Response) {
       }
       accountType = defaultAccountType.key;
     }
+
+    //referral code;
+    const referralCodeRef = referralCode();
+    const referralCodePayload = {};
+    referralCodePayload["userId"] = userId;
+    referralCodePayload["referralCode"] = referralCodeRef;
+
     payload.type = accountType;
+    payload.userId = userId;
     const passwordHash = await hashPassword(payload.password);
     payload.password = passwordHash;
     await selectModel.create(payload);
+    await addReferralCode.create(referralCodePayload);
     return res.status(200).json({ code: 200, message: "Account Created" });
   } catch (error) {
     console.log(error);

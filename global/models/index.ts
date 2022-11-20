@@ -106,7 +106,10 @@ UserModels.ReferralCodeModel.init(
 );
 UserModels.ReferralCodeActivationModal.init(
   ReferralCodeActivationSchema,
-  sequelizeOptions({ modelName: "referral_code", tableName: "referral_code" })
+  sequelizeOptions({
+    modelName: "referral_code_active_list",
+    tableName: "referral_code_active_list",
+  })
 );
 
 UserModels.ConnectionAwaitModel.init(

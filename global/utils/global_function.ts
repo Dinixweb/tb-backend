@@ -23,6 +23,14 @@ function generatedOTP() {
   });
 }
 
+function referralCode() {
+  return otpGenerator.generate(8, {
+    specialChars: false,
+    digits: true,
+    upperCaseAlphabets: true,
+  });
+}
+
 function otpCompareTimer() {
   const dFormat = new Intl.DateTimeFormat("default", {
     hour: "numeric",
@@ -33,4 +41,4 @@ function otpCompareTimer() {
   return dFormat.format(now);
 }
 
-export { otpCompareTimer, otpTimer, generateToken, generatedOTP };
+export { otpCompareTimer, otpTimer, generateToken, generatedOTP, referralCode };

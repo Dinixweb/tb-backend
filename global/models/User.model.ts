@@ -33,7 +33,7 @@ export default class User extends Model<IAccount> {
   declare description: string;
   declare gender: string;
   declare userName: string;
-  declare referralCode: string;
+  // declare referralCode: string;
   declare isActive: boolean;
   declare createdAt: Date;
   declare updatedAt: Date;

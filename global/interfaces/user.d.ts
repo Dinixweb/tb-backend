@@ -13,7 +13,7 @@ export interface IAccount {
   profileImage?: string;
   userName?: string;
   gender?: string;
-  referralCode?: string;
+  // referralCode?: string;
   description?: string;
   createdAt?: Date;
   updatedAt?: Date;

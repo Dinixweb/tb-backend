@@ -3,10 +3,10 @@ import { DataTypes } from "sequelize";
 // User Profile
 export const UserSchema = {
   userId: {
-    type: DataTypes.UUID,
+    type: DataTypes.STRING(225),
     allowNull: false,
     primaryKey: true,
-    defaultValue: DataTypes.UUIDV4,
+    // defaultValue: DataTypes.UUIDV4,
   },
   email: {
     type: DataTypes.STRING,
@@ -48,10 +48,10 @@ export const UserSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  referralCode: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  // referralCode: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false,
+  // },
   refreshToken: {
     type: DataTypes.STRING,
     allowNull: true,
