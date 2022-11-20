@@ -286,8 +286,6 @@ export async function buyPointInitialize(req, res) {
         message:
           "this offer does not exit. please select from the listed offers",
       });
-    console.log(isPrice_Amount);
-
     const buyPoints = Modals.UserModels.CreditModel;
     payload["creditSource"] = "paid";
     payload["amount"] = payload.price;
@@ -296,7 +294,6 @@ export async function buyPointInitialize(req, res) {
     await buyPoints.create(payload);
     res.status(201).send({ message: "point purchase successful" });
   } catch (err) {
-    console.log(err);
     return res.status(404).send(new Api404Error());
   }
 }
