@@ -19,6 +19,7 @@ router.post(
   Profile.indentityVerification
 );
 router.get("/userBio/:userId", Profile.getUserBio);
+router.get("/getReferralCode/:userId", Profile.getReferralCode);
 
 router.get("/getIdentityStatus/:userId", Profile.getIdentityByUserId);
 

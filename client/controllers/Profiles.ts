@@ -232,3 +232,17 @@ export async function updatePassword(req, res) {
 async function hashPassword(password: string) {
   return await bcrypt.hash(password, 10);
 }
+
+export async function getReferralCode(req, res) {
+  const { userId } = req.params;
+
+  try {
+    const getReferralCode = Modals.UserModels.ReferralCodeModel;
+    const referrralResponse = await getReferralCode.findOne({
+      where: { userId: userId },
+    });
+    res.status(200).send(referrralResponse);
+  } catch (err) {
+    res.status(404).send(new Api404Error());
+  }
+}
