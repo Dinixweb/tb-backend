@@ -87,6 +87,9 @@ export async function createPoints() {
       },
     ];
     const addPoints = Modals.UserModels.PointOfferModal;
+    const getPoints = await addPoints.findAll();
+    if (getPoints.length >= 5) return;
+
     const createOffer = [];
     for (const data of point) {
       createOffer.push(addPoints.create(data));

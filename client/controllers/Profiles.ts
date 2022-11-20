@@ -273,3 +273,30 @@ export async function getAllPointOffers(req, res) {
     return res.status(404).send(new Api404Error());
   }
 }
+
+export async function buyPointInitialize(req, res) {
+  const payload = { ...req.body };
+  try {
+    const checkPriceAmount = Modals.UserModels.PointOfferModal;
+    const isPrice_Amount = await checkPriceAmount.findAll({
+      where: { price: payload.price, points: payload.points },
+    });
+    if (isPrice_Amount.length <= 0)
+      return res.status(404).send({
+        message:
+          "this offer does not exit. please select from the listed offers",
+      });
+    console.log(isPrice_Amount);
+
+    const buyPoints = Modals.UserModels.CreditModel;
+    payload["creditSource"] = "paid";
+    payload["amount"] = payload.price;
+    payload["creditUnit"] = payload.points;
+
+    await buyPoints.create(payload);
+    res.status(201).send({ message: "point purchase successful" });
+  } catch (err) {
+    console.log(err);
+    return res.status(404).send(new Api404Error());
+  }
+}
