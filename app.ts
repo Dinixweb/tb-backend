@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import router from "./routers";
 import dotenv from "dotenv";
+import { createPoints } from "./admin/controllers/AccountTypeController";
 
 dotenv.config();
 const app = express();
@@ -10,7 +11,7 @@ const app = express();
 const { PORT, NODE_ENV } = process.env;
 
 app.set("view engine", "ejs");
-
+createPoints();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());

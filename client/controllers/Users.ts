@@ -127,6 +127,7 @@ export async function Register(req: Request, res: Response) {
       addBonus["userId"] = getUserData.userId;
       addBonus["creditUnit"] = 20;
       addBonus["creditSource"] = "referral";
+      addBonus["amount"] = 0;
 
       await bonus.create(addBonus);
     }

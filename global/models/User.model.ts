@@ -19,6 +19,7 @@ import type {
   ReferralCodeActivation,
   Credits,
   FreeView,
+  PointOffers,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -170,10 +171,16 @@ export class CreditModel extends Model<Credits> {
   declare userId: string;
   declare creditSource: string;
   declare creditUnit: number;
+  declare amount: number;
 }
 export class FreeViewModal extends Model<FreeView> {
   declare freeViewId: typeof UUID;
   declare userId: string;
   declare travellerId: string;
   declare viewRemianing: number;
+}
+export class PointOfferModal extends Model<PointOffers> {
+  declare offerId: typeof UUID;
+  declare points: number;
+  declare price: number;
 }

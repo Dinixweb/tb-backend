@@ -470,6 +470,10 @@ export const CreditSchema = {
     type: DataTypes.UUID,
     allowNull: false,
   },
+  amount: {
+    type: DataTypes.BIGINT,
+    allowNull: true,
+  },
 };
 export const FreeViewSchema = {
   freeViewId: {
@@ -488,6 +492,23 @@ export const FreeViewSchema = {
   },
   userId: {
     type: DataTypes.UUID,
+    allowNull: false,
+  },
+};
+
+export const PointOfferSchema = {
+  offerId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  price: {
+    type: DataTypes.BIGINT,
+    allowNull: true,
+  },
+  points: {
+    type: DataTypes.BIGINT,
     allowNull: false,
   },
 };

@@ -25,6 +25,7 @@ import {
   ConnectionAwaitSchema,
   CreditSchema,
   FreeViewSchema,
+  PointOfferSchema,
   ReferralCodeActivationSchema,
   ReferralCodeSchema,
   TokenSchema,
@@ -104,6 +105,10 @@ UserModels.ReferralCodeModel.init(
   ReferralCodeSchema,
   sequelizeOptions({ modelName: "referral_code", tableName: "referral_code" })
 );
+UserModels.PointOfferModal.init(
+  PointOfferSchema,
+  sequelizeOptions({ modelName: "point_offer", tableName: "point_offer" })
+);
 UserModels.ReferralCodeActivationModal.init(
   ReferralCodeActivationSchema,
   sequelizeOptions({
@@ -164,7 +169,7 @@ UserModels.SplitModel.hasMany(UserModels.UserInterested);
 UserModels.UserInterested.belongsTo(UserModels.SplitModel);
 
 (async () => {
-  await sequelizeOptions({ timestamps: true }).sequelize.sync();
+  await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: true });
 })();
 
 export { UserModels, AdminModel, AccountTypeModel };

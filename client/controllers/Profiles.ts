@@ -263,3 +263,13 @@ export async function getUserPoints(req, res) {
     return res.status(404).send(new Api404Error());
   }
 }
+
+export async function getAllPointOffers(req, res) {
+  try {
+    const allPoints = Modals.UserModels.PointOfferModal;
+    const response = await allPoints.findAll();
+    res.status(200).send(response);
+  } catch (err) {
+    return res.status(404).send(new Api404Error());
+  }
+}
