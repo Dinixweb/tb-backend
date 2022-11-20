@@ -15,6 +15,10 @@ import type {
   ConnectionAwaitList,
   ConnectionList,
   Tokens,
+  ReferralCode,
+  ReferralCodeActivation,
+  Credits,
+  FreeView,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -143,4 +147,33 @@ export class TokensModel extends Model<Tokens> {
   declare email: string;
   declare expiryTime?: string;
   declare phoneNumber?: string;
+}
+
+export class ReferralCodeModel extends Model<ReferralCode> {
+  declare referralCodeId: typeof UUID;
+  declare referralCode: string;
+  declare userId: string;
+  declare dateCreated: string;
+  declare dateUpdated: string;
+}
+
+export class ReferralCodeActivationModal extends Model<ReferralCodeActivation> {
+  declare referralCodeActivationId: typeof UUID;
+  declare referralCode: string;
+  declare createdBy: string;
+  declare usedBy: string;
+  declare dateCreated: string;
+  declare dateUpdated: string;
+}
+export class CreditModel extends Model<Credits> {
+  declare creditId: typeof UUID;
+  declare userId: string;
+  declare creditSource: string;
+  declare creditUnit: number;
+}
+export class FreeViewModal extends Model<FreeView> {
+  declare freeViewId: typeof UUID;
+  declare userId: string;
+  declare travellerId: string;
+  declare viewRemianing: number;
 }

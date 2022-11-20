@@ -413,3 +413,81 @@ export const TokenSchema = {
     allowNull: true,
   },
 };
+
+export const ReferralCodeSchema = {
+  referralCodeId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  referralCode: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+};
+
+export const ReferralCodeActivationSchema = {
+  referralCodeActivationId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  referralCode: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  createdBy: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  usedBy: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+};
+export const CreditSchema = {
+  creditId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  creditSource: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  creditUnit: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+};
+export const FreeViewSchema = {
+  freeViewId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  travellerId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  viewRemaining: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+};

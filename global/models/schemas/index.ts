@@ -11,6 +11,10 @@ import {
   ResetPasswordToken,
   IndentitySchema,
   TokenSchema,
+  FreeViewSchema,
+  CreditSchema,
+  ReferralCodeSchema,
+  ReferralCodeActivationSchema,
 } from "./User.schema";
 import { AdminSchema } from "./Admin.schema";
 
@@ -28,4 +32,8 @@ export {
   ResetPasswordToken,
   IndentitySchema,
   TokenSchema,
+  FreeViewSchema,
+  CreditSchema,
+  ReferralCodeSchema,
+  ReferralCodeActivationSchema,
 };

@@ -184,3 +184,33 @@ export interface PNRData {
   airline: string;
   Travelers: Travelers;
 }
+
+export interface ReferralCode {
+  referralCodeId: typeof UUID;
+  referralCode: string;
+  userId: string;
+  dateCreated?: string;
+  dateUpdated?: string;
+}
+
+export interface ReferralCodeActivation {
+  referralCodeActivationId: typeof UUID;
+  referralCode: string;
+  createdBy: string;
+  usedBy: string;
+  dateCreated?: string;
+  dateUpdated?: string;
+}
+export interface Credits {
+  creditId: typeof UUID;
+  userId: string;
+  creditSource: string;
+  creditUnit: number;
+}
+
+export interface FreeView {
+  freeViewId: typeof UUID;
+  userId: typeof UUID;
+  travellerId: typeof UUID;
+  viewRemaining: number;
+}

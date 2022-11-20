@@ -21,7 +21,14 @@ import { AccountTypeSchema } from "../../admin/models/schema";
 import * as UserModels from "./User.model";
 import AdminModel from "./Admin.model";
 import AccountTypeModel from "../../admin/models/AccountType";
-import { ConnectionAwaitSchema, TokenSchema } from "./schemas/User.schema";
+import {
+  ConnectionAwaitSchema,
+  CreditSchema,
+  FreeViewSchema,
+  ReferralCodeActivationSchema,
+  ReferralCodeSchema,
+  TokenSchema,
+} from "./schemas/User.schema";
 
 UserModels.default.init(
   UserSchema,
@@ -83,6 +90,23 @@ UserModels.ShownInterestModel.init(
 UserModels.Connections.init(
   ConnectionsSchema,
   sequelizeOptions({ modelName: "connections", tableName: "connections" })
+);
+
+UserModels.FreeViewModal.init(
+  FreeViewSchema,
+  sequelizeOptions({ modelName: "free_view", tableName: "free_view" })
+);
+UserModels.CreditModel.init(
+  CreditSchema,
+  sequelizeOptions({ modelName: "credits", tableName: "credit" })
+);
+UserModels.ReferralCodeModel.init(
+  ReferralCodeSchema,
+  sequelizeOptions({ modelName: "referral_code", tableName: "referral_code" })
+);
+UserModels.ReferralCodeActivationModal.init(
+  ReferralCodeActivationSchema,
+  sequelizeOptions({ modelName: "referral_code", tableName: "referral_code" })
 );
 
 UserModels.ConnectionAwaitModel.init(
