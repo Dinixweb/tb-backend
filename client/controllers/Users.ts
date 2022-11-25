@@ -112,6 +112,7 @@ export async function Register(req: Request, res: Response) {
     payload.password = passwordHash;
     await selectModel.create(payload);
     await addReferralCode.create(referralCodePayload);
+
     if (payload.referralCode) {
       const getUserData = await addReferralCode.findOne({
         where: { referralCode: payload.referralCode },

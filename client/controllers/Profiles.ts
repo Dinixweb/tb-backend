@@ -236,7 +236,6 @@ async function hashPassword(password: string) {
 
 export async function getReferralCode(req, res) {
   const { userId } = req.params;
-
   try {
     const getReferralCode = Modals.UserModels.ReferralCodeModel;
     const referrralResponse = await getReferralCode.findOne({
