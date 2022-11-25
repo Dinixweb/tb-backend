@@ -12,6 +12,9 @@ router.post("/showInterest", UserResource.CreateInterest);
 router.get("/getUserAdverts/:userId", UserResource.getAllAdverts);
 //router.post("/wishlist", UserResource.CreateWishlist);
 
+// Email Parser Api Call
+router.post("/travellerResourceInit", UserResource.emailParserResource);
+
 // Split System
 router.post("/createSplit", UserResource.createSplit);
 router.get("/getSplitRequest/:userId", UserResource.getSplitRequest);

@@ -272,3 +272,12 @@ export async function createWishlist(req, res) {
     return res.status(400).send(new Api400Error());
   }
 }
+
+export async function emailParserResource(req, res) {
+  const payload = { ...req.body };
+  try {
+    console.log(payload);
+  } catch (err) {
+    return res.status(400).send(new Api400Error());
+  }
+}

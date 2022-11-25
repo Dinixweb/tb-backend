@@ -168,8 +168,25 @@ export interface WishList {
 export interface Travelers {
   travellerId: typeof UUID;
   firstName: string;
-  lastName: string;
+  familyName: string;
   location: string;
+  bookingReference: string;
+  passengerEmail: string;
+  dateforwarded: string;
+  agentEmail: string;
+  agentName: string;
+  airlineEmail: string;
+  airlineName: string;
+  passengerTitle: string;
+  destinationAirport: string;
+  destinationCity: string;
+  origin: string;
+  segment: string;
+  aircraftName: string;
+  arrivalDatetime: string;
+  arrivalTerminal: string;
+  segmentCity: string;
+  segmentName: string;
 }
 
 export interface PNRData {
