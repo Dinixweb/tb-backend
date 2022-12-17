@@ -21,6 +21,7 @@ import type {
   FreeView,
   PointOffers,
   WishList,
+  Travelers,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -191,4 +192,29 @@ export class WishlistModel extends Model<WishList> {
   declare destination: string;
   declare dateFrom: string;
   declare dateTo: string;
+}
+
+export class TravelersModel extends Model<Travelers> {
+  declare travellerId: typeof UUID;
+  declare firstName: string;
+  declare surName: string;
+  declare prnNumber: string;
+  declare airPlaneName: string;
+  declare departureDate: string;
+  declare departureAirlineNumber: string;
+  declare numberOfStops: number;
+  declare flightClass: string;
+  declare departureAirport: string;
+  declare departureCode: string;
+  declare flightEquipmentNo: number;
+  declare arrivalDateTime: string;
+  declare segmentDistance: string;
+  declare noOfPassenger: number;
+  declare terminal: string;
+  declare farePrice: number;
+  declare totalSegmentDistance: string;
+  declare agentEmail?: string;
+  declare agentName?: string;
+  declare airlineEmail?: string;
+  declare passengerTitle?: string;
 }

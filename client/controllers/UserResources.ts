@@ -276,7 +276,7 @@ export async function createWishlist(req, res) {
 export async function emailParserResource(req, res) {
   const payload = { ...req.body };
   try {
-    console.log(payload);
+    res.send(req.body);
   } catch (err) {
     return res.status(400).send(new Api400Error());
   }

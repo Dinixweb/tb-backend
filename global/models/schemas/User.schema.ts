@@ -512,3 +512,97 @@ export const PointOfferSchema = {
     allowNull: false,
   },
 };
+
+export const TravelerSchema = {
+  travellerId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  surName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  prnNumber: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  airPlaneName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  departureDate: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  departureAirlineNumber: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  numberOfStops: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  flightClass: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  departureAirport: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  departureCode: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  flightEquipmentNo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  arrivalDateTime: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  noOfPassenger: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  terminal: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  farePrice: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  totalSegmentDistance: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  segmentDistance: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  agentEmail: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  agentName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  airlineName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  passengerTitle: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+};

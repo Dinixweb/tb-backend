@@ -29,6 +29,7 @@ import {
   ReferralCodeActivationSchema,
   ReferralCodeSchema,
   TokenSchema,
+  TravelerSchema,
 } from "./schemas/User.schema";
 
 UserModels.default.init(
@@ -49,6 +50,10 @@ UserModels.UserAds.init(
 UserModels.UserAdViews.init(
   UserAdViewsSchema,
   sequelizeOptions({ modelName: "ad_view", tableName: "ad_view" })
+);
+UserModels.TravelersModel.init(
+  TravelerSchema,
+  sequelizeOptions({ modelName: "travelers", tableName: "travelers" })
 );
 
 UserModels.ResetPasswordModel.init(

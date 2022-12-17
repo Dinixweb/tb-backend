@@ -166,40 +166,30 @@ export interface WishList {
 }
 
 export interface Travelers {
+  /*required start*/
   travellerId: typeof UUID;
   firstName: string;
-  familyName: string;
-  location: string;
-  bookingReference: string;
-  passengerEmail: string;
-  dateforwarded: string;
-  agentEmail: string;
-  agentName: string;
-  airlineEmail: string;
-  airlineName: string;
-  passengerTitle: string;
-  destinationAirport: string;
-  destinationCity: string;
-  origin: string;
-  segment: string;
-  aircraftName: string;
-  arrivalDatetime: string;
-  arrivalTerminal: string;
-  segmentCity: string;
-  segmentName: string;
-}
-
-export interface PNRData {
-  pnrDataId: typeof UUID;
-  departure: string;
-  destination: string;
-  dateFrom: string;
-  dateTo: string;
-  miles: string;
-  seat: string;
-  passenger: string;
-  airline: string;
-  Travelers: Travelers;
+  surName: string;
+  prnNumber: string;
+  airPlaneName: string;
+  departureDate: string;
+  departureAirlineNumber: string;
+  numberOfStops: number;
+  /*required end*/
+  flightClass: string;
+  departureAirport: string;
+  departureCode: string;
+  flightEquipmentNo: number;
+  arrivalDateTime: string;
+  segmentDistance: string;
+  noOfPassenger: number;
+  terminal: string;
+  farePrice: number;
+  totalSegmentDistance: string;
+  agentEmail?: string;
+  agentName?: string;
+  airlineEmail?: string;
+  passengerTitle?: string;
 }
 
 export interface ReferralCode {

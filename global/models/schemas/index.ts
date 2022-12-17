@@ -15,11 +15,13 @@ import {
   CreditSchema,
   ReferralCodeSchema,
   ReferralCodeActivationSchema,
+  TravelerSchema,
 } from "./User.schema";
 import { AdminSchema } from "./Admin.schema";
 
 export {
   UserSchema,
+  TravelerSchema,
   AdminSchema,
   SubscriptionSchema,
   UserAdsSchema,
