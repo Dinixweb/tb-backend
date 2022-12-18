@@ -22,6 +22,8 @@ router.put("/acceptSplitRequest", UserResource.acceptSplitRequest);
 
 //PRN
 router.get("/pnrRequest", UserResource.PNRSearch);
+router.post("/createTravelRecord", UserResource.CreateTravelRecord);
+router.put("/updateTravelRecord", UserResource.UpdateTravelRecord);
 router.post("addWishlist", UserResource.createWishlist);
 
 export = router;

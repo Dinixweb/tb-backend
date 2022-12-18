@@ -198,7 +198,7 @@ export class TravelersModel extends Model<Travelers> {
   declare travellerId: typeof UUID;
   declare firstName: string;
   declare surName: string;
-  declare prnNumber: string;
+  declare pnrNumber: string;
   declare airPlaneName: string;
   declare departureDate: string;
   declare departureAirlineNumber: string;
@@ -217,4 +217,5 @@ export class TravelersModel extends Model<Travelers> {
   declare agentName?: string;
   declare airlineEmail?: string;
   declare passengerTitle?: string;
+  declare pnrStatus?: string;
 }

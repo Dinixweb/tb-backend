@@ -281,3 +281,33 @@ export async function emailParserResource(req, res) {
     return res.status(400).send(new Api400Error());
   }
 }
+
+export async function CreateTravelRecord(req, res) {
+  const payload = { ...req.body };
+  const setupType = payload["setupRef"];
+  try {
+    const addTravelRecord = Modals.UserModels.TravelersModel;
+    if (setupType !== "initial")
+      return res
+        .status(400)
+        .send({ message: "check to ensure the right setup ref" });
+    await addTravelRecord.create(payload);
+    res.status(201).send({ message: "pnr record addded successfully" });
+  } catch (err) {
+    res.send(new Api400Error());
+  }
+}
+export async function UpdateTravelRecord(req, res) {
+  const payload = { ...req.body };
+
+  const setupType = payload["finalStage"];
+  try {
+    const addTravelRecord = Modals.UserModels.TravelersModel;
+    if (!setupType) return;
+    await addTravelRecord.update(payload, {
+      where: { travellerId: payload["travellerId"] },
+    });
+  } catch (err) {
+    res.send(new Api400Error());
+  }
+}

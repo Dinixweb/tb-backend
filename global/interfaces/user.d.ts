@@ -170,7 +170,7 @@ export interface Travelers {
   travellerId: typeof UUID;
   firstName: string;
   surName: string;
-  prnNumber: string;
+  pnrNumber: string;
   airPlaneName: string;
   departureDate: string;
   departureAirlineNumber: string;
@@ -190,6 +190,7 @@ export interface Travelers {
   agentName?: string;
   airlineEmail?: string;
   passengerTitle?: string;
+  pnrStatus: string;
 }
 
 export interface ReferralCode {

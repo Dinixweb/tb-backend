@@ -528,7 +528,7 @@ export const TravelerSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  prnNumber: {
+  pnrNumber: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -604,5 +604,10 @@ export const TravelerSchema = {
   passengerTitle: {
     type: DataTypes.STRING,
     allowNull: true,
+  },
+  pnrStatus: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: "pending",
   },
 };
