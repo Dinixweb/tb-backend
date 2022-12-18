@@ -168,6 +168,7 @@ export interface WishList {
 export interface Travelers {
   /*required start*/
   travellerId: typeof UUID;
+  userId: typeof UUID;
   firstName: string;
   surName: string;
   pnrNumber: string;

@@ -196,6 +196,7 @@ export class WishlistModel extends Model<WishList> {
 
 export class TravelersModel extends Model<Travelers> {
   declare travellerId: typeof UUID;
+  declare userId: typeof UUID;
   declare firstName: string;
   declare surName: string;
   declare pnrNumber: string;

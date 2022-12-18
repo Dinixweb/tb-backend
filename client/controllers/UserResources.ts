@@ -291,6 +291,11 @@ export async function CreateTravelRecord(req, res) {
       return res
         .status(400)
         .send({ message: "check to ensure the right setup ref" });
+    const getUserPnr = await addTravelRecord.findAll({
+      where: { pnrNumber: payload["pnrNumber"] },
+    });
+    if (getUserPnr.length >= 1)
+      return res.send({ message: "pnr record already added" });
     await addTravelRecord.create(payload);
     res.status(201).send({ message: "pnr record addded successfully" });
   } catch (err) {
@@ -309,5 +314,16 @@ export async function UpdateTravelRecord(req, res) {
     });
   } catch (err) {
     res.send(new Api400Error());
+  }
+}
+
+export async function GetAllPnrRecord(req, res) {
+  const { startDate, endDate, location, name } = req.query;
+  try {
+    const getAllRecord = Modals.UserModels.TravelersModel;
+    const allRecords = await getAllRecord.findAll();
+    res.status(200).send(allRecords);
+  } catch (err) {
+    res.send(new Api404Error());
   }
 }

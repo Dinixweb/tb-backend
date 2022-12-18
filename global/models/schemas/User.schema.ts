@@ -524,6 +524,10 @@ export const TravelerSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
   surName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -531,6 +535,7 @@ export const TravelerSchema = {
   pnrNumber: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   airPlaneName: {
     type: DataTypes.STRING,
