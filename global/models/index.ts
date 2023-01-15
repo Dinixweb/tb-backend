@@ -25,6 +25,7 @@ import {
   ConnectionAwaitSchema,
   CreditSchema,
   FreeViewSchema,
+  InterestListSchema,
   PointOfferSchema,
   ReferralCodeActivationSchema,
   ReferralCodeSchema,
@@ -138,6 +139,11 @@ AdminModel.init(
 UserModels.TokensModel.init(
   TokenSchema,
   sequelizeOptions({ modelName: "tokens", tableName: "tokens" })
+);
+
+UserModels.InterestListModal.init(
+  InterestListSchema,
+  sequelizeOptions({ modelName: "interest_list", tableName: "interest_list" })
 );
 
 AccountTypeModel.init(

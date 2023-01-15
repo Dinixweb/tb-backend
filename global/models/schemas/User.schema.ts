@@ -616,3 +616,20 @@ export const TravelerSchema = {
     defaultValue: "pending",
   },
 };
+
+export const InterestListSchema = {
+  interestId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  interestValues: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+};

@@ -22,6 +22,7 @@ import type {
   PointOffers,
   WishList,
   Travelers,
+  InterestList,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -219,4 +220,10 @@ export class TravelersModel extends Model<Travelers> {
   declare airlineEmail?: string;
   declare passengerTitle?: string;
   declare pnrStatus?: string;
+}
+
+export class InterestListModal extends Model<InterestList> {
+  declare interestId: typeof UUID;
+  declare userId: typeof UUID;
+  declare interestValues: string;
 }

@@ -117,9 +117,9 @@ export async function Register(req: Request, res: Response) {
       const getUserData = await addReferralCode.findOne({
         where: { referralCode: payload.referralCode },
       });
-      console.log("Working", payload.referralCode, getUserData);
+
       if (!getUserData) {
-        return;
+        return res.status(200).json({ code: 200, message: "Account Created" });
       } else {
         const referralActivation = {};
         referralActivation["referralCode"] = payload.referralCode;
@@ -134,8 +134,8 @@ export async function Register(req: Request, res: Response) {
         addBonus["creditSource"] = "referral";
         addBonus["amount"] = 0;
         await bonus.create(addBonus);
+        return res.status(200).json({ code: 200, message: "Account Created" });
       }
-      return res.status(200).json({ code: 200, message: "Account Created" });
     }
   } catch (error) {
     console.log(error);

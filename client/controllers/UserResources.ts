@@ -327,3 +327,8 @@ export async function GetAllPnrRecord(req, res) {
     res.send(new Api404Error());
   }
 }
+
+export async function CreateInterestList(req, res) {
+  const payload = { ...req.body };
+  console.log(payload);
+}
