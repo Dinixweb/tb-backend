@@ -117,22 +117,26 @@ export async function Register(req: Request, res: Response) {
       const getUserData = await addReferralCode.findOne({
         where: { referralCode: payload.referralCode },
       });
-      if (!getUserData) return;
-      const referralActivation = {};
-      referralActivation["referralCode"] = payload.referralCode;
-      referralActivation["createdBy"] = getUserData.userId;
-      referralActivation["usedBy"] = userId;
-      await addReferralCodeActivation.create(referralActivation);
+      console.log("Working", payload.referralCode, getUserData);
+      if (!getUserData) {
+        return;
+      } else {
+        const referralActivation = {};
+        referralActivation["referralCode"] = payload.referralCode;
+        referralActivation["createdBy"] = getUserData.userId;
+        referralActivation["usedBy"] = userId;
+        await addReferralCodeActivation.create(referralActivation);
 
-      //add bonus
-      const addBonus = {};
-      addBonus["userId"] = getUserData.userId;
-      addBonus["creditUnit"] = 20;
-      addBonus["creditSource"] = "referral";
-      addBonus["amount"] = 0;
-      await bonus.create(addBonus);
+        //add bonus
+        const addBonus = {};
+        addBonus["userId"] = getUserData.userId;
+        addBonus["creditUnit"] = 20;
+        addBonus["creditSource"] = "referral";
+        addBonus["amount"] = 0;
+        await bonus.create(addBonus);
+      }
+      return res.status(200).json({ code: 200, message: "Account Created" });
     }
-    return res.status(200).json({ code: 200, message: "Account Created" });
   } catch (error) {
     console.log(error);
     return res.status(new ServerError().statusCode).json(new ServerError());
