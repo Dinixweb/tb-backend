@@ -233,5 +233,9 @@ export interface PointOffers {
 export interface InterestList {
   interestId: typeof UUID;
   userId: typeof UUID;
-  interestValues: string;
+}
+export interface InterestValues {
+  interestValuesId: typeof UUID;
+  values: string;
+  interestId: typeof UUID;
 }

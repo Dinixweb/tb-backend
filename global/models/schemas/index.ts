@@ -17,6 +17,7 @@ import {
   ReferralCodeActivationSchema,
   TravelerSchema,
   InterestListSchema,
+  InterestValuesSchema,
 } from "./User.schema";
 import { AdminSchema } from "./Admin.schema";
 
@@ -40,4 +41,5 @@ export {
   ReferralCodeSchema,
   ReferralCodeActivationSchema,
   InterestListSchema,
+  InterestValuesSchema,
 };

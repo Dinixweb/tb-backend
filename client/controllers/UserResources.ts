@@ -330,5 +330,48 @@ export async function GetAllPnrRecord(req, res) {
 
 export async function CreateInterestList(req, res) {
   const payload = { ...req.body };
-  console.log(payload);
+  try {
+    const addInterest = Modals.UserModels;
+    const interestArr = [];
+    const interest = await addInterest.InterestListModal.findOne({
+      where: { userId: payload.userId },
+    });
+    if (!interest) {
+      await addInterest.InterestListModal.create(payload);
+      const interest = await addInterest.InterestListModal.findOne({
+        where: { userId: payload.userId },
+      });
+      const interestId = interest.interestId;
+      for (const data of payload.interestValues) {
+        const values = data.values;
+        const payloads = { values, interestId };
+        interestArr.push(addInterest.InterestValuesModal.create(payloads));
+      }
+      await Promise.all(interestArr);
+    } else {
+      const interestId = interest.interestId;
+      for (const data of payload.interestValues) {
+        const values = data.values;
+        const payloads = { values, interestId };
+        interestArr.push(addInterest.InterestValuesModal.create(payloads));
+      }
+    }
+    return res.status(201).send({ message: "interest added successfully" });
+  } catch (err) {
+    console.log(err);
+    res.send(new Api400Error());
+  }
+}
+
+export async function GetAreaOfInterest(req, res) {
+  const { userId } = req.params;
+  console.log(userId);
+  try {
+    const getAllInterest = Modals.UserModels.InterestListModal;
+    await getAllInterest.findAll({ where: { userId: userId } });
+    res.status(200).send(getAllInterest);
+  } catch (err) {
+    console.log(err);
+    res.send(new Api404Error());
+  }
 }

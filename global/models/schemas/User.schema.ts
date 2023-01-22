@@ -628,8 +628,20 @@ export const InterestListSchema = {
     type: DataTypes.UUID,
     allowNull: false,
   },
-  interestValues: {
+};
+export const InterestValuesSchema = {
+  interestValuesId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  values: {
     type: DataTypes.STRING,
+    allowNull: false,
+  },
+  interestId: {
+    type: DataTypes.UUID,
     allowNull: false,
   },
 };

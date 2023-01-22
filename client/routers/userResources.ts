@@ -27,5 +27,6 @@ router.put("/updateTravelRecord", UserResource.UpdateTravelRecord);
 router.get("/getAllPnrRecords", UserResource.GetAllPnrRecord);
 router.post("/addWishlist", UserResource.createWishlist);
 router.post("/addInterest", UserResource.CreateInterestList);
+router.get("/GetAreaOfInterest/:userId", UserResource.GetAreaOfInterest);
 
 export = router;

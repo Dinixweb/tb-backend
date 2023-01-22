@@ -23,6 +23,7 @@ import type {
   WishList,
   Travelers,
   InterestList,
+  InterestValues,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -225,5 +226,9 @@ export class TravelersModel extends Model<Travelers> {
 export class InterestListModal extends Model<InterestList> {
   declare interestId: typeof UUID;
   declare userId: typeof UUID;
-  declare interestValues: string;
+}
+export class InterestValuesModal extends Model<InterestValues> {
+  declare interestValuesId: typeof UUID;
+  declare values: typeof String;
+  declare interestId: typeof UUID;
 }
