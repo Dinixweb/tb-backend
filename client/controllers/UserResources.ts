@@ -299,6 +299,7 @@ export async function CreateTravelRecord(req, res) {
     await addTravelRecord.create(payload);
     res.status(201).send({ message: "pnr record addded successfully" });
   } catch (err) {
+    console.log(err);
     res.send(new Api400Error());
   }
 }
@@ -318,12 +319,26 @@ export async function UpdateTravelRecord(req, res) {
 }
 
 export async function GetAllPnrRecord(req, res) {
-  const { startDate, endDate, location, name } = req.query;
+  const { departureAirport, destination, dateFrom, dateTo } = req.query;
   try {
     const getAllRecord = Modals.UserModels.TravelersModel;
-    const allRecords = await getAllRecord.findAll();
+    let clause = new Object();
+    if (departureAirport && destination && dateFrom && dateTo) {
+      clause = { departureAirport, destination, dateFrom, dateTo };
+    } else if (departureAirport && destination) {
+      clause = { departureAirport, destination };
+    } else if (departureAirport && !destination) {
+      clause = { departureAirport };
+    } else if (destination && !departureAirport) {
+      clause = { destination };
+    }
+
+    const allRecords = await getAllRecord.findAll({
+      where: { ...clause },
+    });
     res.status(200).send(allRecords);
   } catch (err) {
+    console.log(err);
     res.send(new Api404Error());
   }
 }
@@ -342,9 +357,10 @@ export async function CreateInterestList(req, res) {
         where: { userId: payload.userId },
       });
       const interestId = interest.interestId;
+      const interestListInterestId = interestId;
       for (const data of payload.interestValues) {
         const values = data.values;
-        const payloads = { values, interestId };
+        const payloads = { values, interestId, interestListInterestId };
         interestArr.push(addInterest.InterestValuesModal.create(payloads));
       }
       await Promise.all(interestArr);
@@ -365,11 +381,17 @@ export async function CreateInterestList(req, res) {
 
 export async function GetAreaOfInterest(req, res) {
   const { userId } = req.params;
-  console.log(userId);
   try {
     const getAllInterest = Modals.UserModels.InterestListModal;
-    await getAllInterest.findAll({ where: { userId: userId } });
-    res.status(200).send(getAllInterest);
+    const getInterest = await getAllInterest.findAll({
+      attributes: ["interestId", "userId"],
+      include: {
+        model: Modals.UserModels.InterestValuesModal,
+        attributes: ["interestValuesId", "values"],
+      },
+      where: { userId: userId },
+    });
+    res.send(getInterest);
   } catch (err) {
     console.log(err);
     res.send(new Api404Error());

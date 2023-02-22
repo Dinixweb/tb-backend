@@ -171,6 +171,11 @@ UserModels.UserSubscription.belongsTo(UserModels.default, {
 UserModels.UserAds.hasMany(UserModels.UserAdViews);
 UserModels.UserAdViews.belongsTo(UserModels.UserAds);
 
+UserModels.InterestListModal.hasMany(UserModels.InterestValuesModal);
+UserModels.InterestValuesModal.belongsTo(UserModels.InterestListModal, {
+  foreignKey: "interestId",
+});
+
 UserModels.UserAds.belongsTo(UserModels.default, { foreignKey: "userId" });
 
 UserModels.UserAds.hasOne(UserModels.ProfileImageUpload);

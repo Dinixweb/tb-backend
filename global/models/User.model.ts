@@ -221,6 +221,9 @@ export class TravelersModel extends Model<Travelers> {
   declare airlineEmail?: string;
   declare passengerTitle?: string;
   declare pnrStatus?: string;
+  declare destination?: string;
+  declare dateFrom?: string;
+  declare dateTo?: string;
 }
 
 export class InterestListModal extends Model<InterestList> {

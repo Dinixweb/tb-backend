@@ -615,6 +615,18 @@ export const TravelerSchema = {
     allowNull: true,
     defaultValue: "pending",
   },
+  destination: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  dateFrom: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  dateTo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 };
 
 export const InterestListSchema = {
@@ -643,5 +655,6 @@ export const InterestValuesSchema = {
   interestId: {
     type: DataTypes.UUID,
     allowNull: false,
+    foreignKey: true,
   },
 };

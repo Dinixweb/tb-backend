@@ -192,6 +192,9 @@ export interface Travelers {
   airlineEmail?: string;
   passengerTitle?: string;
   pnrStatus: string;
+  destination?: string;
+  dateFrom?: string;
+  dateTo?: string;
 }
 
 export interface ReferralCode {
