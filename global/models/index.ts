@@ -193,7 +193,7 @@ UserModels.SplitModel.hasMany(UserModels.UserInterested);
 UserModels.UserInterested.belongsTo(UserModels.SplitModel);
 
 (async () => {
-  await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: true });
+  await sequelizeOptions({ timestamps: true }).sequelize.sync();
 })();
 
 export { UserModels, AdminModel, AccountTypeModel };
