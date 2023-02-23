@@ -242,3 +242,16 @@ export interface InterestValues {
   values: string;
   interestId: typeof UUID;
 }
+
+export interface payments {
+  paymentId: typeof UUID;
+  amount: number;
+  userId: typeof UUID;
+  created: string;
+  referenceNo: string;
+  canceled_at: string;
+  currency: string;
+  paymentMethod: string;
+  status: string;
+  receipt_email: string;
+}
