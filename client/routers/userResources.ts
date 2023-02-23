@@ -2,31 +2,40 @@ import { Router } from "express";
 import * as UserResource from "../controllers/UserResources";
 import multer from "multer";
 const addressUpload = multer({ dest: "" }).single("post");
+import userAuth from "../../global/middleware/auth";
 
 const router = Router();
 
-router.post("/CreatePost", UserResource.CreatePost);
+router.post("/CreatePost", userAuth, UserResource.CreatePost);
 router.delete("/removePost/:userId/:postId", UserResource.RemovePost);
-router.get("/getAllPost", UserResource.getAllPost);
-router.post("/showInterest", UserResource.CreateInterest);
-router.get("/getUserAdverts/:userId", UserResource.getAllAdverts);
+router.get("/getAllPost", userAuth, UserResource.getAllPost);
+router.post("/showInterest", userAuth, UserResource.CreateInterest);
+router.get("/getUserAdverts/:userId", userAuth, UserResource.getAllAdverts);
 //router.post("/wishlist", UserResource.CreateWishlist);
 
 // Email Parser Api Call
-router.post("/travellerResourceInit", UserResource.emailParserResource);
+router.post(
+  "/travellerResourceInit",
+  userAuth,
+  UserResource.emailParserResource
+);
 
 // Split System
-router.post("/createSplit", UserResource.createSplit);
-router.get("/getSplitRequest/:userId", UserResource.getSplitRequest);
-router.put("/acceptSplitRequest", UserResource.acceptSplitRequest);
+router.post("/createSplit", userAuth, UserResource.createSplit);
+router.get("/getSplitRequest/:userId", userAuth, UserResource.getSplitRequest);
+router.put("/acceptSplitRequest", userAuth, UserResource.acceptSplitRequest);
 
 //PRN
-router.get("/pnrRequest", UserResource.PNRSearch);
-router.post("/createTravelRecord", UserResource.CreateTravelRecord);
-router.put("/updateTravelRecord", UserResource.UpdateTravelRecord);
-router.get("/getAllPnrRecords", UserResource.GetAllPnrRecord);
-router.post("/addWishlist", UserResource.createWishlist);
-router.post("/addInterest", UserResource.CreateInterestList);
-router.get("/GetAreaOfInterest/:userId", UserResource.GetAreaOfInterest);
+router.get("/pnrRequest", userAuth, UserResource.PNRSearch);
+router.post("/createTravelRecord", userAuth, UserResource.CreateTravelRecord);
+router.put("/updateTravelRecord", userAuth, UserResource.UpdateTravelRecord);
+router.get("/getAllPnrRecords", userAuth, UserResource.GetAllPnrRecord);
+router.post("/addWishlist", userAuth, UserResource.createWishlist);
+router.post("/addInterest", userAuth, UserResource.CreateInterestList);
+router.get(
+  "/GetAreaOfInterest/:userId",
+  userAuth,
+  UserResource.GetAreaOfInterest
+);
 
 export = router;
