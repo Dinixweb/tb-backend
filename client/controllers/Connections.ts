@@ -229,12 +229,14 @@ export async function initializeFreeView(req, res) {
     const activeAccount = await freeViewCount.findAll({
       where: { userId: payload.userId },
     });
-    const viewRemining = activeAccount
+    const rawActiveCount = activeAccount;
+    let viewRemining = activeAccount
       .map((val) => {
         return val.viewRemaining;
       })
       .reduce((i, a) => i + a, 0);
 
+    viewRemining = 3 - viewRemining;
     res
       .status(201)
       .send({ message: "view successful", viewRemaining: viewRemining });
