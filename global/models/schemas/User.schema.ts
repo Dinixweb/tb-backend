@@ -670,11 +670,11 @@ export const PaymentSchema = {
     defaultValue: DataTypes.UUIDV4,
   },
   amount: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.BIGINT,
     allowNull: false,
   },
   userId: {
-    type: DataTypes.UUID,
+    type: DataTypes.STRING,
     allowNull: false,
     foreignKey: true,
   },

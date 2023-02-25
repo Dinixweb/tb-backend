@@ -133,6 +133,14 @@ UserModels.ConnectionAwaitModel.init(
   })
 );
 
+UserModels.Payments.init(
+  PaymentSchema,
+  sequelizeOptions({
+    modelName: "payments",
+    tableName: "payments",
+  })
+);
+
 AdminModel.init(
   AdminSchema,
   sequelizeOptions({ modelName: "admin_account", tableName: "admin_account" })
@@ -152,13 +160,6 @@ UserModels.InterestValuesModal.init(
   sequelizeOptions({
     modelName: "interest_values",
     tableName: "interest_values",
-  })
-);
-UserModels.Payments.init(
-  PaymentSchema,
-  sequelizeOptions({
-    modelName: "payments",
-    tableName: "payments",
   })
 );
 

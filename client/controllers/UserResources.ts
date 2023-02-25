@@ -336,7 +336,7 @@ export async function GetAllPnrRecord(req, res) {
 
     const allRecords = await getAllRecord.findAll({
       where: { ...clause },
-      attributes: ["travellerId", "firstName", "surName", "userId"],
+      attributes: ["travellerId", "firstName", "surName", "userId", "image"],
     });
     const profileImage = [];
 
@@ -348,10 +348,12 @@ export async function GetAllPnrRecord(req, res) {
         })
       );
     }
-    const profile = await Promise.all(profileImage);
+    let [profile] = await Promise.all(profileImage);
+    profile = profile.dataValues;
 
-    allRecords.forEach((a, e) => {
-      return (a["profile"] = profile[e]);
+    allRecords.forEach((a) => {
+      a = profile;
+      return a;
     });
 
     res.status(200).send(allRecords);
