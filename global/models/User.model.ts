@@ -24,6 +24,7 @@ import type {
   Travelers,
   InterestList,
   InterestValues,
+  PaymentProps,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -224,6 +225,7 @@ export class TravelersModel extends Model<Travelers> {
   declare destination?: string;
   declare dateFrom?: string;
   declare dateTo?: string;
+  declare image?: string;
 }
 
 export class InterestListModal extends Model<InterestList> {
@@ -234,4 +236,16 @@ export class InterestValuesModal extends Model<InterestValues> {
   declare interestValuesId: typeof UUID;
   declare values: typeof String;
   declare interestId: typeof UUID;
+}
+export class Payments extends Model<PaymentProps> {
+  declare paymentId: typeof UUID;
+  declare amount: number;
+  declare userId: typeof UUID;
+  declare created: string;
+  declare referenceNo: string;
+  declare canceled_at: string;
+  declare currency: string;
+  declare paymentMethod: string;
+  declare status: string;
+  declare receipt_email: string;
 }

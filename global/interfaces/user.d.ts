@@ -195,6 +195,7 @@ export interface Travelers {
   destination?: string;
   dateFrom?: string;
   dateTo?: string;
+  image?: string;
 }
 
 export interface ReferralCode {
@@ -243,7 +244,7 @@ export interface InterestValues {
   interestId: typeof UUID;
 }
 
-export interface payments {
+export interface PaymentProps {
   paymentId: typeof UUID;
   amount: number;
   userId: typeof UUID;

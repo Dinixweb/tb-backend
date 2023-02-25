@@ -627,6 +627,10 @@ export const TravelerSchema = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 };
 
 export const InterestListSchema = {
@@ -656,5 +660,50 @@ export const InterestValuesSchema = {
     type: DataTypes.UUID,
     allowNull: false,
     foreignKey: true,
+  },
+};
+export const PaymentSchema = {
+  paymentId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  amount: {
+    type: DataTypes.NUMBER,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    foreignKey: true,
+  },
+  created: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  referenceNo: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  canceled_at: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  currency: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  paymentMethod: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  receipt_email: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 };

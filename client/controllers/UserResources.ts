@@ -322,6 +322,7 @@ export async function GetAllPnrRecord(req, res) {
   const { departureAirport, destination, dateFrom, dateTo } = req.query;
   try {
     const getAllRecord = Modals.UserModels.TravelersModel;
+    const userProfile = Modals.UserModels.default;
     let clause = new Object();
     if (departureAirport && destination && dateFrom && dateTo) {
       clause = { departureAirport, destination, dateFrom, dateTo };
@@ -335,7 +336,24 @@ export async function GetAllPnrRecord(req, res) {
 
     const allRecords = await getAllRecord.findAll({
       where: { ...clause },
+      attributes: ["travellerId", "firstName", "surName", "userId"],
     });
+    const profileImage = [];
+
+    for (const data of allRecords) {
+      profileImage.push(
+        userProfile.findOne({
+          where: { userId: data.userId },
+          attributes: ["profileImage"],
+        })
+      );
+    }
+    const profile = await Promise.all(profileImage);
+
+    allRecords.forEach((a, e) => {
+      return (a["profile"] = profile[e]);
+    });
+
     res.status(200).send(allRecords);
   } catch (err) {
     console.log(err);

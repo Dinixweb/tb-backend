@@ -27,6 +27,7 @@ import {
   FreeViewSchema,
   InterestListSchema,
   InterestValuesSchema,
+  PaymentSchema,
   PointOfferSchema,
   ReferralCodeActivationSchema,
   ReferralCodeSchema,
@@ -151,6 +152,13 @@ UserModels.InterestValuesModal.init(
   sequelizeOptions({
     modelName: "interest_values",
     tableName: "interest_values",
+  })
+);
+UserModels.Payments.init(
+  PaymentSchema,
+  sequelizeOptions({
+    modelName: "payments",
+    tableName: "payments",
   })
 );
 

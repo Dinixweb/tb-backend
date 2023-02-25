@@ -216,6 +216,7 @@ export async function initializeFreeView(req, res) {
   const payload = { ...req.body };
   try {
     const freeViewCount = Modals.UserModels.FreeViewModal;
+    const getAllRecord = Modals.UserModels.TravelersModel;
     const addFreeView = freeViewCount;
     const viewResponse = await freeViewCount.findAll({
       where: { userId: payload.userId },
@@ -229,6 +230,10 @@ export async function initializeFreeView(req, res) {
     const activeAccount = await freeViewCount.findAll({
       where: { userId: payload.userId },
     });
+    const allRecords = await getAllRecord.findAll({
+      where: { travellerId: payload.travellerId },
+    });
+
     const rawActiveCount = activeAccount;
     let viewRemining = activeAccount
       .map((val) => {
@@ -237,9 +242,10 @@ export async function initializeFreeView(req, res) {
       .reduce((i, a) => i + a, 0);
 
     viewRemining = 3 - viewRemining;
-    res
-      .status(201)
-      .send({ message: "view successful", viewRemaining: viewRemining });
+
+    const data = { viewRemaining: viewRemining, allRecords };
+
+    res.status(201).send({ data });
   } catch (err) {
     res.status(400).send(new Api400Error());
   }

@@ -5,7 +5,7 @@ import userAuth from "../../global/middleware/auth";
 const router = Router();
 
 router.post("/connectionRequest", userAuth, Connections.addConnection);
-router.post("/initFreeView", userAuth, Connections.initializeFreeView);
+router.get("/initFreeView", userAuth, Connections.initializeFreeView);
 router.get("/myConnections/:userId", userAuth, Connections.connectionList);
 router.get(
   "/suggestedConnection/:userId",
