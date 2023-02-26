@@ -336,7 +336,17 @@ export async function GetAllPnrRecord(req, res) {
 
     const allRecords = await getAllRecord.findAll({
       where: { ...clause },
-      attributes: ["travellerId", "firstName", "surName", "userId", "image"],
+      attributes: [
+        "travellerId",
+        "firstName",
+        "surName",
+        "userId",
+        "image",
+        "dateFrom",
+        "departureDate",
+        "departureAirport",
+        "destination",
+      ],
     });
     const profileImage = [];
 
@@ -355,8 +365,21 @@ export async function GetAllPnrRecord(req, res) {
       a = profile;
       return a;
     });
+    let monthYear = {};
+    let month = {};
+    for (const data of allRecords) {
+      const date = data.departureDate.substring(3, 10);
 
-    res.status(200).send(allRecords);
+      monthYear = date;
+      month = allRecords.filter(
+        (obj) => obj.departureDate.substring(3, 10) === date
+      );
+    }
+    //console.log(monthYear);
+    //console.log(res);
+    const months = { month };
+
+    res.status(200).send(months);
   } catch (err) {
     console.log(err);
     res.send(new Api404Error());
