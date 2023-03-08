@@ -334,7 +334,7 @@ export async function GetAllPnrRecord(req, res) {
       clause = { destination };
     }
 
-    const allRecords = await getAllRecord.findAll({
+    let allRecords = await getAllRecord.findAll({
       where: { ...clause },
       attributes: [
         "travellerId",
@@ -365,21 +365,32 @@ export async function GetAllPnrRecord(req, res) {
       a = profile;
       return a;
     });
-    let monthYear = {};
-    let month = {};
-    for (const data of allRecords) {
-      const date = data.departureDate.substring(3, 10);
+    allRecords = allRecords.map((a) => a).reverse();
+    const groupByMonth = allRecords.reduce((group, month, index) => {
+      const { departureDate } = month;
+      group[departureDate.substring(3, 12)] =
+        group[departureDate.substring(3, 12)] ?? [];
 
-      monthYear = date;
-      month = allRecords.filter(
-        (obj) => obj.departureDate.substring(3, 10) === date
+      const innerGroup = group[departureDate.substring(3, 12)].reduce(
+        (_group, days) => {
+          const { departureDate } = days;
+          _group[departureDate.substring(0, 5)] =
+            _group[departureDate.substring(0, 5)] ?? [];
+          _group[departureDate.substring(0, 5)].push(days);
+          return _group;
+        },
+        {}
       );
-    }
-    //console.log(monthYear);
-    //console.log(res);
-    const months = { month };
+      group[departureDate.substring(3, 12)].push(month);
+      //console.log(innerGroup);
+      group[departureDate.substring(3, 12)].forEach((e, i) => {
+        return (e = innerGroup[i]);
+      });
 
-    res.status(200).send(months);
+      return group;
+    }, {});
+
+    res.status(200).send(groupByMonth);
   } catch (err) {
     console.log(err);
     res.send(new Api404Error());
