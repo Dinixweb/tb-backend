@@ -1,3 +1,4 @@
+import { database } from "firebase-admin";
 import { DataTypes } from "sequelize";
 
 // User Profile
@@ -631,6 +632,10 @@ export const TravelerSchema = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  matchData: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
 };
 
 export const InterestListSchema = {
@@ -705,5 +710,42 @@ export const PaymentSchema = {
   receipt_email: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+};
+
+export const AddWishListSchema = {
+  wishlistId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  destination: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  departureAirport: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  dateFrom: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  dateTo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  userDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+  },
+  adminDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
   },
 };

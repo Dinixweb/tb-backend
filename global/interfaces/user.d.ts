@@ -196,6 +196,7 @@ export interface Travelers {
   dateFrom?: string;
   dateTo?: string;
   image?: string;
+  matchData?: unknown;
 }
 
 export interface ReferralCode {
@@ -255,4 +256,15 @@ export interface PaymentProps {
   paymentMethod: string;
   status: string;
   receipt_email: string;
+}
+
+export interface AddWishListProps {
+  wishlistId: typeof UUID;
+  departureAirport: string;
+  userId: typeof UUID;
+  destination: string;
+  dateFrom: string;
+  dateTo: string;
+  userDeleted: boolean;
+  adminDeleted: boolean;
 }

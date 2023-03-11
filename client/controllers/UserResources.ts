@@ -7,7 +7,7 @@ import DatauriParser from "datauri/parser";
 import { v4 as uuidv4 } from "uuid";
 import { Op } from "sequelize";
 import sequelize from "sequelize/types/sequelize";
-
+import * as _ from "lodash";
 const parser = new DatauriParser();
 
 /**
@@ -319,7 +319,9 @@ export async function UpdateTravelRecord(req, res) {
 }
 
 export async function GetAllPnrRecord(req, res) {
-  const { departureAirport, destination, dateFrom, dateTo } = req.query;
+  let { departureAirport, destination, dateFrom, dateTo, saveWishlist } =
+    req.query;
+  const { userId } = req.params;
   try {
     const getAllRecord = Modals.UserModels.TravelersModel;
     const userProfile = Modals.UserModels.default;
@@ -348,8 +350,41 @@ export async function GetAllPnrRecord(req, res) {
         "destination",
       ],
     });
-    const profileImage = [];
+    const addWish = Modals.UserModels.AddWishListModel;
+    if (saveWishlist === "true") {
+      destination = !destination ? "" : destination;
+      departureAirport = !departureAirport ? "" : departureAirport;
+      dateFrom = !dateFrom ? "" : dateFrom;
+      dateTo = !dateTo ? "" : dateTo;
+      const getWish = await addWish.findAll({
+        where: {
+          destination: destination,
+          departureAirport: departureAirport,
+          userId: userId,
+          dateFrom: dateFrom,
+          dateTo: dateTo,
+        },
+      });
 
+      // eslint-disable-next-line no-empty
+      if (getWish.length > 0) {
+      } else {
+        const payload = {
+          departureAirport,
+          destination,
+          dateFrom,
+          dateTo,
+          userId,
+        };
+
+        await addWish.create(payload);
+      }
+    }
+
+    if (allRecords.length <= 0)
+      return res.send({ message: "no data available" });
+
+    const profileImage = [];
     for (const data of allRecords) {
       profileImage.push(
         userProfile.findOne({
@@ -366,31 +401,44 @@ export async function GetAllPnrRecord(req, res) {
       return a;
     });
     allRecords = allRecords.map((a) => a).reverse();
-    const groupByMonth = allRecords.reduce((group, month, index) => {
-      const { departureDate } = month;
-      group[departureDate.substring(3, 12)] =
-        group[departureDate.substring(3, 12)] ?? [];
 
-      const innerGroup = group[departureDate.substring(3, 12)].reduce(
-        (_group, days) => {
-          const { departureDate } = days;
-          _group[departureDate.substring(0, 5)] =
-            _group[departureDate.substring(0, 5)] ?? [];
-          _group[departureDate.substring(0, 5)].push(days);
-          return _group;
-        },
-        {}
-      );
-      group[departureDate.substring(3, 12)].push(month);
-      //console.log(innerGroup);
-      group[departureDate.substring(3, 12)].forEach((e, i) => {
-        return (e = innerGroup[i]);
-      });
+    // const groupByMonth = _.groupBy(allRecords, "departureDate");
 
-      return group;
-    }, {});
+    // const groupByMonth = allRecords.reduce((group, month, index) => {
+    //   const { departureDate } = month;
+    //   group[departureDate.substring(3, 12)] =
+    //     group[departureDate.substring(3, 12)] ?? [];
+    //   group[departureDate.substring(3, 12)].push(month);
+    //   return group;
+    // }, {});
+    const labels = ["departureDate"];
 
-    res.status(200).send(groupByMonth);
+    const levelOne = allRecords.reduce((r, o) => {
+      labels
+        .reduce((level, key) => {
+          const label = Array.isArray(o[key].substring(3, 12))
+            ? o[key][0].substring(3, 12)
+            : o[key].substring(3, 12);
+          let temp = level.find((q) => q.label === label);
+          if (!temp) level.push((temp = { label, children: [] }));
+          return temp.children;
+        }, r)
+        .push(o);
+      return r;
+    }, []);
+
+    const ini = levelOne.map((data, index) =>
+      data.children.reduce((group, month) => {
+        const { departureDate } = month;
+        group[departureDate.substring(0, 5)] =
+          group[departureDate.substring(0, 5)] ?? [];
+        group[departureDate.substring(0, 5)].push(month);
+
+        return group;
+      }, {})
+    );
+
+    res.status(200).send(ini);
   } catch (err) {
     console.log(err);
     res.send(new Api404Error());
@@ -451,3 +499,47 @@ export async function GetAreaOfInterest(req, res) {
     res.send(new Api404Error());
   }
 }
+
+export async function ActivePnr(req, res) {
+  const { userId } = req.params;
+  try {
+    const ActiveTravelerPnr = Modals.UserModels.TravelersModel;
+    const getAllPnr = await ActiveTravelerPnr.findAll({
+      where: { userId: userId, pnrStatus: "pending" },
+    });
+    const AllActivePNR = [];
+    for (const data of getAllPnr) {
+      AllActivePNR.push(
+        await ActiveTravelerPnr.findAll({
+          where: {
+            airPlaneName: data.airPlaneName,
+            departureDate: data.departureDate,
+            destination: data.destination,
+            departureAirport: data.departureAirport,
+            userId: !userId,
+          },
+        })
+      );
+    }
+    const matchData = await Promise.all(AllActivePNR);
+
+    getAllPnr.forEach((a, i) => {
+      a.matchData = matchData[i];
+      return a;
+    });
+
+    res.send(getAllPnr);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// export async function AddWishList(req, res) {
+//   const payload = { ...req.body };
+//   try {
+
+//     res.send({ message: "successfully added" });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }

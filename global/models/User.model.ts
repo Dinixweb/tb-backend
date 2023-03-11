@@ -25,6 +25,7 @@ import type {
   InterestList,
   InterestValues,
   PaymentProps,
+  AddWishListProps,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -226,6 +227,7 @@ export class TravelersModel extends Model<Travelers> {
   declare dateFrom?: string;
   declare dateTo?: string;
   declare image?: string;
+  declare matchData: any;
 }
 
 export class InterestListModal extends Model<InterestList> {
@@ -248,4 +250,15 @@ export class Payments extends Model<PaymentProps> {
   declare paymentMethod: string;
   declare status: string;
   declare receipt_email: string;
+}
+
+export class AddWishListModel extends Model<AddWishListProps> {
+  declare wishlistId: typeof UUID;
+  declare userId: typeof UUID;
+  declare departureAirport: string;
+  declare destination: string;
+  declare dateFrom: string;
+  declare dateTo: string;
+  declare userDeleted: boolean;
+  declare adminDeleted: boolean;
 }

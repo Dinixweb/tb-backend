@@ -22,6 +22,7 @@ import * as UserModels from "./User.model";
 import AdminModel from "./Admin.model";
 import AccountTypeModel from "../../admin/models/AccountType";
 import {
+  AddWishListSchema,
   ConnectionAwaitSchema,
   CreditSchema,
   FreeViewSchema,
@@ -131,6 +132,10 @@ UserModels.ConnectionAwaitModel.init(
     modelName: "connection_request",
     tableName: "connection_request",
   })
+);
+UserModels.AddWishListModel.init(
+  AddWishListSchema,
+  sequelizeOptions({ modelName: "wishlist", tableName: "wishlist" })
 );
 
 UserModels.Payments.init(

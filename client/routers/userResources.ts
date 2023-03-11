@@ -27,9 +27,10 @@ router.put("/acceptSplitRequest", userAuth, UserResource.acceptSplitRequest);
 
 //PRN
 router.get("/pnrRequest", userAuth, UserResource.PNRSearch);
+router.get("/ActivePnr/:userId", UserResource.ActivePnr);
 router.post("/createTravelRecord", userAuth, UserResource.CreateTravelRecord);
 router.put("/updateTravelRecord", userAuth, UserResource.UpdateTravelRecord);
-router.get("/getAllPnrRecords", userAuth, UserResource.GetAllPnrRecord);
+router.get("/getAllPnrRecords/:userId", userAuth, UserResource.GetAllPnrRecord);
 router.post("/addWishlist", userAuth, UserResource.createWishlist);
 router.post("/addInterest", userAuth, UserResource.CreateInterestList);
 router.get(
