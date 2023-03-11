@@ -14,12 +14,13 @@ import {
   SplitSchema,
   ResetPasswordToken,
   IndentitySchema,
+  AdminChangeLogSchema,
 } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
 // -> model imports
 import * as UserModels from "./User.model";
-import AdminModel from "./Admin.model";
+import AdminModel, { AdminChangeLogModel } from "./Admin.model";
 import AccountTypeModel from "../../admin/models/AccountType";
 import {
   AddWishListSchema,
@@ -180,6 +181,11 @@ AccountTypeModel.init(
     modelName: "admin_accountTypes",
     tableName: "admin_accountTypes",
   })
+);
+
+AdminChangeLogModel.init(
+  AdminChangeLogSchema,
+  sequelizeOptions({ modelName: "admin_logs", tableName: "admin_logs" })
 );
 
 // Model Relationships

@@ -34,6 +34,30 @@ interface IAcountType {
   key: string;
   createdBy?: null | string;
 }
+export interface AdminChangeLogProps {
+  logId: typeof UUID;
+  userId: typeof UUID;
+  action: string;
+}
+
+export interface FAQProps {
+  faqId: typeof UUID;
+  question: string;
+  answer: string;
+  media: string;
+}
+export interface AboutProps {
+  aboutId: string;
+  about: string;
+}
+export interface PrivacyProps {
+  privacyId: string;
+  privacy: string;
+}
+export interface TermsAndConditionProps {
+  id: string;
+  termsAndCondition: string;
+}
 
 export enum portalRef {
   web = "web-client",

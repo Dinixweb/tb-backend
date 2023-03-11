@@ -1,4 +1,4 @@
-import { AdminUser } from "global/interfaces/admin";
+import { AdminChangeLogProps, AdminUser } from "global/interfaces/admin";
 import { Model, UUID } from "sequelize";
 import Client from "./User.model";
 
@@ -22,4 +22,9 @@ export default class AdminModel extends Model<AdminUser> {
   declare profileImage?: string;
   declare passwordRestToken?: string;
   declare tokenTimestamp?: string;
+}
+export class AdminChangeLogModel extends Model<AdminChangeLogProps> {
+  declare logId: typeof UUID;
+  declare userId: typeof UUID;
+  declare action: string;
 }
