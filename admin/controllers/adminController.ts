@@ -9,6 +9,7 @@ import path from "path";
 import cloudinary from "../../global/utils/cloudinaryConfig";
 import DatauriParser from "datauri/parser";
 import { where } from "sequelize";
+import e from "express";
 
 const parser = new DatauriParser();
 
@@ -79,10 +80,9 @@ export async function UserInfo(req, res) {
 }
 
 export async function UserChangeLogs(req, res) {
-  const { userId } = req.params;
   try {
     const logs = Modals.UserModels.ChangeLogModel;
-    const getAllLogs = logs.findAll({ where: { userId: userId } });
+    const getAllLogs = await logs.findAll();
     res.send(getAllLogs);
   } catch (err) {
     console.log(err);
@@ -156,7 +156,7 @@ export async function createAdminUser(req, res) {
 
 export async function AllAdminUsers(req, res) {
   try {
-    const adminUsers = Modals.AdminModel;
+    const adminUsers = Modals.AdminModel.default;
     const getAllUsers = await adminUsers.findAll({
       attributes: { exclude: ["password"] },
     });
@@ -168,7 +168,7 @@ export async function AllAdminUsers(req, res) {
 export async function deleteAdminUser(req, res) {
   const { employeeId } = req.params;
   try {
-    const adminUsers = Modals.AdminModel;
+    const adminUsers = Modals.AdminModel.default;
     await adminUsers.destroy({ where: { employeeId: employeeId } });
     res.send({ message: "user deleted" });
   } catch (err) {
@@ -186,7 +186,7 @@ export async function UpdateAdminUser(req, res) {
 
   try {
     //Need validtion
-    const adminUser = Modals.AdminModel;
+    const adminUser = Modals.AdminModel.default;
     const profileImage = await cloudinary.uploader.upload(imagePath, {
       upload_preset: "identity_uploads",
       public_id: employeeId,
@@ -199,6 +199,143 @@ export async function UpdateAdminUser(req, res) {
       { where: { employeeId: payload.employeeId } }
     );
     res.send({ message: "updated successfully" });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function FAQ(req, res) {
+  const payload = { ...req.body };
+  try {
+    const _FAQ = Modals.AdminModel.FAQPModel;
+    if (payload) {
+      const getFAQ = await _FAQ.findOne();
+      if (getFAQ) {
+        await _FAQ.update({ ...payload }, { where: { faqId: getFAQ.faqId } });
+      } else {
+        await _FAQ.create(payload);
+      }
+    } else {
+      return res.send({ message: "no value entered...check payload" });
+    }
+    res.send({ message: "successfully updated" });
+  } catch (err) {
+    console.log(err);
+  }
+}
+export async function AboutApp(req, res) {
+  const payload = { ...req.body };
+  try {
+    const AboutObj = Modals.AdminModel.AboutModel;
+    if (payload) {
+      const getAboutApp = await AboutObj.findOne();
+      if (getAboutApp) {
+        await AboutObj.update(
+          { ...payload },
+          { where: { aboutId: getAboutApp.aboutId } }
+        );
+      } else {
+        await AboutObj.create(payload);
+      }
+    } else {
+      return res.send({ message: "no value entered...check payload" });
+    }
+    res.send({ message: "successfully updated" });
+  } catch (err) {
+    console.log(err);
+  }
+}
+export async function Privacy(req, res) {
+  const payload = { ...req.body };
+  try {
+    const _privacy = Modals.AdminModel.PrivacyModel;
+    if (payload) {
+      const getPrivacy = await _privacy.findOne();
+      if (getPrivacy) {
+        await _privacy.update(
+          { ...payload },
+          { where: { privacyId: getPrivacy.privacyId } }
+        );
+      } else {
+        await _privacy.create(payload);
+      }
+    } else {
+      return res.send({ message: "no value entered...check payload" });
+    }
+    res.send({ message: "successfully updated" });
+  } catch (err) {
+    console.log(err);
+  }
+}
+export async function TermsAndCondition(req, res) {
+  const payload = { ...req.body };
+  try {
+    const terms = Modals.AdminModel.TermsAndConditionModel;
+    if (payload) {
+      const getTerms = await terms.findOne();
+      if (getTerms) {
+        await terms.update(
+          { ...payload },
+          {
+            where: {
+              id: getTerms.id,
+            },
+          }
+        );
+      } else {
+        await terms.create(payload);
+      }
+    } else {
+      return res.send({ message: "no value entered...check payload" });
+    }
+    res.send({ message: "successfully updated" });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getFAQ(req, res) {
+  try {
+    const getFAQ = Modals.AdminModel.FAQPModel;
+    const [response] = await getFAQ.findAll();
+
+    res.send(response);
+  } catch (err) {
+    console.log(err);
+  }
+}
+export async function GetAboutApp(req, res) {
+  try {
+    const getAbout = Modals.AdminModel.AboutModel;
+    const [response] = await getAbout.findAll();
+    res.send(response);
+  } catch (err) {
+    console.log(err);
+  }
+}
+export async function GetPrivacy(req, res) {
+  try {
+    const getPrivacy = Modals.AdminModel.PrivacyModel;
+    const [response] = await getPrivacy.findAll();
+    res.send(response);
+  } catch (err) {
+    console.log(err);
+  }
+}
+export async function GetTermsAndCondition(req, res) {
+  try {
+    const getTerms = Modals.AdminModel.TermsAndConditionModel;
+    const [response] = await getTerms.findAll();
+    res.send(response);
+  } catch (err) {
+    console.log(err);
+  }
+}
+export async function AdminChangeLogs(req, res) {
+  try {
+    const logs = Modals.AdminModel.AdminChangeLogModel;
+    const getAllLogs = await logs.findAll();
+    res.send(getAllLogs);
   } catch (err) {
     console.log(err);
   }

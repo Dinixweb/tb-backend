@@ -8,6 +8,15 @@ router.get("/getUserChangeLogs/:userId", AdminController.UserChangeLogs);
 router.post("/addAdminUser", profileUpload, AdminController.createAdminUser);
 router.get("/allAdminUsers", AdminController.AllAdminUsers);
 router.put("/updateAdminUser", profileUpload, AdminController.UpdateAdminUser);
+router.post("/createFAQ", AdminController.FAQ);
+router.post("/createAboutApp", AdminController.AboutApp);
+router.post("/createPrivacy", AdminController.Privacy);
+router.post("/createTermsAndCondition", AdminController.TermsAndCondition);
+router.get("/getFAQ", AdminController.getFAQ);
+router.get("/getAboutApp", AdminController.GetAboutApp);
+router.get("/getPrivacy", AdminController.GetPrivacy);
+router.get("/getTermsAndCondition", AdminController.GetTermsAndCondition);
+router.get("/getAdminChangeLogs", AdminController.AdminChangeLogs);
 router.delete("/deleteAdminUser/:employeeId", AdminController.deleteAdminUser);
 
 export = router;

@@ -22,7 +22,14 @@ import {
   AddWishListSchema,
   ChangeLogSchema,
 } from "./User.schema";
-import { AdminSchema, AdminChangeLogSchema } from "./Admin.schema";
+import {
+  AdminSchema,
+  AdminChangeLogSchema,
+  FAQSchema,
+  AboutSchema,
+  PrivacySchema,
+  TermsAndConditionSchema,
+} from "./Admin.schema";
 
 export {
   UserSchema,
@@ -49,4 +56,8 @@ export {
   AddWishListSchema,
   ChangeLogSchema,
   AdminChangeLogSchema,
+  FAQSchema,
+  AboutSchema,
+  PrivacySchema,
+  TermsAndConditionSchema,
 };

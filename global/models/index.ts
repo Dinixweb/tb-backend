@@ -15,12 +15,16 @@ import {
   ResetPasswordToken,
   IndentitySchema,
   AdminChangeLogSchema,
+  FAQSchema,
+  AboutSchema,
+  PrivacySchema,
+  TermsAndConditionSchema,
 } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
 // -> model imports
 import * as UserModels from "./User.model";
-import AdminModel, { AdminChangeLogModel } from "./Admin.model";
+import * as AdminModel from "./Admin.model";
 import AccountTypeModel from "../../admin/models/AccountType";
 import {
   AddWishListSchema,
@@ -153,7 +157,7 @@ UserModels.Payments.init(
   })
 );
 
-AdminModel.init(
+AdminModel.default.init(
   AdminSchema,
   sequelizeOptions({ modelName: "admin_account", tableName: "admin_account" })
 );
@@ -183,11 +187,31 @@ AccountTypeModel.init(
   })
 );
 
-AdminChangeLogModel.init(
+AdminModel.AdminChangeLogModel.init(
   AdminChangeLogSchema,
   sequelizeOptions({ modelName: "admin_logs", tableName: "admin_logs" })
 );
 
+AdminModel.FAQPModel.init(
+  FAQSchema,
+  sequelizeOptions({ tableName: "faq", modelName: "faq" })
+);
+AdminModel.AboutModel.init(
+  AboutSchema,
+  sequelizeOptions({ tableName: "about", modelName: "about" })
+);
+
+AdminModel.PrivacyModel.init(
+  PrivacySchema,
+  sequelizeOptions({ tableName: "privacy", modelName: "privacy" })
+);
+AdminModel.TermsAndConditionModel.init(
+  TermsAndConditionSchema,
+  sequelizeOptions({
+    tableName: "terms_and_condition",
+    modelName: "terms_and_condition",
+  })
+);
 // Model Relationships
 // AccountTypeModel.belongsTo(AdminModel, { foreignKey: "createdBy" });
 UserModels.UserSubscription.belongsTo(UserModels.default, {

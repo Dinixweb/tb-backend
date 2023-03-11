@@ -1,6 +1,12 @@
-import { AdminChangeLogProps, AdminUser } from "global/interfaces/admin";
+import {
+  AboutProps,
+  AdminChangeLogProps,
+  AdminUser,
+  FAQProps,
+  PrivacyProps,
+  TermsAndConditionProps,
+} from "global/interfaces/admin";
 import { Model, UUID } from "sequelize";
-import Client from "./User.model";
 
 export default class AdminModel extends Model<AdminUser> {
   declare employeeId: typeof UUID;
@@ -27,4 +33,23 @@ export class AdminChangeLogModel extends Model<AdminChangeLogProps> {
   declare logId: typeof UUID;
   declare userId: typeof UUID;
   declare action: string;
+}
+
+export class FAQPModel extends Model<FAQProps> {
+  declare faqId: typeof UUID;
+  declare question: string;
+  declare answer: string;
+  declare media: string;
+}
+export class AboutModel extends Model<AboutProps> {
+  declare aboutId: string;
+  declare about: string;
+}
+export class PrivacyModel extends Model<PrivacyProps> {
+  declare privacyId: string;
+  declare privacy: string;
+}
+export class TermsAndConditionModel extends Model<TermsAndConditionProps> {
+  declare id: string;
+  declare termsAndCondition: string;
 }
