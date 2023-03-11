@@ -1,5 +1,5 @@
 import { DataType, Model } from "sequelize";
-import type { UUID } from "sequelize/types";
+import { UUID } from "sequelize/types";
 import type {
   AdViews,
   Feeds,
@@ -26,6 +26,7 @@ import type {
   InterestValues,
   PaymentProps,
   AddWishListProps,
+  UserChangeLogProps,
 } from "../interfaces/user";
 
 export default class User extends Model<IAccount> {
@@ -44,6 +45,10 @@ export default class User extends Model<IAccount> {
   declare isActive: boolean;
   declare createdAt: Date;
   declare updatedAt: Date;
+  declare identity: unknown;
+  declare referralCount: number;
+  declare totalReferredUser: number;
+  declare numberOfConnection: number;
 }
 
 export class UserSubscription extends Model<Subscription> {
@@ -123,7 +128,7 @@ export class ResetPasswordModel extends Model<PasswordResetToken> {
 
 export class IdentityModel extends Model<IndentityVerification> {
   declare identityId: string;
-  declare userId: string;
+  declare userId: typeof UUID;
   declare identityType: string;
   declare identity: string;
   declare expiryDate: string;
@@ -261,4 +266,10 @@ export class AddWishListModel extends Model<AddWishListProps> {
   declare dateTo: string;
   declare userDeleted: boolean;
   declare adminDeleted: boolean;
+}
+
+export class ChangeLogModel extends Model<UserChangeLogProps> {
+  declare logId: typeof UUID;
+  declare userId: typeof UUID;
+  declare action: string;
 }

@@ -31,6 +31,7 @@ router.get("/ActivePnr/:userId", UserResource.ActivePnr);
 router.post("/createTravelRecord", userAuth, UserResource.CreateTravelRecord);
 router.put("/updateTravelRecord", userAuth, UserResource.UpdateTravelRecord);
 router.get("/getAllPnrRecords/:userId", userAuth, UserResource.GetAllPnrRecord);
+router.get("/getWishListHistory/:userId", UserResource.GetWishList);
 router.post("/addWishlist", userAuth, UserResource.createWishlist);
 router.post("/addInterest", userAuth, UserResource.CreateInterestList);
 router.get(

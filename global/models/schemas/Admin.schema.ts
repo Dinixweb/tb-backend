@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 
 export const AdminSchema = {
-  userId: {
+  employeeId: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
@@ -47,6 +47,38 @@ export const AdminSchema = {
     allowNull: true,
   },
   tokenTimestamp: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  age: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  nationality: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  userName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  department: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  salary: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  jobTitle: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  jobInfo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  address: {
     type: DataTypes.STRING,
     allowNull: true,
   },

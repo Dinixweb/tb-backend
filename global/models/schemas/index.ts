@@ -20,6 +20,7 @@ import {
   InterestValuesSchema,
   PaymentSchema,
   AddWishListSchema,
+  ChangeLogSchema,
 } from "./User.schema";
 import { AdminSchema } from "./Admin.schema";
 
@@ -46,4 +47,5 @@ export {
   InterestValuesSchema,
   PaymentSchema,
   AddWishListSchema,
+  ChangeLogSchema,
 };

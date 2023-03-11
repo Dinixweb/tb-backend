@@ -66,6 +66,22 @@ export const UserSchema = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  identity: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
+  referralCount: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  totalReferredUser: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  numberOfConnection: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
 };
 
 // subscription schema
@@ -747,5 +763,22 @@ export const AddWishListSchema = {
   adminDeleted: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
+  },
+};
+
+export const ChangeLogSchema = {
+  logId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  action: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 };

@@ -1,3 +1,4 @@
+import { string } from "joi";
 import { UUID } from "sequelize/types";
 
 export interface IAccount {
@@ -14,6 +15,10 @@ export interface IAccount {
   gender?: string;
   // referralCode?: string;
   description?: string;
+  identity?: unknown;
+  referralCount?: number;
+  totalReferredUser?: number;
+  numberOfConnection?: number;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -120,7 +125,7 @@ export interface PasswordResetToken {
 
 export interface IndentityVerification {
   identityId: string;
-  userId: string;
+  userId: typeof UUID;
   identityType?: string;
   identity?: string;
   expiryDate?: string;
@@ -267,4 +272,10 @@ export interface AddWishListProps {
   dateTo: string;
   userDeleted: boolean;
   adminDeleted: boolean;
+}
+
+export interface UserChangeLogProps {
+  logId: typeof UUID;
+  userId: typeof UUID;
+  action: string;
 }

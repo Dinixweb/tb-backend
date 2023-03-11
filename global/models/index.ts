@@ -23,6 +23,7 @@ import AdminModel from "./Admin.model";
 import AccountTypeModel from "../../admin/models/AccountType";
 import {
   AddWishListSchema,
+  ChangeLogSchema,
   ConnectionAwaitSchema,
   CreditSchema,
   FreeViewSchema,
@@ -58,6 +59,11 @@ UserModels.UserAdViews.init(
 UserModels.TravelersModel.init(
   TravelerSchema,
   sequelizeOptions({ modelName: "travelers", tableName: "travelers" })
+);
+
+UserModels.ChangeLogModel.init(
+  ChangeLogSchema,
+  sequelizeOptions({ modelName: "user_logs", tableName: "user_logs" })
 );
 
 UserModels.ResetPasswordModel.init(

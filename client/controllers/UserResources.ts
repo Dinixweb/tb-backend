@@ -319,10 +319,15 @@ export async function UpdateTravelRecord(req, res) {
 }
 
 export async function GetAllPnrRecord(req, res) {
+  // eslint-disable-next-line prefer-const
   let { departureAirport, destination, dateFrom, dateTo, saveWishlist } =
     req.query;
   const { userId } = req.params;
   try {
+    if (!departureAirport || !destination)
+      return res.send({
+        message: "search requires departureAiport and destination",
+      });
     const getAllRecord = Modals.UserModels.TravelersModel;
     const userProfile = Modals.UserModels.default;
     let clause = new Object();
@@ -442,6 +447,17 @@ export async function GetAllPnrRecord(req, res) {
   } catch (err) {
     console.log(err);
     res.send(new Api404Error());
+  }
+}
+
+export async function GetWishList(req, res) {
+  const { userId } = req.params;
+  try {
+    const wish = Modals.UserModels.AddWishListModel;
+    const getAllWish = await wish.findAll({ where: { userId: userId } });
+    res.send(getAllWish);
+  } catch (err) {
+    console.log(err);
   }
 }
 
