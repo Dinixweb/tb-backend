@@ -67,7 +67,7 @@ export const UserSchema = {
     allowNull: true,
   },
   identity: {
-    type: DataTypes.JSON,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   referralCount: {
@@ -649,7 +649,7 @@ export const TravelerSchema = {
     allowNull: true,
   },
   matchData: {
-    type: DataTypes.JSON,
+    type: DataTypes.STRING,
     allowNull: true,
   },
 };
