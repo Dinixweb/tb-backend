@@ -345,7 +345,6 @@ export async function GetAllPrnRecord(req, res) {
   try {
     const pnrRecords = Modals.UserModels.TravelersModel;
     const response = await pnrRecords.findAll();
-
     res.send(response);
   } catch (err) {
     console.log(err);
