@@ -13,6 +13,11 @@ export interface IAccount {
   profileImage?: string;
   userName?: string;
   gender?: string;
+  nationality: string;
+  isSuspended?: boolean;
+  suspendedDate?: string;
+  suspensionReason: string;
+  trust: string;
   // referralCode?: string;
   description?: string;
   identity?: unknown;

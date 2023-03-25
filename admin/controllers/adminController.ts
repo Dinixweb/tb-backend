@@ -8,13 +8,19 @@ import { referralCode } from "global/utils/global_function";
 import path from "path";
 import cloudinary from "../../global/utils/cloudinaryConfig";
 import DatauriParser from "datauri/parser";
-import { where } from "sequelize";
-import e from "express";
+import { Op } from "sequelize";
 
 const parser = new DatauriParser();
 
-async function findByEmail(_email: string, _Modal: any) {
-  const query = { where: { email: _email } };
+async function findByEmail(_email: string, _phone, _Modal: any) {
+  const query = {
+    where: {
+      [Op.or]: [
+        { email: { [Op.like]: _email } },
+        { phoneNumber: { [Op.like]: _phone } },
+      ],
+    },
+  };
   const currentUser = await _Modal.findOne(query);
   return currentUser;
 }
@@ -94,7 +100,7 @@ export async function createAdminUser(req, res) {
   const employeeId = uuidv4();
   let accountType: string | number = -1;
   const baseModelRef = {
-    "web-client": Modals.AdminModel,
+    "web-client": Modals.AdminModel.default,
     "mobile-client": Modals.UserModels.default,
   };
 
@@ -103,7 +109,7 @@ export async function createAdminUser(req, res) {
   const imagePath = file64.content;
 
   const modelRef = baseModelRef[payload.createRef] ?? -1;
-
+  console.log(modelRef, payload.createRef);
   try {
     if (payload.createRef === "web-client") {
       const query = { where: { key: payload.createRef } };
@@ -116,11 +122,15 @@ export async function createAdminUser(req, res) {
       accountType = currentType.key;
     }
     const selectModel = modelRef === -1 ? Modals.UserModels.default : modelRef;
-    const currentUser = await findByEmail(payload.email, selectModel);
+    const currentUser = await findByEmail(
+      payload.email,
+      payload.phoneNumber,
+      selectModel
+    );
     if (currentUser) {
       return res
         .status(new BadRequestError().statusCode)
-        .json(new BadRequestError(400, "Email already exist"));
+        .json(new BadRequestError(400, "Email or Phone number already exist"));
     }
     if (accountType === -1) {
       const findDefaultAccountTypeQuery = { where: { defaultType: true } };
