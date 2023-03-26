@@ -17,6 +17,8 @@ router.get("/getAboutApp", AdminController.GetAboutApp);
 router.get("/getPrivacy", AdminController.GetPrivacy);
 router.get("/getTermsAndCondition", AdminController.GetTermsAndCondition);
 router.get("/getAdminChangeLogs", AdminController.AdminChangeLogs);
+router.put("/suspendUser", AdminController.SuspendUser);
+router.put("/reactivateUser/:userId", AdminController.ReactivateUser);
 router.get("/getPnrRecords", AdminController.GetAllPrnRecord);
 router.delete("/deleteAdminUser/:employeeId", AdminController.deleteAdminUser);
 

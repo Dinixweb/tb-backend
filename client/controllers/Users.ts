@@ -110,6 +110,7 @@ export async function Register(req: Request, res: Response) {
     payload.userId = userId;
     const passwordHash = await hashPassword(payload.password);
     payload.password = passwordHash;
+    payload.trust = "30%";
     await selectModel.create(payload);
     await addReferralCode.create(referralCodePayload);
 

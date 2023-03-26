@@ -41,6 +41,11 @@ export default class User extends Model<IAccount> {
   declare description: string;
   declare gender: string;
   declare userName: string;
+  declare nationality: string;
+  declare isSuspended?: boolean;
+  declare suspendedDate?: string;
+  declare suspensionReason: string;
+  declare trust: string;
   // declare referralCode: string;
   declare isActive: boolean;
   declare createdAt: Date;

@@ -27,6 +27,8 @@ export const RegisterValidationSchema = Joi.object({
   userName: Joi.string().required(),
   gender: Joi.string().required(),
   type: Joi.string().optional(),
+  dateOfBirth: Joi.string().optional(),
+  nationality: Joi.string().optional(),
   referralCode: Joi.string().optional(),
 });
 

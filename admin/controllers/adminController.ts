@@ -360,3 +360,36 @@ export async function GetAllPrnRecord(req, res) {
     console.log(err);
   }
 }
+
+export async function SuspendUser(req, res) {
+  const { userId, suspensionReason } = req.body;
+  const date = new Date().toJSON().slice(0, 10);
+
+  try {
+    const updateUsers = Modals.UserModels.default;
+    await updateUsers.update(
+      {
+        isSuspended: true,
+        suspensionReason: suspensionReason,
+        suspendedDate: date,
+      },
+      { where: { userId: userId } }
+    );
+    res.send({ message: "user suspended" });
+  } catch (err) {
+    console.log(err);
+  }
+}
+export async function ReactivateUser(req, res) {
+  const { userId } = req.params;
+  try {
+    const updateUsers = Modals.UserModels.default;
+    await updateUsers.update(
+      { isSuspended: false, suspensionReason: "", suspendedDate: "" },
+      { where: { userId: userId } }
+    );
+    res.send({ message: "user reactivated successfully" });
+  } catch (err) {
+    console.log(err);
+  }
+}

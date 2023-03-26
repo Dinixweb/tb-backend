@@ -62,6 +62,26 @@ export const UserSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  nationality: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  isSuspended: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+  },
+  suspendedDate: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  suspensionReason: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  trust: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   profileImage: {
     type: DataTypes.STRING,
     allowNull: true,
