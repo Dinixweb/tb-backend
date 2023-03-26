@@ -60,7 +60,14 @@ export interface Feeds {
   updatedAt?: Date;
 }
 export interface Ads extends Feeds {
+  adId: typeof UUID;
+  advertId: string;
+  split: string;
+  targetCity_1?: string;
+  targetCity_2?: string;
+  targetCity_3?: string;
   deletedAt: Date;
+  adRerunTimes;
   adView?: AdViews[];
 }
 
@@ -169,6 +176,7 @@ export interface Tokens {
 
 export interface WishList {
   wishlistId: typeof UUID;
+  userId: string;
   departure: string;
   destination: string;
   dateFrom: string;

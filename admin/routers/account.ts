@@ -18,8 +18,12 @@ router.get("/getPrivacy", AdminController.GetPrivacy);
 router.get("/getTermsAndCondition", AdminController.GetTermsAndCondition);
 router.get("/getAdminChangeLogs", AdminController.AdminChangeLogs);
 router.put("/suspendUser", AdminController.SuspendUser);
-router.put("/reactivateUser/:userId", AdminController.ReactivateUser);
+router.get("/getFlightData", AdminController.GetFlightDetails);
 router.get("/getPnrRecords", AdminController.GetAllPrnRecord);
+router.get("/getWishlist", AdminController.GetWishlist);
+router.get("/getAdvertList", AdminController.AvertDetails);
+router.put("/reactivateUser/:userId", AdminController.ReactivateUser);
+
 router.delete("/deleteAdminUser/:employeeId", AdminController.deleteAdminUser);
 
 export = router;

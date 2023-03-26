@@ -9,6 +9,7 @@ import path from "path";
 import cloudinary from "../../global/utils/cloudinaryConfig";
 import DatauriParser from "datauri/parser";
 import { Op } from "sequelize";
+import Api404Error from "../../global/errors/ApiError404";
 
 const parser = new DatauriParser();
 
@@ -348,6 +349,7 @@ export async function AdminChangeLogs(req, res) {
     res.send(getAllLogs);
   } catch (err) {
     console.log(err);
+    res.send(new Api404Error());
   }
 }
 
@@ -358,6 +360,28 @@ export async function GetAllPrnRecord(req, res) {
     res.send(response);
   } catch (err) {
     console.log(err);
+    res.send(new Api404Error());
+  }
+}
+export async function GetWishlist(req, res) {
+  try {
+    const fetchWishlist = Modals.UserModels.WishlistModel;
+    const response = await fetchWishlist.findAll();
+    res.send(response);
+  } catch (error) {
+    console.log(error);
+    res.send(new Api404Error());
+  }
+}
+
+export async function GetFlightDetails(req, res) {
+  try {
+    const flightData = Modals.UserModels.TravelersModel;
+    const response = await flightData.findAll();
+    res.send(response);
+  } catch (err) {
+    console.log(err);
+    res.send(new Api404Error());
   }
 }
 
@@ -391,5 +415,16 @@ export async function ReactivateUser(req, res) {
     res.send({ message: "user reactivated successfully" });
   } catch (err) {
     console.log(err);
+  }
+}
+
+export async function AvertDetails(req, res) {
+  try {
+    const advertList = Modals.UserModels.UserAds;
+    const response = await advertList.findAll();
+    res.send(response);
+  } catch (err) {
+    console.log(err);
+    res.send(new Api404Error());
   }
 }

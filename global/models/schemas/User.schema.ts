@@ -156,6 +156,26 @@ export const UserAdsSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  advertId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  split: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  targetCity_1: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  targetCity_2: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  targetCity_3: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   postTitle: {
     type: DataTypes.STRING,
     allowNull: false,

@@ -79,6 +79,13 @@ export class UserAds extends Model<Feeds> {
   declare postAddress: string;
   declare link: string;
   declare postPrice: number;
+  declare advertId: string;
+  declare split: string;
+  declare targetCity_1: string;
+  declare targetCity_2: string;
+  declare targetCity_3: string;
+  declare deletedAt: Date;
+  declare adRerunTimes;
 }
 export class UserAdViews extends Model<AdViews> {
   declare viewId: typeof UUID;
@@ -202,6 +209,7 @@ export class PointOfferModal extends Model<PointOffers> {
 }
 export class WishlistModel extends Model<WishList> {
   declare wishlistId: typeof UUID;
+  declare userId: string;
   declare departure: string;
   declare destination: string;
   declare dateFrom: string;
