@@ -56,18 +56,19 @@ export interface Feeds {
   link: string;
   postPrice: number;
   numberOfPersons: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-export interface Ads extends Feeds {
-  adId: typeof UUID;
   advertId: string;
   split: string;
   targetCity_1?: string;
   targetCity_2?: string;
   targetCity_3?: string;
-  deletedAt: Date;
-  adRerunTimes;
+  noOfDaye: number;
+  deletedAt?: Date;
+  adRerunTimes?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+export interface Ads extends Feeds {
+  adId: typeof UUID;
   adView?: AdViews[];
 }
 

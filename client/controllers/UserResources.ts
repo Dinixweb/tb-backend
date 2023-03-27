@@ -29,6 +29,7 @@ export async function CreatePost(req, res) {
   } = req.body;
   //const ImageId = uuidv4();
   const postId = uuidv4();
+  const adId = uuidv4();
 
   try {
     // const extName = path.extname(req.file.originalname).toString();
@@ -51,6 +52,8 @@ export async function CreatePost(req, res) {
     await Modals.UserModels.UserAds.create({
       postId: postId,
       userId: userId,
+      advertId: adId,
+      adRerunTimes: 1,
       postType: postType,
       link: link,
       postTitle: postTitle,

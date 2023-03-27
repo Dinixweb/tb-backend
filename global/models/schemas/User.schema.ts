@@ -184,6 +184,10 @@ export const UserAdsSchema = {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  adRerunTimes: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
   postAddress: {
     type: DataTypes.TEXT,
     allowNull: true,
