@@ -56,12 +56,12 @@ export interface Feeds {
   link: string;
   postPrice: number;
   numberOfPersons: number;
-  advertId: string;
+  advertId?: string;
   split: string;
   targetCity_1?: string;
   targetCity_2?: string;
   targetCity_3?: string;
-  noOfDaye: number;
+  noOfDays?: number;
   deletedAt?: Date;
   adRerunTimes?: number;
   createdAt?: Date;
