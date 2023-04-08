@@ -5,9 +5,7 @@ import * as Modals from "../../global/models";
 import type { Response, Request } from "express";
 
 // -> accountType controller methods
-export async function CreateAccountType(req, res) {
-  const { label, key, defaultType } = req.body;
-  //const payload = { label, key, defaultType };
+export async function CreateAccountType() {
   const accountType = [
     {
       label: "web-client",
@@ -22,20 +20,15 @@ export async function CreateAccountType(req, res) {
   ];
 
   try {
+    const isAccountType = await AccountTypeModel.findAll();
+    if (isAccountType) return;
     const addType = [];
     for (const type of accountType) {
       addType.push(AccountTypeModel.create(type));
     }
     await Promise.all(addType);
-    return res.status(201).json({ code: 201, message: "Account Types" });
   } catch (error) {
     console.log(error);
-    if (error.errors[0].message !== undefined) {
-      return res
-        .status(new BadRequestError().statusCode)
-        .json(new BadRequestError(400, error.errors[0].message));
-    }
-    return res.status(new ServerError().statusCode).json(new ServerError());
   }
 }
 
@@ -62,42 +55,19 @@ export async function removeType(req: Request, res: Response) {
   }
 }
 
-export async function createPoints() {
+export async function createPoints(req, res) {
+  const payload = { ...req.body };
   try {
-    const point = [
-      {
-        points: 10,
-        price: 5,
-      },
-      {
-        points: 30,
-        price: 15,
-      },
-      {
-        points: 70,
-        price: 25,
-      },
-      {
-        points: 150,
-        price: 35,
-      },
-      {
-        points: 500,
-        price: 50,
-      },
-    ];
     const addPoints = Modals.UserModels.PointOfferModal;
     const getPoints = await addPoints.findAll();
-    if (getPoints.length >= 5) return;
 
-    const createOffer = [];
-    for (const data of point) {
-      createOffer.push(addPoints.create(data));
-    }
-    await Promise.all(createOffer);
-    //res.send({message:'offers created'})
+    const isPoint = getPoints.some((point) => point.points === payload.points);
+    console.log(isPoint);
+    if (isPoint) return res.send({ message: "point already exist" });
+    await addPoints.create(payload);
+    res.send({ message: "offers created" });
   } catch (err) {
     console.log(err);
-    //res.status(new ServerError().statusCode).json(new ServerError());
+    res.status(new ServerError().statusCode).json(new ServerError());
   }
 }

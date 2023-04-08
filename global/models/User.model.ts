@@ -214,6 +214,7 @@ export class WishlistModel extends Model<WishList> {
   declare destination: string;
   declare dateFrom: string;
   declare dateTo: string;
+  declare image: string;
 }
 
 export class TravelersModel extends Model<Travelers> {

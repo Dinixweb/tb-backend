@@ -8,7 +8,8 @@ const isDev = process.env.NODE_ENV;
 const HOST = process.env.HOST;
 
 // -> For some reason on Mac, process.env keeps replacing the USER with my current system name
-const USER = isDev === "development" ? "root" : (process.env.USER as string);
+const DBUSER =
+  isDev === "development" ? "root" : (process.env.DBUSER as string);
 const PASSWORD = process.env.PASSWORD as string;
 const DATABASE = process.env.DATABASE as string;
 const dbDriver = process.env.DB_DRIVER as Dialect;
@@ -17,7 +18,7 @@ let sequelizeConnection: Sequelize;
 if (process.env.CLEARDB_DATABASE_URL) {
   sequelizeConnection = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 } else {
-  sequelizeConnection = new Sequelize(DATABASE, USER, PASSWORD, {
+  sequelizeConnection = new Sequelize(DATABASE, DBUSER, PASSWORD, {
     host: HOST,
     dialect: dbDriver,
     logging: false,

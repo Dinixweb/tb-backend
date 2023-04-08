@@ -6,7 +6,7 @@ const router = Router();
 router.get("", AccountTypeController.getAll);
 
 // -> admin Middleware
-router.post("", adminAuth, AccountTypeController.CreateAccountType);
+//router.post("", adminAuth, AccountTypeController.CreateAccountType);
 router.delete("/:id", adminAuth, AccountTypeController.removeType);
-
+router.post("/createPoints", AccountTypeController.createPoints);
 export = router;

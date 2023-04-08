@@ -4,6 +4,7 @@ import * as AdminController from "../controllers/adminController";
 const router = Router();
 const profileUpload = multer({ dest: "" }).single("profileImage");
 router.get("/getAllUsers", AdminController.UserInfo);
+
 router.get("/getUserChangeLogs/:userId", AdminController.UserChangeLogs);
 router.post("/addAdminUser", profileUpload, AdminController.createAdminUser);
 router.get("/allAdminUsers", AdminController.AllAdminUsers);

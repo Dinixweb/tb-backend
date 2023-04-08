@@ -808,6 +808,10 @@ export const AddWishListSchema = {
     type: DataTypes.BOOLEAN,
     allowNull: true,
   },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 };
 
 export const ChangeLogSchema = {

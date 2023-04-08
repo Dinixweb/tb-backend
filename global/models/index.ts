@@ -47,30 +47,6 @@ UserModels.default.init(
   sequelizeOptions({ modelName: "client_account", tableName: "client_account" })
 );
 
-UserModels.UserSubscription.init(
-  SubscriptionSchema,
-  sequelizeOptions({ modelName: "subscription", tableName: "subscription" })
-);
-
-UserModels.UserAds.init(
-  UserAdsSchema,
-  sequelizeOptions({ modelName: "user_ads", tableName: "user_ads" })
-);
-
-UserModels.UserAdViews.init(
-  UserAdViewsSchema,
-  sequelizeOptions({ modelName: "ad_view", tableName: "ad_view" })
-);
-UserModels.TravelersModel.init(
-  TravelerSchema,
-  sequelizeOptions({ modelName: "travelers", tableName: "travelers" })
-);
-
-UserModels.ChangeLogModel.init(
-  ChangeLogSchema,
-  sequelizeOptions({ modelName: "user_logs", tableName: "user_logs" })
-);
-
 UserModels.ResetPasswordModel.init(
   ResetPasswordToken,
   sequelizeOptions({
@@ -85,10 +61,33 @@ UserModels.IdentityModel.init(
     tableName: "indentity_verification",
   })
 );
-
+UserModels.PointOfferModal.init(
+  PointOfferSchema,
+  sequelizeOptions({ modelName: "point_offer", tableName: "point_offer" })
+);
 UserModels.ProfileImageUpload.init(
   ProfileImageSchema,
   sequelizeOptions({ modelName: "profile_images", tableName: "profile_images" })
+);
+
+AdminModel.default.init(
+  AdminSchema,
+  sequelizeOptions({ modelName: "admin_account", tableName: "admin_account" })
+);
+
+UserModels.TokensModel.init(
+  TokenSchema,
+  sequelizeOptions({ modelName: "tokens", tableName: "tokens" })
+);
+
+UserModels.TravelersModel.init(
+  TravelerSchema,
+  sequelizeOptions({ modelName: "travelers", tableName: "travelers" })
+);
+
+UserModels.ChangeLogModel.init(
+  ChangeLogSchema,
+  sequelizeOptions({ modelName: "user_logs", tableName: "user_logs" })
 );
 
 UserModels.SplitModel.init(
@@ -113,6 +112,16 @@ UserModels.Connections.init(
   sequelizeOptions({ modelName: "connections", tableName: "connections" })
 );
 
+UserModels.UserSubscription.init(
+  SubscriptionSchema,
+  sequelizeOptions({ modelName: "subscription", tableName: "subscription" })
+);
+
+UserModels.UserAdViews.init(
+  UserAdViewsSchema,
+  sequelizeOptions({ modelName: "ad_view", tableName: "ad_view" })
+);
+
 UserModels.FreeViewModal.init(
   FreeViewSchema,
   sequelizeOptions({ modelName: "free_view", tableName: "free_view" })
@@ -125,10 +134,11 @@ UserModels.ReferralCodeModel.init(
   ReferralCodeSchema,
   sequelizeOptions({ modelName: "referral_code", tableName: "referral_code" })
 );
-UserModels.PointOfferModal.init(
-  PointOfferSchema,
-  sequelizeOptions({ modelName: "point_offer", tableName: "point_offer" })
+UserModels.UserAds.init(
+  UserAdsSchema,
+  sequelizeOptions({ modelName: "user_ads", tableName: "user_ads" })
 );
+
 UserModels.ReferralCodeActivationModal.init(
   ReferralCodeActivationSchema,
   sequelizeOptions({
@@ -155,16 +165,6 @@ UserModels.Payments.init(
     modelName: "payments",
     tableName: "payments",
   })
-);
-
-AdminModel.default.init(
-  AdminSchema,
-  sequelizeOptions({ modelName: "admin_account", tableName: "admin_account" })
-);
-
-UserModels.TokensModel.init(
-  TokenSchema,
-  sequelizeOptions({ modelName: "tokens", tableName: "tokens" })
 );
 
 UserModels.InterestListModal.init(
@@ -212,35 +212,36 @@ AdminModel.TermsAndConditionModel.init(
     modelName: "terms_and_condition",
   })
 );
+
+// table relationship
+
+UserModels.default.hasOne(UserModels.Connections);
+UserModels.Connections.belongsTo(UserModels.default);
+UserModels.default.hasOne(UserModels.ShownInterestModel);
 // Model Relationships
 // AccountTypeModel.belongsTo(AdminModel, { foreignKey: "createdBy" });
-UserModels.UserSubscription.belongsTo(UserModels.default, {
-  foreignKey: "userId",
-});
-
-UserModels.UserAds.hasMany(UserModels.UserAdViews);
-UserModels.UserAdViews.belongsTo(UserModels.UserAds);
 
 UserModels.InterestListModal.hasMany(UserModels.InterestValuesModal);
 UserModels.InterestValuesModal.belongsTo(UserModels.InterestListModal, {
   foreignKey: "interestId",
 });
 
-UserModels.UserAds.belongsTo(UserModels.default, { foreignKey: "userId" });
-
-UserModels.UserAds.hasOne(UserModels.ProfileImageUpload);
-UserModels.ProfileImageUpload.belongsTo(UserModels.UserAds);
-
-UserModels.UserAds.hasMany(UserModels.ShownInterestModel);
-UserModels.ShownInterestModel.belongsTo(UserModels.UserAds);
-UserModels.default.hasOne(UserModels.ShownInterestModel);
 UserModels.ShownInterestModel.belongsTo(UserModels.default);
-
-UserModels.default.hasOne(UserModels.Connections);
-UserModels.Connections.belongsTo(UserModels.default);
 
 UserModels.SplitModel.hasMany(UserModels.UserInterested);
 UserModels.UserInterested.belongsTo(UserModels.SplitModel);
+// UserModels.UserSubscription.belongsTo(UserModels.default, {
+//   foreignKey: "userId",
+// });
+//UserModels.UserAds.belongsTo(UserModels.default, { foreignKey: "userId" });
+
+//UserModels.UserAds.hasOne(UserModels.ProfileImageUpload);
+UserModels.ProfileImageUpload.belongsTo(UserModels.UserAds);
+
+//UserModels.UserAds.hasMany(UserModels.ShownInterestModel);
+UserModels.ShownInterestModel.belongsTo(UserModels.UserAds);
+UserModels.UserAds.hasMany(UserModels.UserAdViews);
+UserModels.UserAdViews.belongsTo(UserModels.UserAds);
 
 (async () => {
   await sequelizeOptions({ timestamps: true }).sequelize.sync();

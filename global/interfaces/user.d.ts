@@ -182,6 +182,7 @@ export interface WishList {
   destination: string;
   dateFrom: string;
   dateTo: string;
+  image: string;
 }
 
 export interface Travelers {

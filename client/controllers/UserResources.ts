@@ -323,19 +323,28 @@ export async function UpdateTravelRecord(req, res) {
 
 export async function GetAllPnrRecord(req, res) {
   // eslint-disable-next-line prefer-const
-  let { departureAirport, destination, dateFrom, dateTo, saveWishlist } =
-    req.query;
+  let {
+    departureAirport,
+    destination,
+    dateFrom,
+    dateTo,
+    saveWishlist,
+    searchType,
+  } = req.query;
   const { userId } = req.params;
   try {
-    if (!departureAirport || !destination)
+    if (!departureAirport)
       return res.send({
-        message: "search requires departureAiport and destination",
+        message: "search requires departureAiport",
       });
     const getAllRecord = Modals.UserModels.TravelersModel;
     const userProfile = Modals.UserModels.default;
+
     let clause = new Object();
     if (departureAirport && destination && dateFrom && dateTo) {
       clause = { departureAirport, destination, dateFrom, dateTo };
+    } else if (departureAirport && destination && dateFrom) {
+      clause = { departureAirport, destination, dateFrom };
     } else if (departureAirport && destination) {
       clause = { departureAirport, destination };
     } else if (departureAirport && !destination) {
@@ -343,110 +352,148 @@ export async function GetAllPnrRecord(req, res) {
     } else if (destination && !departureAirport) {
       clause = { destination };
     }
-
-    let allRecords = await getAllRecord.findAll({
-      where: { ...clause },
-      attributes: [
-        "travellerId",
-        "firstName",
-        "surName",
-        "userId",
-        "image",
-        "dateFrom",
-        "departureDate",
-        "departureAirport",
-        "destination",
-      ],
-    });
-    const addWish = Modals.UserModels.AddWishListModel;
-    if (saveWishlist === "true") {
-      destination = !destination ? "" : destination;
-      departureAirport = !departureAirport ? "" : departureAirport;
-      dateFrom = !dateFrom ? "" : dateFrom;
-      dateTo = !dateTo ? "" : dateTo;
-      const getWish = await addWish.findAll({
-        where: {
-          destination: destination,
-          departureAirport: departureAirport,
-          userId: userId,
-          dateFrom: dateFrom,
-          dateTo: dateTo,
-        },
+    const PNRSearch = async () => {
+      let allRecords = await getAllRecord.findAll({
+        where: { ...clause },
+        attributes: [
+          "travellerId",
+          "firstName",
+          "surName",
+          "userId",
+          "image",
+          "dateFrom",
+          "departureDate",
+          "departureAirport",
+          "destination",
+        ],
       });
 
-      // eslint-disable-next-line no-empty
-      if (getWish.length > 0) {
-      } else {
-        const payload = {
-          departureAirport,
-          destination,
-          dateFrom,
-          dateTo,
-          userId,
-        };
+      const addWish = Modals.UserModels.AddWishListModel;
+      if (saveWishlist === "true") {
+        destination = !destination ? "" : destination;
+        departureAirport = !departureAirport ? "" : departureAirport;
+        dateFrom = !dateFrom ? "" : dateFrom;
+        dateTo = !dateTo ? "" : dateTo;
+        const getWish = await addWish.findAll({
+          where: {
+            destination: destination,
+            departureAirport: departureAirport,
+            userId: userId,
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+          },
+        });
 
-        await addWish.create(payload);
+        // eslint-disable-next-line no-empty
+        if (getWish.length > 0) {
+        } else {
+          const payload = {
+            departureAirport,
+            destination,
+            dateFrom,
+            dateTo,
+            userId,
+          };
+
+          await addWish.create(payload);
+        }
       }
+
+      if (allRecords.length <= 0)
+        return res.send({ message: "no data available" });
+
+      const profileImage = [];
+      for (const data of allRecords) {
+        profileImage.push(
+          userProfile.findOne({
+            where: { userId: data.userId },
+            attributes: ["profileImage"],
+          })
+        );
+      }
+      let [profile] = await Promise.all(profileImage);
+
+      profile = !profile ? "" : profile.dataValues;
+
+      allRecords.forEach((a) => {
+        a = profile;
+        return a;
+      });
+      allRecords = allRecords.map((a) => a).reverse();
+
+      const groupedByMonthAndYear = allRecords.reduce((result, item) => {
+        const year = item.departureDate.substring(6, 10);
+        const month = item.departureDate.substring(5, 3);
+
+        const day = item.departureDate.substring(0, 2);
+        const key = `${year}-${month}`;
+
+        if (!result[key]) {
+          result[key] = {};
+        }
+
+        if (!result[key][day]) {
+          result[key][day] = [];
+        }
+
+        result[key][day].push(item);
+
+        return result;
+      }, {});
+
+      res.status(200).send(groupedByMonthAndYear);
+    };
+    const wishListSearch = async () => {
+      const wishlist = Modals.UserModels.AddWishListModel;
+      let getAllWish = await wishlist.findAll({ where: { userId: userId } });
+      const profileImage = [];
+      for (const data of getAllWish) {
+        profileImage.push(
+          userProfile.findOne({
+            where: { userId: data.userId },
+            attributes: ["profileImage"],
+          })
+        );
+      }
+      let [profile] = await Promise.all(profileImage);
+
+      profile = !profile ? "" : profile.dataValues;
+
+      getAllWish.forEach((a) => {
+        a = profile;
+        return a;
+      });
+      getAllWish = getAllWish.map((a) => a).reverse();
+
+      const groupedByMonthAndYear = getAllWish.reduce((result, item) => {
+        const year = item.dateFrom.substring(6, 10);
+        const month = item.dateFrom.substring(5, 3);
+
+        const day = item.dateFrom.substring(0, 2);
+        const key = `${year}-${month}`;
+
+        if (!result[key]) {
+          result[key] = {};
+        }
+
+        if (!result[key][day]) {
+          result[key][day] = [];
+        }
+
+        result[key][day].push(item);
+
+        return result;
+      }, {});
+
+      res.status(200).send(groupedByMonthAndYear);
+    };
+    if (searchType === "wishList") {
+      wishListSearch();
+    } else if (searchType === "pnrSearch") {
+      PNRSearch();
+    } else {
+      return res.send({ message: "set searchType" });
     }
-
-    if (allRecords.length <= 0)
-      return res.send({ message: "no data available" });
-
-    const profileImage = [];
-    for (const data of allRecords) {
-      profileImage.push(
-        userProfile.findOne({
-          where: { userId: data.userId },
-          attributes: ["profileImage"],
-        })
-      );
-    }
-    let [profile] = await Promise.all(profileImage);
-    profile = profile.dataValues;
-
-    allRecords.forEach((a) => {
-      a = profile;
-      return a;
-    });
-    allRecords = allRecords.map((a) => a).reverse();
-
-    // const groupByMonth = _.groupBy(allRecords, "departureDate");
-
-    // const groupByMonth = allRecords.reduce((group, month, index) => {
-    //   const { departureDate } = month;
-    //   group[departureDate.substring(3, 12)] =
-    //     group[departureDate.substring(3, 12)] ?? [];
-    //   group[departureDate.substring(3, 12)].push(month);
-    //   return group;
-    // }, {});
-    const labels = ["departureDate"];
-
-    const levelOne = allRecords.reduce((r, o) => {
-      labels
-        .reduce((level, key) => {
-          const label = Array.isArray(o[key].substring(3, 12))
-            ? o[key][0].substring(3, 12)
-            : o[key].substring(3, 12);
-          let temp = level.find((q) => q.label === label);
-          if (!temp) level.push((temp = { label, children: [] }));
-          return temp.children;
-        }, r)
-        .push(o);
-      return r;
-    }, []);
-
-    const ini = levelOne.map((data, index) =>
-      data.children.reduce((group, month) => {
-        const { departureDate } = month;
-        group[departureDate.substring(0, 5)] =
-          group[departureDate.substring(0, 5)] ?? [];
-        group[departureDate.substring(0, 5)].push(month);
-
-        return group;
-      }, {})
-    );
-
-    res.status(200).send(ini);
   } catch (err) {
     console.log(err);
     res.send(new Api404Error());
@@ -456,8 +503,8 @@ export async function GetAllPnrRecord(req, res) {
 export async function GetWishList(req, res) {
   const { userId } = req.params;
   try {
-    const wish = Modals.UserModels.AddWishListModel;
-    const getAllWish = await wish.findAll({ where: { userId: userId } });
+    const wishlist = Modals.UserModels.AddWishListModel;
+    const getAllWish = await wishlist.findAll({ where: { userId: userId } });
     res.send(getAllWish);
   } catch (err) {
     console.log(err);
