@@ -571,7 +571,7 @@ export async function ActivePnr(req, res) {
   try {
     const ActiveTravelerPnr = Modals.UserModels.TravelersModel;
     const getAllPnr = await ActiveTravelerPnr.findAll({
-      where: { userId: userId, pnrStatus: "pending" },
+      where: { userId: userId, pnrStatus: "active" },
     });
     const AllActivePNR = [];
     for (const data of getAllPnr) {
@@ -582,7 +582,7 @@ export async function ActivePnr(req, res) {
             departureDate: data.departureDate,
             destination: data.destination,
             departureAirport: data.departureAirport,
-            userId: !userId,
+            userId: { [Op.not]: userId },
           },
         })
       );
