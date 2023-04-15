@@ -390,6 +390,7 @@ export async function SuspendUser(req, res) {
 
   try {
     const updateUsers = Modals.UserModels.default;
+    const createLog = Modals.AdminModel.AdminChangeLogModel;
     await updateUsers.update(
       {
         isSuspended: true,
@@ -398,6 +399,7 @@ export async function SuspendUser(req, res) {
       },
       { where: { userId: userId } }
     );
+
     res.send({ message: "user suspended" });
   } catch (err) {
     console.log(err);

@@ -265,7 +265,7 @@ UserModels.UserAds.hasMany(UserModels.UserAdViews);
 UserModels.UserAdViews.belongsTo(UserModels.UserAds);
 
 (async () => {
-  await sequelizeOptions({ timestamps: true }).sequelize.sync();
+  await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: true });
 })();
 
 export { UserModels, AdminModel, AccountTypeModel };
