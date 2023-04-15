@@ -2,6 +2,7 @@ import {
   AboutProps,
   AdminChangeLogProps,
   AdminUser,
+  CreatePointProps,
   FAQProps,
   PrivacyProps,
   TermsAndConditionProps,
@@ -52,4 +53,11 @@ export class PrivacyModel extends Model<PrivacyProps> {
 export class TermsAndConditionModel extends Model<TermsAndConditionProps> {
   declare id: string;
   declare termsAndCondition: string;
+}
+
+export class CreatePoints extends Model<CreatePointProps> {
+  declare offerId: typeof UUID;
+  declare price: string;
+  declare points: string;
+  declare createdBy: string;
 }

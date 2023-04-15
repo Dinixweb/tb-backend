@@ -161,20 +161,24 @@ export const TermsAndConditionSchema = {
   },
 };
 
-// export const CreatePointShema = {
-//   pointId: {
-//     type: DataTypes.UUID,
-//     primaryKey: true,
-//     allowNull: false,
-//     defaultValue: DataTypes.UUIDV4,
-//   },
-//   points: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//   },
-//   amount: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//     default: 0,
-//   },
-// };
+export const CreatePointShema = {
+  offerId: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  points: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  price: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    default: 0,
+  },
+  createdBy: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+};

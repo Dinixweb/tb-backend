@@ -105,13 +105,12 @@ export async function createAdminUser(req, res) {
     "web-client": Modals.AdminModel.default,
     "mobile-client": Modals.UserModels.default,
   };
-  console.log(payload);
+
   const extName = path.extname(req.file.originalname).toString();
   const file64 = parser.format(extName, req.file.buffer);
   const imagePath = file64.content;
 
   const modelRef = baseModelRef[payload.createRef] ?? -1;
-  console.log(modelRef, payload.createRef);
   try {
     if (payload.createRef === "web-client") {
       const query = { where: { key: payload.createRef } };

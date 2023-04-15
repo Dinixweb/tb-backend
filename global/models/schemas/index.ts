@@ -29,6 +29,7 @@ import {
   AboutSchema,
   PrivacySchema,
   TermsAndConditionSchema,
+  CreatePointShema,
 } from "./Admin.schema";
 
 export {
@@ -60,4 +61,5 @@ export {
   AboutSchema,
   PrivacySchema,
   TermsAndConditionSchema,
+  CreatePointShema,
 };

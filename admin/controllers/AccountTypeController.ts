@@ -21,11 +21,12 @@ export async function CreateAccountType() {
 
   try {
     const isAccountType = await AccountTypeModel.findAll();
-    if (isAccountType) return;
+    if (isAccountType.length > 0) return;
     const addType = [];
     for (const type of accountType) {
       addType.push(AccountTypeModel.create(type));
     }
+    console.log("Account Type Created");
     await Promise.all(addType);
   } catch (error) {
     console.log(error);

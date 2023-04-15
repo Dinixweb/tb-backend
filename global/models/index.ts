@@ -19,6 +19,7 @@ import {
   AboutSchema,
   PrivacySchema,
   TermsAndConditionSchema,
+  CreatePointShema,
 } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
@@ -61,10 +62,7 @@ UserModels.IdentityModel.init(
     tableName: "indentity_verification",
   })
 );
-UserModels.PointOfferModal.init(
-  PointOfferSchema,
-  sequelizeOptions({ modelName: "point_offer", tableName: "point_offer" })
-);
+
 UserModels.ProfileImageUpload.init(
   ProfileImageSchema,
   sequelizeOptions({ modelName: "profile_images", tableName: "profile_images" })
@@ -212,6 +210,10 @@ AdminModel.TermsAndConditionModel.init(
     modelName: "terms_and_condition",
   })
 );
+AdminModel.CreatePoints.init(
+  CreatePointShema,
+  sequelizeOptions({ tableName: "point_offer", modelName: "point_offer" })
+);
 
 // table relationship
 
@@ -244,7 +246,7 @@ UserModels.UserAds.hasMany(UserModels.UserAdViews);
 UserModels.UserAdViews.belongsTo(UserModels.UserAds);
 
 (async () => {
-  await sequelizeOptions({ timestamps: true }).sequelize.sync();
+  await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: true });
 })();
 
 export { UserModels, AdminModel, AccountTypeModel };

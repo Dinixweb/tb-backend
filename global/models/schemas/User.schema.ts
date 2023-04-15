@@ -572,6 +572,8 @@ export const PointOfferSchema = {
     type: DataTypes.BIGINT,
     allowNull: false,
   },
+  createdBy: DataTypes.STRING,
+  allowNull: false,
 };
 
 export const TravelerSchema = {
