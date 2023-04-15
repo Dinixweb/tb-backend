@@ -399,7 +399,11 @@ export async function SuspendUser(req, res) {
       },
       { where: { userId: userId } }
     );
-
+    const actions = {
+      action: "User suspension",
+      userId: userId,
+    };
+    await createLog.create(actions);
     res.send({ message: "user suspended" });
   } catch (err) {
     console.log(err);

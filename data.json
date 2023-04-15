@@ -260,3 +260,115 @@
         "suspendedDate": "2023-04-15"
     }
 ]
+
+//admin log
+[
+    {
+        "logId": "e819fe62-d93b-4575-aa25-1fae9e264385",
+        "userId": "ecc47d65-9612-45d6-917a-fbb78c95e3c5",
+        "action": "User suspension",
+        "createdAt": "2023-04-15T22:57:53.000Z",
+        "updatedAt": "2023-04-15T22:57:53.000Z"
+    }
+]
+
+// Client Users
+
+[
+    {
+        "userId": "09fd2472-a7ee-4c52-91f3-df741384fd48",
+        "email": "james@gmail.com",
+        "firstName": "James",
+        "lastName": "Ike",
+        "phoneNumber": "08036529875",
+        "description": null,
+        "active": true,
+        "isVerified": false,
+        "userName": "james",
+        "gender": "male",
+        "refreshToken": null,
+        "nationality": "Nigerian",
+        "isSuspended": null,
+        "suspendedDate": null,
+        "suspensionReason": null,
+        "trust": "30%",
+        "profileImage": null,
+        "referralCount": 0,
+        "totalReferredUser": 0,
+        "numberOfConnection": 0,
+        "createdAt": "2023-04-08T11:35:39.000Z",
+        "updatedAt": "2023-04-08T11:35:39.000Z"
+    },
+    {
+        "userId": "43e79b1d-adc2-4a06-b88b-3bb77ea40e4d",
+        "email": "dennis@gmail.com",
+        "firstName": "Dennis",
+        "lastName": "Shaba",
+        "phoneNumber": "080352698745",
+        "description": null,
+        "active": true,
+        "isVerified": false,
+        "userName": "dinix",
+        "gender": "male",
+        "refreshToken": null,
+        "nationality": "Nigerian",
+        "isSuspended": null,
+        "suspendedDate": null,
+        "suspensionReason": null,
+        "trust": "30%",
+        "profileImage": null,
+        "referralCount": 0,
+        "totalReferredUser": 0,
+        "numberOfConnection": 0,
+        "createdAt": "2023-04-08T11:36:27.000Z",
+        "updatedAt": "2023-04-08T11:36:27.000Z"
+    },
+    {
+        "userId": "a03248e2-663f-43f3-a692-d2f9ec866637",
+        "email": "kelvin@gmail.com",
+        "firstName": "Kelvin",
+        "lastName": "Mansi",
+        "phoneNumber": "08052699785",
+        "description": null,
+        "active": true,
+        "isVerified": false,
+        "userName": "kelv",
+        "gender": "male",
+        "refreshToken": null,
+        "nationality": "Nigerian",
+        "isSuspended": null,
+        "suspendedDate": null,
+        "suspensionReason": null,
+        "trust": "30%",
+        "profileImage": null,
+        "referralCount": 0,
+        "totalReferredUser": 0,
+        "numberOfConnection": 0,
+        "createdAt": "2023-04-08T11:36:06.000Z",
+        "updatedAt": "2023-04-08T11:36:06.000Z"
+    },
+    {
+        "userId": "ecc47d65-9612-45d6-917a-fbb78c95e3c5",
+        "email": "mario@gmail.com",
+        "firstName": "Mario",
+        "lastName": "Kelly",
+        "phoneNumber": "08052698578",
+        "description": null,
+        "active": true,
+        "isVerified": false,
+        "userName": "mario",
+        "gender": "male",
+        "refreshToken": null,
+        "nationality": "Nigerian",
+        "isSuspended": true,
+        "suspendedDate": "2023-04-15",
+        "suspensionReason": "abuse of app",
+        "trust": "30%",
+        "profileImage": null,
+        "referralCount": 0,
+        "totalReferredUser": 0,
+        "numberOfConnection": 0,
+        "createdAt": "2023-04-08T10:54:54.000Z",
+        "updatedAt": "2023-04-15T22:57:53.000Z"
+    }
+]
