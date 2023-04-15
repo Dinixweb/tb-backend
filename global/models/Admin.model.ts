@@ -16,7 +16,7 @@ export default class AdminModel extends Model<AdminUser> {
   declare phoneNumber: number;
   declare userName: string;
   declare password: string;
-  declare age: string;
+  declare dateOfBirth: string;
   declare nationality: string;
   declare address: string;
   declare jobInfo: string;

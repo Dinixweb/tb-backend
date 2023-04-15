@@ -231,7 +231,7 @@ export async function InitializePasswordReset(req, res) {
     const firstName: string = checkUser[0].firstName;
     const userId: string = userIdData[0];
 
-    if (!checkUser) return;
+    if (!checkUser) return res.status(404).send({ message: "no user found" });
 
     const payload = { email, resetToken, tokenTimestamp, userId };
     await userRef.ResetPasswordModel.create(payload);
@@ -242,8 +242,7 @@ export async function InitializePasswordReset(req, res) {
   }
 }
 
-export async function tokenInvalidation(req, res) {
-  const Timer = otpTimer();
+export async function tokenInvalidation() {
   const otpCompareTime = otpCompareTimer();
   const userRef = Modals.UserModels;
   const timing = await userRef.ResetPasswordModel.findAll();

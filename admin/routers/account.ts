@@ -12,6 +12,7 @@ router.put("/updateAdminUser", profileUpload, AdminController.UpdateAdminUser);
 router.post("/createFAQ", AdminController.FAQ);
 router.post("/createAboutApp", AdminController.AboutApp);
 router.post("/createPrivacy", AdminController.Privacy);
+//router.post("/createPoints", AdminController.addPoints);
 router.post("/createTermsAndCondition", AdminController.TermsAndCondition);
 router.get("/getFAQ", AdminController.getFAQ);
 router.get("/getAboutApp", AdminController.GetAboutApp);

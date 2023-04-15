@@ -10,6 +10,7 @@ import cloudinary from "../../global/utils/cloudinaryConfig";
 import DatauriParser from "datauri/parser";
 import { Op } from "sequelize";
 import Api404Error from "../../global/errors/ApiError404";
+import Api400Error from "../../global/errors/Api400Error";
 
 const parser = new DatauriParser();
 
@@ -104,7 +105,7 @@ export async function createAdminUser(req, res) {
     "web-client": Modals.AdminModel.default,
     "mobile-client": Modals.UserModels.default,
   };
-
+  console.log(payload);
   const extName = path.extname(req.file.originalname).toString();
   const file64 = parser.format(extName, req.file.buffer);
   const imagePath = file64.content;
@@ -428,3 +429,11 @@ export async function AvertDetails(req, res) {
     res.send(new Api404Error());
   }
 }
+// export async function addPoints(req, res) {
+//   const payload = {...req.body}
+//   try {
+//     const createPoints =
+//   } catch (err) {
+//     res.send(new Api400Error())
+//   }
+// }

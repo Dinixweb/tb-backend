@@ -21,7 +21,6 @@ function cronJob() {
   setTimeout(() => {
     if (!hasRun) {
       CreateAccountType();
-      console.log("account type run");
       hasRun = true;
     }
   }, 1 * 60 * 1000);

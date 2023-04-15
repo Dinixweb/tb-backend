@@ -50,7 +50,7 @@ export const AdminSchema = {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  age: {
+  dateOfBirth: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -160,3 +160,21 @@ export const TermsAndConditionSchema = {
     allowNull: false,
   },
 };
+
+// export const CreatePointShema = {
+//   pointId: {
+//     type: DataTypes.UUID,
+//     primaryKey: true,
+//     allowNull: false,
+//     defaultValue: DataTypes.UUIDV4,
+//   },
+//   points: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//   },
+//   amount: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//     default: 0,
+//   },
+// };

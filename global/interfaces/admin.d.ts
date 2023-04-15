@@ -14,7 +14,7 @@ interface AdminUser {
   profileImage?: string;
   passwordRestToken?: string;
   tokenTimestamp?: string;
-  age: string;
+  dateOfBirth: string;
   nationality: string;
   address: string;
   jobInfo?: string;
@@ -57,6 +57,13 @@ export interface PrivacyProps {
 export interface TermsAndConditionProps {
   id: string;
   termsAndCondition: string;
+}
+
+export interface CreatePoints {
+  pointId: typeof UUID;
+  price: string;
+  points: string;
+  createdBy: string;
 }
 
 export enum portalRef {
