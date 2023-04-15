@@ -413,3 +413,12 @@
         "createdAt": "2023-04-15T22:57:53.000Z"
     }
 ]
+
+//support (user suspension history)
+[
+    {
+        "suspensionReason": "abuse of app",
+        "username": "mario",
+        "suspendedDate": "2023-04-15"
+    }
+]

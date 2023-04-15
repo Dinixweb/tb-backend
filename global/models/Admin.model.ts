@@ -36,7 +36,7 @@ export default class AdminModel extends Model<AdminUser> {
 }
 export class AdminChangeLogModel extends Model<AdminChangeLogProps> {
   declare logId: typeof UUID;
-  declare userId: typeof UUID;
+  declare employeeId: typeof UUID;
   declare action: string;
   declare createdBy: string;
 }

@@ -95,7 +95,7 @@ export const AdminChangeLogSchema = {
     allowNull: false,
     defaultValue: DataTypes.UUIDV4,
   },
-  userId: {
+  employeeId: {
     type: DataTypes.UUID,
     allowNull: false,
   },

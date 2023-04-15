@@ -37,7 +37,7 @@ interface IAcountType {
 }
 export interface AdminChangeLogProps {
   logId: typeof UUID;
-  userId: typeof UUID;
+  employeeId: typeof UUID;
   action: string;
   createdBy: string;
 }

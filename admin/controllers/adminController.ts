@@ -177,15 +177,15 @@ export async function AllAdminUsers(req, res) {
   }
 }
 export async function deleteAdminUser(req, res) {
-  const { userId } = req.params;
+  const { employeeId } = req.params;
   try {
     const adminUsers = Modals.AdminModel.default;
-    await adminUsers.destroy({ where: { employeeId: userId } });
+    await adminUsers.destroy({ where: { employeeId: employeeId } });
     const createLog = Modals.AdminModel.AdminChangeLogModel;
     const actions = {
       action: `Admin user deleted`,
-      createdBy: userId,
-      userId: userId,
+      createdBy: employeeId,
+      employeeId: employeeId,
     };
     await createLog.create(actions);
     res.send({ message: "user deleted" });
@@ -217,9 +217,9 @@ export async function UpdateAdminUser(req, res) {
     );
     const createLog = Modals.AdminModel.AdminChangeLogModel;
     const actions = {
-      action: `Admin User Bio Modified`,
-      createdBy: payload.userId,
-      userId: payload.userId,
+      action: `Admin user bio modified`,
+      createdBy: payload.employeeId,
+      employeeId: payload.employeeId,
     };
     await createLog.create(actions);
     res.send({ message: "updated successfully" });
@@ -245,8 +245,8 @@ export async function FAQ(req, res) {
     const createLog = Modals.AdminModel.AdminChangeLogModel;
     const actions = {
       action: `FAQ added`,
-      createdBy: payload.userId,
-      userId: payload.userId,
+      createdBy: payload.employeeId,
+      employeeId: payload.employeeId,
     };
     await createLog.create(actions);
     res.send({ message: "successfully updated" });
@@ -274,8 +274,8 @@ export async function AboutApp(req, res) {
     const createLog = Modals.AdminModel.AdminChangeLogModel;
     const actions = {
       action: `About App added`,
-      createdBy: payload.userId,
-      userId: payload.userId,
+      createdBy: payload.employeeId,
+      employeeId: payload.employeeId,
     };
     await createLog.create(actions);
     res.send({ message: "successfully updated" });
@@ -303,8 +303,8 @@ export async function Privacy(req, res) {
     const createLog = Modals.AdminModel.AdminChangeLogModel;
     const actions = {
       action: `Privacy added`,
-      createdBy: payload.userId,
-      userId: payload.userId,
+      createdBy: payload.employeeId,
+      employeeId: payload.employeeId,
     };
     await createLog.create(actions);
     res.send({ message: "successfully updated" });
@@ -331,8 +331,8 @@ export async function TermsAndCondition(req, res) {
         const createLog = Modals.AdminModel.AdminChangeLogModel;
         const actions = {
           action: `Terms and Condition added`,
-          createdBy: payload.userId,
-          userId: payload.userId,
+          createdBy: payload.employeeId,
+          employeeId: payload.employeeId,
         };
         await createLog.create(actions);
         await terms.create(payload);
@@ -429,7 +429,7 @@ export async function GetFlightDetails(req, res) {
 }
 
 export async function SuspendUser(req, res) {
-  const { userId, suspensionReason } = req.body;
+  const { userId, suspensionReason, createdBy } = req.body;
   const date = new Date().toJSON().slice(0, 10);
 
   try {
@@ -445,8 +445,8 @@ export async function SuspendUser(req, res) {
     );
     const actions = {
       action: `Performed a suspension of user with userId,${userId}`,
-      createdBy: userId,
-      userId,
+      createdBy: createdBy,
+      emloyeeId: createdBy,
     };
     await createLog.create(actions);
     res.send({ message: "user suspended" });
@@ -455,7 +455,7 @@ export async function SuspendUser(req, res) {
   }
 }
 export async function ReactivateUser(req, res) {
-  const { userId } = req.body;
+  const { userId, createdBy } = req.body;
   try {
     const updateUsers = Modals.UserModels.default;
     await updateUsers.update(
@@ -465,8 +465,8 @@ export async function ReactivateUser(req, res) {
     const createLog = Modals.AdminModel.AdminChangeLogModel;
     const actions = {
       action: `Performed a re-activation of user with userId,${userId}`,
-      createdBy: userId,
-      userId,
+      createdBy: createdBy,
+      employeeId: createdBy,
     };
     await createLog.create(actions);
     res.send({ message: "user reactivated successfully" });
@@ -495,7 +495,7 @@ export async function addPoints(req, res) {
     const actions = {
       action: `Created points`,
       createdBy: payload.createdBy,
-      userId: payload.createdBy,
+      employeeId: payload.createdBy,
     };
     await createLog.create(actions);
     res.send({ message: "created successfully" });
