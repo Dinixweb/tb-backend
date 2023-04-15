@@ -14,6 +14,7 @@ interface AdminUser {
   profileImage?: string;
   passwordRestToken?: string;
   tokenTimestamp?: string;
+  gender: string;
   dateOfBirth: string;
   nationality: string;
   address: string;
@@ -66,9 +67,39 @@ export interface CreatePointProps {
   createdBy: string;
 }
 
+export interface TicketProps {
+  id: typeof UUID;
+  ticketId: string;
+  username: string;
+  userId: string;
+  issueTitle: string;
+  issueExpanation: string;
+  submissionDate: string;
+  assignedTo: string;
+  comments: string;
+  resolveBy: string;
+  ticketStatus: string;
+  resolutionDate: string;
+}
+
+export interface PostReportedProps {
+  reportId: typeof UUID;
+  username: string;
+  userId: string;
+  reporter: string;
+  reasons: string;
+  postId: string;
+}
+export interface UserSuspensionHistory {
+  id: typeof UUID;
+  userId: string;
+  username: string;
+  reasonForSuspension: string;
+}
 export enum portalRef {
   web = "web-client",
   mobile = "mobile-client",
 }
 
+export enum ticketRef {}
 export type portalTypes = portalRef.web | portalRef.mobile;

@@ -30,6 +30,9 @@ import {
   PrivacySchema,
   TermsAndConditionSchema,
   CreatePointShema,
+  UserSuspensionShema,
+  PostReportedShema,
+  TicketShema,
 } from "./Admin.schema";
 
 export {
@@ -62,4 +65,7 @@ export {
   PrivacySchema,
   TermsAndConditionSchema,
   CreatePointShema,
+  UserSuspensionShema,
+  PostReportedShema,
+  TicketShema,
 };

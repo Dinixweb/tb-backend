@@ -29,6 +29,10 @@ export const AdminSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  gender: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   active: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -178,6 +182,109 @@ export const CreatePointShema = {
     default: 0,
   },
   createdBy: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+};
+
+export const TicketShema = {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: DataTypes.UUIDV4,
+  },
+
+  ticketId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  username: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  resolveBy: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  issueTitle: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  issueExpanation: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  submissionDate: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  assignedTo: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  comments: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  ticketStatus: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  resolutionDate: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+};
+
+export const PostReportedShema = {
+  reportId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  reporter: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  reasons: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  postId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+};
+export const UserSuspensionShema = {
+  id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  reasonForSuspension: {
     type: DataTypes.STRING,
     allowNull: false,
   },

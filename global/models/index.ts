@@ -20,6 +20,9 @@ import {
   PrivacySchema,
   TermsAndConditionSchema,
   CreatePointShema,
+  TicketShema,
+  PostReportedShema,
+  UserSuspensionShema,
 } from "./schemas";
 import { AccountTypeSchema } from "../../admin/models/schema";
 
@@ -215,6 +218,22 @@ AdminModel.CreatePoints.init(
   sequelizeOptions({ tableName: "point_offer", modelName: "point_offer" })
 );
 
+AdminModel.Tickets.init(
+  TicketShema,
+  sequelizeOptions({ tableName: "tickets", modelName: "tickets" })
+);
+AdminModel.PostReported.init(
+  PostReportedShema,
+  sequelizeOptions({ tableName: "post_reported", modelName: "post_reported" })
+);
+AdminModel.UserSuspension.init(
+  UserSuspensionShema,
+  sequelizeOptions({
+    tableName: "user_suspension",
+    modelName: "user_suspension",
+  })
+);
+
 // table relationship
 
 UserModels.default.hasOne(UserModels.Connections);
@@ -246,7 +265,7 @@ UserModels.UserAds.hasMany(UserModels.UserAdViews);
 UserModels.UserAdViews.belongsTo(UserModels.UserAds);
 
 (async () => {
-  await sequelizeOptions({ timestamps: true }).sequelize.sync();
+  await sequelizeOptions({ timestamps: true }).sequelize.sync({ alter: false });
 })();
 
 export { UserModels, AdminModel, AccountTypeModel };

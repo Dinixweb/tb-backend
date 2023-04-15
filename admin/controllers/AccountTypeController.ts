@@ -26,7 +26,6 @@ export async function CreateAccountType() {
     for (const type of accountType) {
       addType.push(AccountTypeModel.create(type));
     }
-    console.log("Account Type Created");
     await Promise.all(addType);
   } catch (error) {
     console.log(error);

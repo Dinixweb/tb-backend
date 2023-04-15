@@ -189,7 +189,6 @@ export async function deleteAdminUser(req, res) {
 
 export async function UpdateAdminUser(req, res) {
   const payload = { ...req.body };
-  console.log(payload);
   const extName = path.extname(req.file.originalname).toString();
   const file64 = parser.format(extName, req.file.buffer);
   const imagePath = file64.content;
@@ -365,9 +364,9 @@ export async function GetAllPrnRecord(req, res) {
 }
 export async function GetWishlist(req, res) {
   try {
-    const fetchWishlist = Modals.UserModels.WishlistModel;
-    const response = await fetchWishlist.findAll();
-    res.send(response);
+    const fetchWishlist = Modals.UserModels.AddWishListModel;
+    const responseObject = await fetchWishlist.findAll();
+    res.send(responseObject);
   } catch (error) {
     console.log(error);
     res.send(new Api404Error());
@@ -428,11 +427,53 @@ export async function AvertDetails(req, res) {
     res.send(new Api404Error());
   }
 }
-// export async function addPoints(req, res) {
-//   const payload = {...req.body}
-//   try {
-//     const createPoints =
-//   } catch (err) {
-//     res.send(new Api400Error())
-//   }
-// }
+export async function addPoints(req, res) {
+  const payload = { ...req.body };
+  try {
+    const createPoints = Modals.AdminModel.CreatePoints;
+    await createPoints.create(payload);
+    res.send({ message: "created successfully" });
+  } catch (err) {
+    res.send(new Api400Error());
+  }
+}
+export async function getPoints(req, res) {
+  try {
+    const fetchPoints = Modals.AdminModel.CreatePoints;
+    const response = await fetchPoints.findAll();
+    res.send(response);
+  } catch (err) {
+    res.send(new Api404Error());
+  }
+}
+
+export async function getTickets(req, res) {
+  try {
+    const fetchTickets = Modals.AdminModel.Tickets;
+    const response = await fetchTickets.findAll();
+    res.send(response);
+  } catch (err) {
+    res.send(new Api404Error());
+  }
+}
+export async function getPostReported(req, res) {
+  try {
+    const getReports = Modals.AdminModel.PostReported;
+    const response = await getReports.findAll();
+    res.send(response);
+  } catch (err) {
+    res.send(new Api404Error());
+  }
+}
+export async function getUserSuspension(req, res) {
+  try {
+    const getUserSuspended = Modals.UserModels.default;
+    const response = await getUserSuspended.findAll({
+      where: { isSuspended: true },
+      attributes: ["suspensionReason", "username", "suspendedDate"],
+    });
+    res.send(response);
+  } catch (err) {
+    res.send(new Api404Error());
+  }
+}

@@ -100,3 +100,163 @@
     "updatedAt": "2023-04-08T11:39:11.000Z"
   }
 ]
+
+// Flight records
+[
+    {
+        "travellerId": "7acb52a5-59a2-4b2b-bccc-6e0b1422ed4e",
+        "firstName": "Dennis",
+        "userId": "a312e8c0-2876-4bc7-b69d-e867914caf89",
+        "surName": "Shaba",
+        "pnrNumber": "A05u8Bw",
+        "airPlaneName": "Emirate",
+        "departureDate": "21/12/2022",
+        "departureAirlineNumber": "7HAJ",
+        "numberOfStops": 2,
+        "flightClass": null,
+        "departureAirport": "Murtala International Airport Lagos",
+        "departureCode": null,
+        "flightEquipmentNo": null,
+        "arrivalDateTime": null,
+        "noOfPassenger": null,
+        "terminal": null,
+        "farePrice": null,
+        "totalSegmentDistance": null,
+        "segmentDistance": null,
+        "agentEmail": null,
+        "agentName": null,
+        "airlineName": null,
+        "passengerTitle": "Mr",
+        "pnrStatus": "pending",
+        "destination": null,
+        "dateFrom": null,
+        "dateTo": null,
+        "image": null,
+        "matchData": null,
+        "createdAt": "2023-04-08T11:08:14.000Z",
+        "updatedAt": "2023-04-08T11:08:14.000Z"
+    },
+    {
+        "travellerId": "bf993f80-cae4-4fa4-85ab-3d6c0ae37078",
+        "firstName": "Dennis",
+        "userId": "43e79b1d-adc2-4a06-b88b-3bb77ea40e4d",
+        "surName": "Shaba",
+        "pnrNumber": "S8298ja",
+        "airPlaneName": "British Airways",
+        "departureDate": "12/09/2023",
+        "departureAirlineNumber": "7HAJ",
+        "numberOfStops": 2,
+        "flightClass": null,
+        "departureAirport": "Nnamdi Azikiwe International Airport Abuja",
+        "departureCode": null,
+        "flightEquipmentNo": null,
+        "arrivalDateTime": null,
+        "noOfPassenger": null,
+        "terminal": null,
+        "farePrice": null,
+        "totalSegmentDistance": null,
+        "segmentDistance": null,
+        "agentEmail": null,
+        "agentName": null,
+        "airlineName": null,
+        "passengerTitle": "Mr",
+        "pnrStatus": "pending",
+        "destination": null,
+        "dateFrom": null,
+        "dateTo": null,
+        "image": null,
+        "matchData": null,
+        "createdAt": "2023-04-08T11:38:03.000Z",
+        "updatedAt": "2023-04-08T11:38:03.000Z"
+    },
+    {
+        "travellerId": "c1608db5-3a1f-4b4c-9a6d-13c0ca12223c",
+        "firstName": "James",
+        "userId": "09fd2472-a7ee-4c52-91f3-df741384fd48",
+        "surName": "Ike",
+        "pnrNumber": "9OA0PAOS",
+        "airPlaneName": "British Airways",
+        "departureDate": "12/09/2023",
+        "departureAirlineNumber": "7HAJ",
+        "numberOfStops": 2,
+        "flightClass": null,
+        "departureAirport": "Nnamdi Azikiwe International Airport Abuja",
+        "departureCode": null,
+        "flightEquipmentNo": null,
+        "arrivalDateTime": null,
+        "noOfPassenger": null,
+        "terminal": null,
+        "farePrice": null,
+        "totalSegmentDistance": null,
+        "segmentDistance": null,
+        "agentEmail": null,
+        "agentName": null,
+        "airlineName": null,
+        "passengerTitle": "Mr",
+        "pnrStatus": "pending",
+        "destination": null,
+        "dateFrom": null,
+        "dateTo": null,
+        "image": null,
+        "matchData": null,
+        "createdAt": "2023-04-08T11:39:11.000Z",
+        "updatedAt": "2023-04-08T11:39:11.000Z"
+    }
+]
+
+// wishlist records
+
+[
+    {
+        "wishlistId": "358b0807-e5c4-4432-829d-71bc97d27249",
+        "userId": "ecc47d65-9612-45d6-917a-fbb78c95e3c5",
+        "destination": "",
+        "departureAirport": "Murtala International Airport Lagos",
+        "dateFrom": "",
+        "dateTo": "",
+        "userDeleted": null,
+        "adminDeleted": null,
+        "image": null,
+        "createdAt": "2023-04-08T12:06:42.000Z",
+        "updatedAt": "2023-04-08T12:06:42.000Z"
+    }
+]
+
+// points
+
+[
+    {
+        "offerId": "983934a3-4414-473a-bb8e-3e5e46b2305d",
+        "points": "150",
+        "price": "390",
+        "createdBy": "",
+        "createdAt": "2023-04-08T10:41:45.000Z",
+        "updatedAt": "2023-04-08T10:41:45.000Z"
+    },
+    {
+        "offerId": "98e96567-fe15-4fa8-8b49-f782c5c9904c",
+        "points": "120",
+        "price": "350",
+        "createdBy": "09fd2472-a7ee-4c52-91f3-df741384fd48",
+        "createdAt": "2023-04-15T19:53:13.000Z",
+        "updatedAt": "2023-04-15T19:53:13.000Z"
+    },
+    {
+        "offerId": "d7dd3725-8425-44fd-af9a-3b01cbaa72fd",
+        "points": "120",
+        "price": "350",
+        "createdBy": "",
+        "createdAt": "2023-04-08T10:39:44.000Z",
+        "updatedAt": "2023-04-08T10:39:44.000Z"
+    }
+]
+
+
+//suspension history
+[
+    {
+        "suspensionReason": "abuse of app",
+        "username": "mario",
+        "suspendedDate": "2023-04-15"
+    }
+]
