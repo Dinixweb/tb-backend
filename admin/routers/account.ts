@@ -28,7 +28,7 @@ router.get("/getAdvertList", AdminController.AvertDetails);
 router.get("/getAllTickets", AdminController.getTickets);
 router.get("/getPostReported", AdminController.getPostReported);
 router.get("/suspendedUsersHistory", AdminController.getUserSuspension);
-router.put("/reactivateUser/:userId", AdminController.ReactivateUser);
+router.put("/reactivateUser", AdminController.ReactivateUser);
 
 router.delete("/deleteAdminUser/:employeeId", AdminController.deleteAdminUser);
 

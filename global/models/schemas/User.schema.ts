@@ -831,4 +831,8 @@ export const ChangeLogSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  createdBy: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 };

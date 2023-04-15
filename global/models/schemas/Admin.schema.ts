@@ -103,6 +103,10 @@ export const AdminChangeLogSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  createdBy: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 };
 
 export const FAQSchema = {

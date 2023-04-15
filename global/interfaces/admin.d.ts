@@ -39,6 +39,7 @@ export interface AdminChangeLogProps {
   logId: typeof UUID;
   userId: typeof UUID;
   action: string;
+  createdBy: string;
 }
 
 export interface FAQProps {

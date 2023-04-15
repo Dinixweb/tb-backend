@@ -286,4 +286,5 @@ export class ChangeLogModel extends Model<UserChangeLogProps> {
   declare logId: typeof UUID;
   declare userId: typeof UUID;
   declare action: string;
+  declare createdBy: string;
 }

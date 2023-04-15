@@ -372,3 +372,44 @@
         "updatedAt": "2023-04-15T22:57:53.000Z"
     }
 ]
+
+
+//admin change log
+[
+    {
+        "logId": "155e52a1-7dbc-4b29-bb3d-32d0bb68c685",
+        "createdBy": "f2c7cb7c-d399-4367-a628-51fe97ab0bb9",
+        "action": "About App added",
+        "createdAt": "2023-04-15T23:43:20.000Z"
+    },
+    {
+        "logId": "847ad843-2c2a-4b0a-b5fb-b3fefc4235d4",
+        "createdBy": "f2c7cb7c-d399-4367-a628-51fe97ab0bb9",
+        "action": "Privacy added",
+        "createdAt": "2023-04-15T23:43:37.000Z"
+    },
+    {
+        "logId": "8881f753-30f4-46e2-ad6e-f64cb166c8e3",
+        "createdBy": "f2c7cb7c-d399-4367-a628-51fe97ab0bb9",
+        "action": "FAQ added",
+        "createdAt": "2023-04-15T23:42:50.000Z"
+    },
+    {
+        "logId": "915b799a-d7c2-4400-b013-8d63625ff81f",
+        "createdBy": "adminUserId",
+        "action": "Performed a suspension of user with userId,ecc47d65-9612-45d6-917a-fbb78c95e3c5",
+        "createdAt": "2023-04-15T23:26:08.000Z"
+    },
+    {
+        "logId": "c3ae67e7-62fb-46aa-8302-27158d6e6eca",
+        "createdBy": "adminUserId",
+        "action": "Performed a re-activation of user with userId,915b799a-d7c2-4400-b013-8d63625ff81f",
+        "createdAt": "2023-04-15T23:27:22.000Z"
+    },
+    {
+        "logId": "e819fe62-d93b-4575-aa25-1fae9e264385",
+        "createdBy": "",
+        "action": "User suspension",
+        "createdAt": "2023-04-15T22:57:53.000Z"
+    }
+]

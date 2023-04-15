@@ -38,6 +38,7 @@ export class AdminChangeLogModel extends Model<AdminChangeLogProps> {
   declare logId: typeof UUID;
   declare userId: typeof UUID;
   declare action: string;
+  declare createdBy: string;
 }
 
 export class FAQPModel extends Model<FAQProps> {

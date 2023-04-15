@@ -293,4 +293,5 @@ export interface UserChangeLogProps {
   logId: typeof UUID;
   userId: typeof UUID;
   action: string;
+  createdBy: string;
 }

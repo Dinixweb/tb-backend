@@ -177,10 +177,17 @@ export async function AllAdminUsers(req, res) {
   }
 }
 export async function deleteAdminUser(req, res) {
-  const { employeeId } = req.params;
+  const { userId } = req.params;
   try {
     const adminUsers = Modals.AdminModel.default;
-    await adminUsers.destroy({ where: { employeeId: employeeId } });
+    await adminUsers.destroy({ where: { employeeId: userId } });
+    const createLog = Modals.AdminModel.AdminChangeLogModel;
+    const actions = {
+      action: `Admin user deleted`,
+      createdBy: userId,
+      userId: userId,
+    };
+    await createLog.create(actions);
     res.send({ message: "user deleted" });
   } catch (err) {
     console.log(err);
@@ -208,6 +215,13 @@ export async function UpdateAdminUser(req, res) {
       { ...payload },
       { where: { employeeId: payload.employeeId } }
     );
+    const createLog = Modals.AdminModel.AdminChangeLogModel;
+    const actions = {
+      action: `Admin User Bio Modified`,
+      createdBy: payload.userId,
+      userId: payload.userId,
+    };
+    await createLog.create(actions);
     res.send({ message: "updated successfully" });
   } catch (err) {
     console.log(err);
@@ -228,6 +242,13 @@ export async function FAQ(req, res) {
     } else {
       return res.send({ message: "no value entered...check payload" });
     }
+    const createLog = Modals.AdminModel.AdminChangeLogModel;
+    const actions = {
+      action: `FAQ added`,
+      createdBy: payload.userId,
+      userId: payload.userId,
+    };
+    await createLog.create(actions);
     res.send({ message: "successfully updated" });
   } catch (err) {
     console.log(err);
@@ -250,6 +271,13 @@ export async function AboutApp(req, res) {
     } else {
       return res.send({ message: "no value entered...check payload" });
     }
+    const createLog = Modals.AdminModel.AdminChangeLogModel;
+    const actions = {
+      action: `About App added`,
+      createdBy: payload.userId,
+      userId: payload.userId,
+    };
+    await createLog.create(actions);
     res.send({ message: "successfully updated" });
   } catch (err) {
     console.log(err);
@@ -272,6 +300,13 @@ export async function Privacy(req, res) {
     } else {
       return res.send({ message: "no value entered...check payload" });
     }
+    const createLog = Modals.AdminModel.AdminChangeLogModel;
+    const actions = {
+      action: `Privacy added`,
+      createdBy: payload.userId,
+      userId: payload.userId,
+    };
+    await createLog.create(actions);
     res.send({ message: "successfully updated" });
   } catch (err) {
     console.log(err);
@@ -293,6 +328,13 @@ export async function TermsAndCondition(req, res) {
           }
         );
       } else {
+        const createLog = Modals.AdminModel.AdminChangeLogModel;
+        const actions = {
+          action: `Terms and Condition added`,
+          createdBy: payload.userId,
+          userId: payload.userId,
+        };
+        await createLog.create(actions);
         await terms.create(payload);
       }
     } else {
@@ -344,7 +386,9 @@ export async function GetTermsAndCondition(req, res) {
 export async function AdminChangeLogs(req, res) {
   try {
     const logs = Modals.AdminModel.AdminChangeLogModel;
-    const getAllLogs = await logs.findAll();
+    const getAllLogs = await logs.findAll({
+      attributes: ["logId", "createdBy", "action", "createdAt"],
+    });
     res.send(getAllLogs);
   } catch (err) {
     console.log(err);
@@ -400,8 +444,9 @@ export async function SuspendUser(req, res) {
       { where: { userId: userId } }
     );
     const actions = {
-      action: "User suspension",
-      userId: userId,
+      action: `Performed a suspension of user with userId,${userId}`,
+      createdBy: userId,
+      userId,
     };
     await createLog.create(actions);
     res.send({ message: "user suspended" });
@@ -410,13 +455,20 @@ export async function SuspendUser(req, res) {
   }
 }
 export async function ReactivateUser(req, res) {
-  const { userId } = req.params;
+  const { userId } = req.body;
   try {
     const updateUsers = Modals.UserModels.default;
     await updateUsers.update(
       { isSuspended: false, suspensionReason: "", suspendedDate: "" },
       { where: { userId: userId } }
     );
+    const createLog = Modals.AdminModel.AdminChangeLogModel;
+    const actions = {
+      action: `Performed a re-activation of user with userId,${userId}`,
+      createdBy: userId,
+      userId,
+    };
+    await createLog.create(actions);
     res.send({ message: "user reactivated successfully" });
   } catch (err) {
     console.log(err);
@@ -438,6 +490,14 @@ export async function addPoints(req, res) {
   try {
     const createPoints = Modals.AdminModel.CreatePoints;
     await createPoints.create(payload);
+
+    const createLog = Modals.AdminModel.AdminChangeLogModel;
+    const actions = {
+      action: `Created points`,
+      createdBy: payload.createdBy,
+      userId: payload.createdBy,
+    };
+    await createLog.create(actions);
     res.send({ message: "created successfully" });
   } catch (err) {
     res.send(new Api400Error());
