@@ -446,7 +446,7 @@ export async function SuspendUser(req, res) {
     const actions = {
       action: `Performed a suspension of user with userId,${userId}`,
       createdBy: createdBy,
-      emloyeeId: createdBy,
+      employeeId: createdBy,
     };
     await createLog.create(actions);
     res.send({ message: "user suspended" });
