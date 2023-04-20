@@ -7,7 +7,10 @@ import BadRequestError from "../../global/errors/Api400Error";
 import ServerError from "../../global/errors/ApiError500";
 
 import ENV from "../../global/config/keys";
-import { UserSerializer } from "../serializers/user.serializer";
+import {
+  AdminSerializer,
+  UserSerializer,
+} from "../serializers/user.serializer";
 
 import type { Request, Response } from "express";
 import Api400Error from "../../global/errors/Api400Error";
@@ -159,7 +162,7 @@ export async function Login(req: Request, res: Response) {
 
   const ModalRef = {
     "web-client": {
-      model: Modals.AdminModel,
+      model: Modals.AdminModel.default,
       secret: ENV.JWT_ADMIN_SECRET,
     },
     "mobile-client": {
@@ -200,8 +203,9 @@ export async function Login(req: Request, res: Response) {
     );
 
     payload["token"] = userToken;
-
-    payload["user"] = UserSerializer(currentUser);
+    const userType = UserSerializer(currentUser);
+    const adminType = AdminSerializer(currentUser);
+    payload["user"] = loginRef === "web-client" ? adminType : userType;
 
     return res
       .status(200)

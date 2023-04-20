@@ -196,19 +196,19 @@ export async function deleteAdminUser(req, res) {
 
 export async function UpdateAdminUser(req, res) {
   const payload = { ...req.body };
-  const extName = path.extname(req.file.originalname).toString();
-  const file64 = parser.format(extName, req.file.buffer);
-  const imagePath = file64.content;
-  const employeeId = uuidv4();
+  // const extName = path.extname(req.file.originalname).toString();
+  // const file64 = parser.format(extName, req.file.buffer);
+  // const imagePath = file64.content;
+  // const employeeId = uuidv4();
 
   try {
     //Need validtion
     const adminUser = Modals.AdminModel.default;
-    const profileImage = await cloudinary.uploader.upload(imagePath, {
-      upload_preset: "identity_uploads",
-      public_id: employeeId,
-    });
-    payload["profileImage"] = profileImage.secure_url;
+    // const profileImage = await cloudinary.uploader.upload(imagePath, {
+    //   upload_preset: "identity_uploads",
+    //   public_id: employeeId,
+    // });
+    // payload["profileImage"] = profileImage.secure_url;
     const passwordHash = await hashPassword(payload.password);
     payload.password = passwordHash;
     await adminUser.update(
