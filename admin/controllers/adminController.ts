@@ -8,9 +8,10 @@ import { referralCode } from "global/utils/global_function";
 import path from "path";
 import cloudinary from "../../global/utils/cloudinaryConfig";
 import DatauriParser from "datauri/parser";
-import { Op } from "sequelize";
+import { HasMany, Op, QueryTypes, Sequelize } from "sequelize";
 import Api404Error from "../../global/errors/ApiError404";
 import Api400Error from "../../global/errors/Api400Error";
+import sequelizeConnection from "../../global/database";
 
 const parser = new DatauriParser();
 
@@ -78,7 +79,6 @@ export async function UserInfo(req, res) {
     });
     res.send(getAllUsers);
   } catch (error) {
-    console.log(error);
     res.status(400).send({
       message: "error fetching data",
       statusCode: 400,
@@ -93,7 +93,7 @@ export async function UserChangeLogs(req, res) {
     const getAllLogs = await logs.findAll();
     res.send(getAllLogs);
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 
@@ -161,7 +161,7 @@ export async function createAdminUser(req, res) {
     await selectModel.create(payload);
     res.send({ message: "user created successfully" });
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 
@@ -173,7 +173,7 @@ export async function AllAdminUsers(req, res) {
     });
     res.send(getAllUsers);
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 export async function deleteAdminUser(req, res) {
@@ -190,7 +190,7 @@ export async function deleteAdminUser(req, res) {
     await createLog.create(actions);
     res.send({ message: "user deleted" });
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 
@@ -224,7 +224,7 @@ export async function UpdateAdminUser(req, res) {
     await createLog.create(actions);
     res.send({ message: "updated successfully" });
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 
@@ -251,7 +251,7 @@ export async function FAQ(req, res) {
     await createLog.create(actions);
     res.send({ message: "successfully updated" });
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 export async function AboutApp(req, res) {
@@ -280,7 +280,7 @@ export async function AboutApp(req, res) {
     await createLog.create(actions);
     res.send({ message: "successfully updated" });
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 export async function Privacy(req, res) {
@@ -309,7 +309,7 @@ export async function Privacy(req, res) {
     await createLog.create(actions);
     res.send({ message: "successfully updated" });
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 export async function TermsAndCondition(req, res) {
@@ -342,7 +342,7 @@ export async function TermsAndCondition(req, res) {
     }
     res.send({ message: "successfully updated" });
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 
@@ -353,7 +353,7 @@ export async function getFAQ(req, res) {
 
     res.send(response);
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 export async function GetAboutApp(req, res) {
@@ -362,7 +362,7 @@ export async function GetAboutApp(req, res) {
     const [response] = await getAbout.findAll();
     res.send(response);
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 export async function GetPrivacy(req, res) {
@@ -371,7 +371,7 @@ export async function GetPrivacy(req, res) {
     const [response] = await getPrivacy.findAll();
     res.send(response);
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 export async function GetTermsAndCondition(req, res) {
@@ -380,7 +380,7 @@ export async function GetTermsAndCondition(req, res) {
     const [response] = await getTerms.findAll();
     res.send(response);
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 export async function AdminChangeLogs(req, res) {
@@ -391,8 +391,22 @@ export async function AdminChangeLogs(req, res) {
     });
     res.send(getAllLogs);
   } catch (err) {
-    console.log(err);
     res.send(new Api404Error());
+  }
+}
+
+export async function UpdateTravelRecord(req, res) {
+  const payload = { ...req.body };
+
+  const setupType = payload["finalStage"];
+  try {
+    const addTravelRecord = Modals.UserModels.TravelersModel;
+    if (!setupType) return;
+    await addTravelRecord.update(payload, {
+      where: { travellerId: payload["travellerId"] },
+    });
+  } catch (err) {
+    res.send(new Api400Error());
   }
 }
 
@@ -402,17 +416,30 @@ export async function GetAllPrnRecord(req, res) {
     const response = await pnrRecords.findAll();
     res.send(response);
   } catch (err) {
-    console.log(err);
     res.send(new Api404Error());
   }
 }
 export async function GetWishlist(req, res) {
+  const { wishRef } = req.query;
+  const today = new Date();
   try {
     const fetchWishlist = Modals.UserModels.AddWishListModel;
-    const responseObject = await fetchWishlist.findAll();
+
+    let responseObject = await fetchWishlist.findAll();
+
+    if (wishRef === "active") {
+      responseObject = responseObject.filter((date) => {
+        return new Date(date.dateTo) > today;
+      });
+    } else if (wishRef === "history") {
+      responseObject = responseObject.filter((date) => {
+        return new Date(date.dateTo) < today;
+      });
+    } else if (wishRef === "all") {
+      responseObject;
+    }
     res.send(responseObject);
   } catch (error) {
-    console.log(error);
     res.send(new Api404Error());
   }
 }
@@ -423,7 +450,6 @@ export async function GetFlightDetails(req, res) {
     const response = await flightData.findAll();
     res.send(response);
   } catch (err) {
-    console.log(err);
     res.send(new Api404Error());
   }
 }
@@ -451,7 +477,7 @@ export async function SuspendUser(req, res) {
     await createLog.create(actions);
     res.send({ message: "user suspended" });
   } catch (err) {
-    console.log(err);
+    res.send(new Api400Error());
   }
 }
 export async function ReactivateUser(req, res) {
@@ -471,7 +497,7 @@ export async function ReactivateUser(req, res) {
     await createLog.create(actions);
     res.send({ message: "user reactivated successfully" });
   } catch (err) {
-    console.log(err);
+    res.send(new Api400Error());
   }
 }
 
@@ -481,7 +507,6 @@ export async function AvertDetails(req, res) {
     const response = await advertList.findAll();
     res.send(response);
   } catch (err) {
-    console.log(err);
     res.send(new Api404Error());
   }
 }
@@ -489,6 +514,11 @@ export async function addPoints(req, res) {
   const payload = { ...req.body };
   try {
     const createPoints = Modals.AdminModel.CreatePoints;
+    const isPoint = await createPoints.findAll({
+      where: { points: payload.points, price: payload.price },
+    });
+    if (isPoint.length > 0)
+      return res.send({ message: "points already exist" });
     await createPoints.create(payload);
 
     const createLog = Modals.AdminModel.AdminChangeLogModel;
@@ -540,6 +570,30 @@ export async function getUserSuspension(req, res) {
     });
     res.send(response);
   } catch (err) {
+    res.send(new Api404Error());
+  }
+}
+
+export async function paymentRecieved(req, res) {
+  const { paymentRef } = req.query;
+  try {
+    const payments = Modals.UserModels.Payments;
+
+    let allPayments;
+    if (paymentRef === "payments") {
+      allPayments = await sequelizeConnection.query(
+        `SELECT payments.paymentId, payments.amount, payments.userId, payments.created, payments.referenceNo, payments.currency, payments.paymentMethod, payments.status, payments.receipt_email, payments.cancellationReason, client_account.firstName, client_account.lastName,payments.createdAt, payments.updatedAt  FROM payments INNER JOIN client_account ON payments.userId=client_account.userId`,
+        { type: QueryTypes.SELECT }
+      );
+    } else if (paymentRef === "initialized") {
+      allPayments = await sequelizeConnection.query(
+        `SELECT credit.creditId, credit.creditSource, credit.userId, credit.amount, credit.creditUnit, credit.paymentStatus, client_account.firstName, client_account.lastName, credit.createdAt, credit.updatedAt FROM credit INNER JOIN client_account ON credit.userId= client_account.userId`,
+        { type: QueryTypes.SELECT }
+      );
+    }
+    res.send(allPayments);
+  } catch (err) {
+    console.log(err);
     res.send(new Api404Error());
   }
 }

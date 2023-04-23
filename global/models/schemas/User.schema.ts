@@ -527,6 +527,19 @@ export const CreditSchema = {
     type: DataTypes.BIGINT,
     allowNull: false,
   },
+  paymentStatus: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: "unpaid",
+  },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   userId: {
     type: DataTypes.UUID,
     allowNull: false,
@@ -611,6 +624,14 @@ export const TravelerSchema = {
   departureAirlineNumber: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  flightType: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  arrivalTime: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   numberOfStops: {
     type: DataTypes.INTEGER,
@@ -754,10 +775,22 @@ export const PaymentSchema = {
     allowNull: false,
   },
   canceled_at: {
-    type: DataTypes.STRING,
+    type: DataTypes.BIGINT,
     allowNull: true,
   },
   currency: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  cancellationReason: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  lastName: {
     type: DataTypes.STRING,
     allowNull: true,
   },

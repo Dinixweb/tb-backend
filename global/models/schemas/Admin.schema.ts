@@ -177,11 +177,11 @@ export const CreatePointShema = {
     defaultValue: DataTypes.UUIDV4,
   },
   points: {
-    type: DataTypes.STRING,
+    type: DataTypes.BIGINT,
     allowNull: false,
   },
   price: {
-    type: DataTypes.STRING,
+    type: DataTypes.FLOAT,
     allowNull: false,
     default: 0,
   },

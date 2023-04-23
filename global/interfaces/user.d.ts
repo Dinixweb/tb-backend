@@ -206,6 +206,8 @@ export interface Travelers {
   noOfPassenger: number;
   terminal: string;
   farePrice: number;
+  flightType: string;
+  arrivalTime: string;
   totalSegmentDistance: string;
   agentEmail?: string;
   agentName?: string;
@@ -240,7 +242,10 @@ export interface Credits {
   userId: string;
   creditSource: string;
   creditUnit: number;
+  paymentStatus: string;
   amount?: number;
+  firstName?: string;
+  lastName?: string;
 }
 
 export interface FreeView {
@@ -269,13 +274,16 @@ export interface PaymentProps {
   paymentId: typeof UUID;
   amount: number;
   userId: typeof UUID;
-  created: string;
+  created: number;
   referenceNo: string;
-  canceled_at: string;
+  canceled_at: number;
   currency: string;
   paymentMethod: string;
   status: string;
   receipt_email: string;
+  firstName?: string;
+  lastName?: string;
+  cancellationReason: string;
 }
 
 export interface AddWishListProps {

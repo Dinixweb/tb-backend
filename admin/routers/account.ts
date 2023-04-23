@@ -6,6 +6,7 @@ const profileUpload = multer({ dest: "" }).single("profileImage");
 router.get("/getAllUsers", AdminController.UserInfo);
 
 router.get("/getUserChangeLogs/:userId", AdminController.UserChangeLogs);
+router.put("/updateTravelRecord", AdminController.UpdateTravelRecord);
 router.post("/addAdminUser", profileUpload, AdminController.createAdminUser);
 router.get("/allAdminUsers", AdminController.AllAdminUsers);
 router.put("/updateAdminUser", profileUpload, AdminController.UpdateAdminUser);
@@ -29,6 +30,7 @@ router.get("/getAllTickets", AdminController.getTickets);
 router.get("/getPostReported", AdminController.getPostReported);
 router.get("/suspendedUsersHistory", AdminController.getUserSuspension);
 router.put("/reactivateUser", AdminController.ReactivateUser);
+router.get("/getPayments", AdminController.paymentRecieved);
 
 router.delete("/deleteAdminUser/:employeeId", AdminController.deleteAdminUser);
 

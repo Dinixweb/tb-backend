@@ -62,8 +62,8 @@ export class TermsAndConditionModel extends Model<TermsAndConditionProps> {
 
 export class CreatePoints extends Model<CreatePointProps> {
   declare offerId: typeof UUID;
-  declare price: string;
-  declare points: string;
+  declare price: number;
+  declare points: number;
   declare createdBy: string;
 }
 

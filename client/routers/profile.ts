@@ -24,6 +24,11 @@ router.post(
   Profile.indentityVerification
 );
 router.post("/buyPoints", userAuth, Profile.buyPointInitialize);
+router.get(
+  "/getBuyPointInitialized/:userId",
+  userAuth,
+  Profile.getBuyPointInitialized
+);
 router.get("/getPointOffers", userAuth, Profile.getAllPointOffers);
 router.get("/userBio/:userId", userAuth, Profile.getUserBio);
 router.get("/getReferralCode/:userId", userAuth, Profile.getReferralCode);

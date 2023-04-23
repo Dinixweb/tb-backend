@@ -194,7 +194,10 @@ export class CreditModel extends Model<Credits> {
   declare userId: string;
   declare creditSource: string;
   declare creditUnit: number;
+  declare paymentStatus: string;
   declare amount: number;
+  declare firstName: string;
+  declare lastName: string;
 }
 export class FreeViewModal extends Model<FreeView> {
   declare freeViewId: typeof UUID;
@@ -235,6 +238,8 @@ export class TravelersModel extends Model<Travelers> {
   declare segmentDistance: string;
   declare noOfPassenger: number;
   declare terminal: string;
+  declare flightType: string;
+  declare arrivalTime: string;
   declare farePrice: number;
   declare totalSegmentDistance: string;
   declare agentEmail?: string;
@@ -262,13 +267,16 @@ export class Payments extends Model<PaymentProps> {
   declare paymentId: typeof UUID;
   declare amount: number;
   declare userId: typeof UUID;
-  declare created: string;
+  declare created: number;
   declare referenceNo: string;
-  declare canceled_at: string;
+  declare canceled_at: number;
   declare currency: string;
   declare paymentMethod: string;
   declare status: string;
   declare receipt_email: string;
+  declare firstName: string;
+  declare lastName: string;
+  declare cancellationReason: string;
 }
 
 export class AddWishListModel extends Model<AddWishListProps> {

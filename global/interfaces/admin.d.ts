@@ -63,8 +63,8 @@ export interface TermsAndConditionProps {
 
 export interface CreatePointProps {
   offerId: typeof UUID;
-  price: string;
-  points: string;
+  price: number;
+  points: number;
   createdBy: string;
 }
 

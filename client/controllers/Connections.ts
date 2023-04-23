@@ -85,7 +85,6 @@ export async function addConnection(req, res) {
       });
     }
   } catch (err) {
-    console.log(err);
     return res.status(400).send(new Api400Error(0));
   }
 }
@@ -174,7 +173,7 @@ export async function checkConnection(req, res) {
   const { userId, user_2_Id } = req.params;
 
   const payload = { userId, user_2_Id };
-  console.log(payload);
+
   try {
     const isConnectionExist = Modals.UserModels.Connections;
     const response = await isConnectionExist.findOne({

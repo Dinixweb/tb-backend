@@ -40,5 +40,21 @@ function otpCompareTimer() {
   const now = new Date();
   return dFormat.format(now);
 }
+function PaymentReferrence() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+  for (let i = 0; i < 8; i++) {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    code += chars.charAt(randomIndex);
+  }
+  return code;
+}
 
-export { otpCompareTimer, otpTimer, generateToken, generatedOTP, referralCode };
+export {
+  otpCompareTimer,
+  otpTimer,
+  generateToken,
+  generatedOTP,
+  referralCode,
+  PaymentReferrence,
+};

@@ -142,7 +142,6 @@ export async function Register(req: Request, res: Response) {
       }
     }
   } catch (error) {
-    console.log(error);
     return res.status(new ServerError().statusCode).json(new ServerError());
   }
 }
@@ -211,7 +210,6 @@ export async function Login(req: Request, res: Response) {
       .status(200)
       .json({ code: 200, message: "Logged In", data: payload });
   } catch (error) {
-    console.log(error);
     return res.status(new ServerError().statusCode).json(new ServerError());
   }
 }

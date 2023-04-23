@@ -68,7 +68,6 @@ export async function CreatePost(req, res) {
       message: "post created successfully",
     });
   } catch (err) {
-    console.log(err);
     return res.status(400).send(new Api400Error());
   }
 }
@@ -134,7 +133,6 @@ export async function getAllPost(req, res) {
       return res.status(200).send(allUserPost);
     }
   } catch (err) {
-    console.log(err);
     return res.status(400).send(new Api404Error());
   }
 }
@@ -165,7 +163,6 @@ export async function getAllAdverts(req, res) {
     });
     res.status(200).send(allUserPost);
   } catch (err) {
-    console.log(err);
     return res.status(400).send(new Api404Error());
   }
 }
@@ -208,7 +205,6 @@ export async function CreateInterest(req, res) {
       }
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send(new Api400Error());
   }
 }
@@ -235,7 +231,6 @@ export async function createSplit(req, res) {
     await Promise.all(addNewInterestList);
     res.status(200).send({ message: "split created successfully" });
   } catch (err) {
-    console.log(err);
     return res.status(400).send(new Api400Error());
   }
 }
@@ -302,27 +297,11 @@ export async function CreateTravelRecord(req, res) {
     await addTravelRecord.create(payload);
     res.status(201).send({ message: "pnr record addded successfully" });
   } catch (err) {
-    console.log(err);
-    res.send(new Api400Error());
-  }
-}
-export async function UpdateTravelRecord(req, res) {
-  const payload = { ...req.body };
-
-  const setupType = payload["finalStage"];
-  try {
-    const addTravelRecord = Modals.UserModels.TravelersModel;
-    if (!setupType) return;
-    await addTravelRecord.update(payload, {
-      where: { travellerId: payload["travellerId"] },
-    });
-  } catch (err) {
     res.send(new Api400Error());
   }
 }
 
 export async function GetAllPnrRecord(req, res) {
-  // eslint-disable-next-line prefer-const
   let {
     departureAirport,
     destination,
@@ -339,19 +318,8 @@ export async function GetAllPnrRecord(req, res) {
       });
     const getAllRecord = Modals.UserModels.TravelersModel;
     const userProfile = Modals.UserModels.default;
-
     let clause = new Object();
-    if (departureAirport && destination && dateFrom && dateTo) {
-      clause = { departureAirport, destination, dateFrom, dateTo };
-    } else if (departureAirport && destination && dateFrom) {
-      clause = { departureAirport, destination, dateFrom };
-    } else if (departureAirport && destination) {
-      clause = { departureAirport, destination };
-    } else if (departureAirport && !destination) {
-      clause = { departureAirport };
-    } else if (destination && !departureAirport) {
-      clause = { destination };
-    }
+    clause = { departureAirport, destination, dateFrom, dateTo };
     const PNRSearch = async () => {
       let allRecords = await getAllRecord.findAll({
         where: { ...clause },
@@ -495,7 +463,6 @@ export async function GetAllPnrRecord(req, res) {
       return res.send({ message: "set searchType" });
     }
   } catch (err) {
-    console.log(err);
     res.send(new Api404Error());
   }
 }
@@ -507,7 +474,7 @@ export async function GetWishList(req, res) {
     const getAllWish = await wishlist.findAll({ where: { userId: userId } });
     res.send(getAllWish);
   } catch (err) {
-    console.log(err);
+    res.send(new Api404Error());
   }
 }
 
@@ -542,7 +509,6 @@ export async function CreateInterestList(req, res) {
     }
     return res.status(201).send({ message: "interest added successfully" });
   } catch (err) {
-    console.log(err);
     res.send(new Api400Error());
   }
 }
@@ -561,7 +527,6 @@ export async function GetAreaOfInterest(req, res) {
     });
     res.send(getInterest);
   } catch (err) {
-    console.log(err);
     res.send(new Api404Error());
   }
 }
@@ -596,16 +561,6 @@ export async function ActivePnr(req, res) {
 
     res.send(getAllPnr);
   } catch (err) {
-    console.log(err);
+    req.send(new Api400Error());
   }
 }
-
-// export async function AddWishList(req, res) {
-//   const payload = { ...req.body };
-//   try {
-
-//     res.send({ message: "successfully added" });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }

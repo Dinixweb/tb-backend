@@ -136,7 +136,6 @@ export async function updateEmail(req, res) {
     changeEmail(getUserData.firstName, getUserData.email, otp);
     return res.status(200).send({ message: "otp sent to old email" });
   } catch (err) {
-    console.log(err);
     res.status(404).send(new Api404Error());
   }
 }
@@ -158,7 +157,6 @@ export async function phoneNumberUpdate(req, res) {
     changePhone(getUserData.firstName, getUserData.email, otp);
     return res.status(200).send({ message: "otp sent to email" });
   } catch (err) {
-    console.log(err);
     res.status(404).send(new Api404Error());
   }
 }
@@ -172,8 +170,6 @@ export async function OtpEmailVerification(req, res) {
     const getUserData = await Modals.UserModels.default.findOne({
       where: { userId: payload.userId },
     });
-
-    console.log(getUserToken, getUserData);
 
     if (!getUserToken) return res.status(400).send({ message: "invalid otp" });
 
@@ -214,7 +210,6 @@ export async function OtpPhoneVerification(req, res) {
   }
 }
 export async function updatePassword(req, res) {
-  console.log(req.body);
   const payload = { ...req.body };
 
   const passwordHash = await hashPassword(payload.password);
@@ -265,7 +260,7 @@ export async function getUserPoints(req, res) {
 
 export async function getAllPointOffers(req, res) {
   try {
-    const allPoints = Modals.UserModels.PointOfferModal;
+    const allPoints = Modals.AdminModel.CreatePoints;
     const response = await allPoints.findAll();
     res.status(200).send(response);
   } catch (err) {
@@ -276,23 +271,37 @@ export async function getAllPointOffers(req, res) {
 export async function buyPointInitialize(req, res) {
   const payload = { ...req.body };
   try {
-    const checkPriceAmount = Modals.UserModels.PointOfferModal;
+    const checkPriceAmount = Modals.AdminModel.CreatePoints;
     const isPrice_Amount = await checkPriceAmount.findAll({
       where: { price: payload.price, points: payload.points },
     });
+
     if (isPrice_Amount.length <= 0)
       return res.status(404).send({
         message:
           "this offer does not exit. please select from the listed offers",
       });
     const buyPoints = Modals.UserModels.CreditModel;
-    payload["creditSource"] = "paid";
+    payload["creditSource"] = "purchased";
     payload["amount"] = payload.price;
     payload["creditUnit"] = payload.points;
 
     await buyPoints.create(payload);
-    res.status(201).send({ message: "point purchase successful" });
+
+    res.status(201).send({ message: "point purchase initialized" });
   } catch (err) {
     return res.status(404).send(new Api404Error());
+  }
+}
+export async function getBuyPointInitialized(req, res) {
+  const { userId } = req.params;
+  try {
+    const pointInitialized = Modals.UserModels.CreditModel;
+    const response = await pointInitialized.findAll({
+      where: { userId: userId },
+    });
+    res.send(response);
+  } catch (err) {
+    res.send(new Api404Error());
   }
 }
