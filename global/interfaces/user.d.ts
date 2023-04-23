@@ -183,6 +183,9 @@ export interface WishList {
   dateFrom: string;
   dateTo: string;
   image: string;
+  firstname: string;
+  lastName?: string;
+  userName?: string;
 }
 
 export interface Travelers {

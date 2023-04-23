@@ -12,6 +12,7 @@ import { HasMany, Op, QueryTypes, Sequelize } from "sequelize";
 import Api404Error from "../../global/errors/ApiError404";
 import Api400Error from "../../global/errors/Api400Error";
 import sequelizeConnection from "../../global/database";
+import { WishList } from "global/interfaces/user";
 
 const parser = new DatauriParser();
 
@@ -423,16 +424,17 @@ export async function GetWishlist(req, res) {
   const { wishRef } = req.query;
   const today = new Date();
   try {
-    const fetchWishlist = Modals.UserModels.AddWishListModel;
-
-    let responseObject = await fetchWishlist.findAll();
+    let responseObject = await sequelizeConnection.query(
+      `SELECT wishlist.wishlistId, wishlist.userId, wishlist.departureAirport, wishlist.destination, wishlist.dateFrom, wishlist.dateTo, wishlist.image, client_account.firstName, client_account.lastName FROM wishlist INNER JOIN client_account ON wishlist.userId = client_account.userId`,
+      { type: QueryTypes.SELECT }
+    );
 
     if (wishRef === "active") {
-      responseObject = responseObject.filter((date) => {
+      responseObject = responseObject.filter((date: WishList) => {
         return new Date(date.dateTo) > today;
       });
     } else if (wishRef === "history") {
-      responseObject = responseObject.filter((date) => {
+      responseObject = responseObject.filter((date: WishList) => {
         return new Date(date.dateTo) < today;
       });
     } else if (wishRef === "all") {
@@ -440,6 +442,7 @@ export async function GetWishlist(req, res) {
     }
     res.send(responseObject);
   } catch (error) {
+    console.log(error);
     res.send(new Api404Error());
   }
 }
