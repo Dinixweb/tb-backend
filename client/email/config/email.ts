@@ -7,18 +7,18 @@ dotenv.config();
 const EMAIL = process.env.EMAIL as string;
 const EMAILPASSWORD = process.env.PASSWORD as string;
 const transporter = nodemailer.createTransport({
-  host: "smtp-mail.outlook.com",
-  port: 587,
+  host: "",
+  port: ,
   secure: false,
   auth: {
-    user: "wekanfly@outlook.com",
-    pass: "TravelBuddy@001",
+    user: "",
+    pass: "",
   },
 });
 
 export function passwordResetEmail(firstName, email, otp) {
   const mail = {
-    from: "wekanfly@outlook.com",
+    from: "",
     to: email,
     subject: "one-time-password",
     text: passwordReset(firstName, otp),
@@ -32,7 +32,7 @@ export function passwordResetEmail(firstName, email, otp) {
 }
 export function changeEmail(firstName, email, otp) {
   const mail = {
-    from: "wekanfly@outlook.com",
+    from: "",
     to: email,
     subject: "Email Reset OTP",
     text: changeEmailMessage(firstName, otp),
@@ -46,7 +46,7 @@ export function changeEmail(firstName, email, otp) {
 }
 export function changePhone(firstName, email, otp) {
   const mail = {
-    from: "wekanfly@outlook.com",
+    from: "",
     to: email,
     subject: "Email Reset OTP",
     text: changePhoneMessage(firstName, otp),
@@ -60,7 +60,7 @@ export function changePhone(firstName, email, otp) {
 }
 export function EmailChangeSuccess(firstName, email) {
   const mail = {
-    from: "wekanfly@outlook.com",
+    from: "",
     to: email,
     subject: "Email Reset OTP",
     text: emailSuccessMessage(firstName),
@@ -119,7 +119,7 @@ export function SignUp(firstName, email, benefitList, referalCodeLink) {
       return console.log(err);
     }
     const mainOptions = {
-      from: "wekanfly@outlook.com",
+      from: "",
       to: email,
       subject: "Sign Confirmation",
       html: ejs.render(data, {
